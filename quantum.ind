@@ -1,0 +1,93 @@
+\begin{theindex}
+
+  \item adjoint, 8
+  \item Ancillas, 25
+
+  \indexspace
+
+  \item Bell states, 14
+  \item Bloch sphere, 6
+  \item bra vector, 5
+
+  \indexspace
+
+  \item $\cnot$ Gate, 11
+  \item computational basis, 4
+  \item controlled NOT gate, 11
+
+  \indexspace
+
+  \item Dirac notation, 3
+  \item Discrete Fourier Transform (DFT), 22
+
+  \indexspace
+
+  \item eigenstate, 15
+  \item entangled qubits, 13
+  \item entangled state, 13
+
+  \indexspace
+
+  \item gate, 7
+
+  \indexspace
+
+  \item Hadamard gate, 8
+
+  \indexspace
+
+  \item inner product, 5
+
+  \indexspace
+
+  \item ket vector, 3
+
+  \indexspace
+
+  \item maximally entangled qubits, 14
+
+  \indexspace
+
+  \item $P$ gate, 25
+  \item Parseval identity, 23
+  \item partially entangled, 14
+  \item Pauli gates, 8
+  \item phase kickback, 15
+  \item plus $k$ adder, 25
+
+  \indexspace
+
+  \item quantum state, 3
+  \item qubit, 3
+
+  \indexspace
+
+  \item relative phase, 6
+  \item rotations, 9
+
+  \indexspace
+
+  \item $S$ gate, 8
+
+  \indexspace
+
+  \item $T$ gate, 8
+  \item Toffoli Gate, 12
+
+  \indexspace
+
+  \item unitary, 8
+
+  \indexspace
+
+  \item $X$ gate, 7
+
+  \indexspace
+
+  \item $Y$ gate, 7
+
+  \indexspace
+
+  \item $Z$ gate, 7
+
+\end{theindex}

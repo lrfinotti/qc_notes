@@ -1,0 +1,35 @@
+\indexentry{qubit}{3}
+\indexentry{quantum state}{3}
+\indexentry{Dirac notation}{3}
+\indexentry{ket vector}{3}
+\indexentry{computational basis}{4}
+\indexentry{inner product}{5}
+\indexentry{bra vector}{5}
+\indexentry{relative phase}{6}
+\indexentry{Bloch sphere}{6}
+\indexentry{gate}{7}
+\indexentry{X gate@$X$ gate}{7}
+\indexentry{Y gate@$Y$ gate}{7}
+\indexentry{Z gate@$Z$ gate}{7}
+\indexentry{Hadamard gate}{8}
+\indexentry{S gate@$S$ gate}{8}
+\indexentry{T gate@$T$ gate}{8}
+\indexentry{Pauli gates}{8}
+\indexentry{unitary}{8}
+\indexentry{adjoint}{8}
+\indexentry{rotations}{9}
+\indexentry{cnot gate@$\cnot$ Gate}{11}
+\indexentry{controlled NOT gate}{11}
+\indexentry{Toffoli Gate}{12}
+\indexentry{entangled qubits}{13}
+\indexentry{entangled state}{13}
+\indexentry{maximally entangled qubits}{14}
+\indexentry{Bell states}{14}
+\indexentry{partially entangled}{14}
+\indexentry{eigenstate}{15}
+\indexentry{phase kickback}{15}
+\indexentry{Discrete Fourier Transform (DFT)}{22}
+\indexentry{Parseval identity}{23}
+\indexentry{Ancillas}{25}
+\indexentry{P gate@$P$ gate}{25}
+\indexentry{plus $k$ adder}{25}

@@ -1,0 +1,23 @@
+\contentsline {section}{\tocsection {}{1}{Qubits}}{3}{section.1}%
+\contentsline {section}{\tocsection {}{2}{Tensor Products}}{4}{section.2}%
+\contentsline {section}{\tocsection {}{3}{Inner Product}}{5}{section.3}%
+\contentsline {section}{\tocsection {}{4}{Bloch Sphere}}{5}{section.4}%
+\contentsline {section}{\tocsection {}{5}{Gates}}{7}{section.5}%
+\contentsline {section}{\tocsection {}{6}{Rotations}}{9}{section.6}%
+\contentsline {section}{\tocsection {}{7}{Quantum Circuits}}{10}{section.7}%
+\contentsline {section}{\tocsection {}{8}{Multi-Qubit Gates}}{11}{section.8}%
+\contentsline {subsection}{\tocsubsection {}{8.1}{$\mathrm {CNOT}$ Gate}}{11}{subsection.8.1}%
+\contentsline {subsection}{\tocsubsection {}{8.2}{Multiple Control Gates}}{12}{subsection.8.2}%
+\contentsline {subsection}{\tocsubsection {}{8.3}{Toffoli Gate}}{12}{subsection.8.3}%
+\contentsline {subsection}{\tocsubsection {}{8.4}{Other Controlled Gates}}{12}{subsection.8.4}%
+\contentsline {section}{\tocsection {}{9}{Measuring Singular Qubits}}{12}{section.9}%
+\contentsline {section}{\tocsection {}{10}{Entanglement}}{13}{section.10}%
+\contentsline {section}{\tocsection {}{11}{Phase Kickback}}{14}{section.11}%
+\contentsline {section}{\tocsection {}{12}{Superdense Coding}}{15}{section.12}%
+\contentsline {section}{\tocsection {}{13}{Grover's Algorithm}}{16}{section.13}%
+\contentsline {section}{\tocsection {}{14}{Quantum Fourier Transform}}{21}{section.14}%
+\contentsline {subsection}{\tocsubsection {}{14.1}{Discrete Fourier Transform}}{22}{subsection.14.1}%
+\contentsline {subsection}{\tocsubsection {}{14.2}{Quantum Fourier Transform}}{23}{subsection.14.2}%
+\contentsline {subsection}{\tocsubsection {}{14.3}{Application: Adder Circuit}}{25}{subsection.14.3}%
+\contentsline {section}{\tocsection {}{}{Notation}}{28}{section*.2}%
+\contentsline {section}{\tocsection {}{}{Index}}{29}{section*.3}%
