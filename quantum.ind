@@ -1,7 +1,7 @@
 \begin{theindex}
 
   \item adjoint, 8
-  \item Ancillas, 25
+  \item Ancillas, 24
 
   \indexspace
 
@@ -24,7 +24,12 @@
 
   \item eigenstate, 15
   \item entangled qubits, 13
-  \item entangled state, 13
+  \item entangled state, 14
+
+  \indexspace
+
+  \item Fejér kernel, 27
+  \item Fejér state, 27
 
   \indexspace
 
@@ -48,15 +53,16 @@
 
   \indexspace
 
-  \item $P$ gate, 25
-  \item Parseval identity, 23
+  \item $P$ gate, 24
+  \item Parseval identity, 22
   \item partially entangled, 14
   \item Pauli gates, 8
   \item phase kickback, 15
-  \item plus $k$ adder, 25
+  \item plus $k$ adder, 24
 
   \indexspace
 
+  \item quantum phase estimator, 29
   \item quantum state, 3
   \item qubit, 3
 

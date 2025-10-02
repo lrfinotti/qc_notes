@@ -5,7 +5,7 @@
 \indexentry{ket i@$\ket{\mi}$}{3}
 \indexentry{ket minus i@$\ket{-\mi}$}{3}
 \indexentry{ket psi@$\ket{\psi}$}{3}
-\indexentry{ket theta phi@$\ket{\psi(\theta, \phi)}$}{3}
+\indexentry{ket theta phi@$\ket{\psi(\theta, \phi)}$}{4}
 \indexentry{bar psi@$\bra{\psi}$}{5}
 \indexentry{X@$X$}{7}
 \indexentry{Y@$Y$}{7}
@@ -21,3 +21,4 @@
 \indexentry{phi minus@$\ket{\Phi^-}$}{14}
 \indexentry{psi plus@$\ket{\Psi^+}$}{14}
 \indexentry{psi minus@$\ket{\Psi^-}$}{14}
+\indexentry{ket k of F@$\ket{k}_F$}{27}

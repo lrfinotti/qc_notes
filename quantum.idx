@@ -22,14 +22,17 @@
 \indexentry{controlled NOT gate}{11}
 \indexentry{Toffoli Gate}{12}
 \indexentry{entangled qubits}{13}
-\indexentry{entangled state}{13}
+\indexentry{entangled state}{14}
 \indexentry{maximally entangled qubits}{14}
 \indexentry{Bell states}{14}
 \indexentry{partially entangled}{14}
 \indexentry{eigenstate}{15}
 \indexentry{phase kickback}{15}
 \indexentry{Discrete Fourier Transform (DFT)}{22}
-\indexentry{Parseval identity}{23}
-\indexentry{Ancillas}{25}
-\indexentry{P gate@$P$ gate}{25}
-\indexentry{plus $k$ adder}{25}
+\indexentry{Parseval identity}{22}
+\indexentry{Ancillas}{24}
+\indexentry{P gate@$P$ gate}{24}
+\indexentry{plus $k$ adder}{24}
+\indexentry{Fejér state}{27}
+\indexentry{Fejér kernel}{27}
+\indexentry{quantum phase estimator}{29}

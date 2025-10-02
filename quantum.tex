@@ -139,6 +139,8 @@
 \newcommand{\prob}{\mathbb{P}}
 \newcommand{\ft}{\mathcal{F}}  % Fourier transform
 \DeclareMathOperator{\qft}{QFT}  % quantum Fourier transform
+\DeclareMathOperator{\qpe}{QFE}  % quantum phase estimator
+
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -461,6 +463,11 @@ be a direction/point on the sphere (in spherical coordinates).  Then, the spin o
 \end{enumerate}
 \end{notation}
 
+
+\begin{remark}
+  Note that if we have two gates $U_1$ and $U_2$, with $U_1 \sim U_2$, if they are affecting a single qubit, they can be exchanged without affecting the physical result, as they only add a global phase.  On the other hand, if they come with a \emph{controlled gate}, as seen in \cref{ssec:control_gates}, then they introduce a relative phase and \emph{cannot} be switched!
+\end{remark}
+
 \begin{remarks}
   \begin{enumerate}
 
@@ -683,7 +690,7 @@ The \emph{Toffoli Gate}\index{Toffoli Gate} is $C^2X$, so it has two controls an
   \end{quantikz}
 \end{center}
 
-\subsection{Other Controlled Gates}
+\subsection{Other Controlled Gates}\label{ssec:control_gates}
 
 One can use the $\cnot$ gate to produce other controlled gates: $CY$, $CZ$, $CS$, $CH$.
 % For example, here is the $CY$ gate:
@@ -1131,29 +1138,23 @@ We define \emph{Grover's oracle} as $G = - U_s U_f$.
 
 
 \begin{lemma}\label{lemma:expsum}
-  Let $\zeta_N \idef \me^{2 \mpi \mi/N}$, with $N \geq 2$.  Then, for $a \in \Z/{N}\Z \setminus \{0\}$ such that $N/\gcd(a, N) \geq 2$, we have
+  Let $\zeta_N \idef \me^{2 \mpi \mi/N}$, with $N \geq 2$, and $a \in \R$.  Then we have
   \[
-    \sum_{b=0}^{N-1} \zeta_N^{ab} = 0.
+    \sum_{b=0}^{N-1} \zeta_N^{ab} =
+    \begin{cases}
+      N, & \text{if $a \in \Z$ and $a \equiv 0 \pmod{N}$}; \\
+      0, & \text{if $a \in \Z$ and $a \not\equiv 0 \pmod{N}$}; \\
+      \frac{{\left(\zeta_N^{a}\right)}^N - 1}{\zeta_N - 1}, & \text{if $a \not\in \Z$}.
+    \end{cases}
   \]
 \end{lemma}
 
 \begin{proof}
-  Let $d \idef (a, N)$ and $a = d a_1$, $N = d N_1$.  Then, $\zeta_N^a = \me^{2 \mpi \mi/N \cdot a} = \me^{2 \mpi \mi/N_1 \cdot a_1} \idef \zeta_{N_1}$.  Since $\gcd(a_1, N_1) = 1$, we have that $\zeta_{N_1}$ is a \emph{primitive} $N_1$-st root of unity and so
+  We have that $\zeta_N^a = 1$ if and only if $a \in \Z$ and $a \equiv 0 \pmod{N}$, in which case the result is trivial.  So, suppose that $\zeta_N^a \neq 1$.  Then:
   \[
-   \Phi_{N_1}(X) \idef  X^{N_1} - 1 = \prod_{i=0}^{N_1 - 1} (X - \zeta_{N_1}^i).
+    \sum_{b=0}^{N-1} {\left(\zeta_N^a\right)}^b = \frac{\zeta_N^{aN} - 1}{\zeta_N^a - 1}.
   \]
-  Hence, if $N_1 \geq 2$, we have that the coefficient of $X^{N_1 - 1}$ in $\Phi_{N_1}(X)$ is $0$.  But this coefficient is simply
-  \[
-    - \sum_{i=0}^{N_1-1} \zeta_{N_1}^{i} = - \sum_{i=0}^{N_1-1} \zeta_N^{ai} = 0.
-  \]
-  Noting that $\zeta_{N_1}^{x + N_1} = \zeta_{N_1}^x$, we have that
-  \begin{align*}
-    \sum_{b=0}^{N-1} \zeta_N^{ab}
-    &= \sum_{b=0}^{N-1} \zeta_{N_1}^b \\
-    & = \sum_{b=0}^{N_1-1} \zeta_{N_1}^b + \sum_{b=N_1}^{2N_1-1} \zeta_{N_1}^b + \cdots + \sum_{b=(d-1)N_1}^{dN_1-1} \zeta_{N_1}^b \\
-    &= \sum_{b=0}^{N_1-1} \zeta_{N_1}^b + \sum_{b=0}^{N_1-1} \zeta_{N_1}^b + \cdots + \sum_{b=0}^{N_1-1} \zeta_{N_1}^b \\
-    &= 0 + 0 + \cdots + 0 = 0.
-  \end{align*}
+  If $a \in \Z$, then ${\left( \zeta_N^a \right)}^N = {\left( \zeta_N^N \right)}^a = 1$.
 \end{proof}
 
 
@@ -1363,6 +1364,96 @@ So, using~\cref{eq:ak}, and assuming that $\qft$ can be implemented, we can also
   \end{align*}
   So, indeed the last circuit gives, up to a global phase, the $P(k)$ gate.
 \end{proof}
+
+
+\section{Quantum Phase Estimation}
+
+\subsection{Fejér States}
+
+What happens if we replace $k \in \Z$ in $A(k)$ by some $k \in  \R$?
+
+\begin{definition}
+  For $n$ bits and $k \in \R$, define $\ket{k}_F\index[not]{ket k of F@$\ket{k}_F$}$, the \emph{$k$-th Fejér state}\index{Fejér state} as
+  \begin{align*}
+    \ket{k}_F
+    &\idef \adj{\qft} \circ P(k) \circ \qft \ket{0}_n \\
+    &= \sum_{z=0}^{2^n-1} \exp\left(\mpi \mi (1 - 1/2)(k - z)\right) \frac{\sin(\mpi(k-z))}{2^n \sin(\mpi (k-z)/ 2^n)} \ket{z}_n.
+  \end{align*}
+\end{definition}
+
+Then, for $x \in \{0, 1, \ldots, 2^n-1\}$, we have
+\[
+  \prob(x \mid \ket{k}_F) = \abs{\langle x \mid k  \rangle_F}^2 = \frac{\sin^2(\mpi(k -x))}{4^n \sin^2(\mpi(k-x)/2^n)},
+\]
+the \emph{Fejér kernel}\index{Fejér kernel}.
+
+\Vref{fig:fejer_kernel} shows the graph of the Fejér kernel
+\[
+   \frac{\sin^2(\mpi(k -x))}{4^n \sin^2(\mpi(k-x)/2^n)}
+\]
+for $n = 5$ and $k = 17.3$.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.6]{fejer_kernel.jpg}
+  \caption{Ferjér kernel for $k=17.3$ and $n=5$.}
+  \label{fig:fejer_kernel}
+\end{figure}
+
+
+If we let $k = x_0 + r$, where $x_0 = \lfloor k \rceil$, so $r \in [-1/2, 1/2]$, then
+\[
+  \prob(x_0 \mid \ket{k}_F) = \frac{\sin^2(\mpi r)}{4^n \sin^2(\mpi r/2^n)} \geq \frac{4}{\mpi^2} \approx 0.41,
+\]
+and in fact
+\[
+   \prob(\lfloor x \rfloor \mid \ket{k}_F) +  \prob(\lceil x \rceil \mid \ket{k}_F) \geq \frac{8}{\mpi^2} \approx 0.82.
+\]
+
+
+\subsection{Quantum Phase Estimator/Digitizer}
+
+Let $\mcal{H}$ be the Hilbert space of $n$-qubit states.  Given
+\begin{itemize}
+
+\item an implementation of an unitary operator $U$;
+
+\item an \emph{eigenstate} $\ket{\psi} \in \mcal{H}$ of $U$, with $U \ket{\psi} = \me^{2 \pi \mi \theta} \ket{\psi}$, with $0 \leq \theta < 1$;
+
+\end{itemize}
+we want to find or estimate $\theta$.
+
+\begin{remark}
+  Note that $\ket{\psi} \sim \me^{2 \pi \mi \theta} \ket{\psi}$, so physically there is no difference (and hence asking for $\theta$, as is, is not a proper question). On the other hand, when we have a controlled gate $CU$ given by
+  \[
+    CU( \ket{a} \ket{\psi}) = \ket{a} U^a \ket{\psi} \quad \text{(for $a \in \F_2$)},
+  \]
+  i.e.,
+  \[
+    CU( \alpha \ket{0} \ket{\psi} + \beta \ket{1} \ket{\psi}) = \alpha \ket{0} \ket{\psi} + \beta \me^{2 \pi \mi \theta} \ket{1} \ket{\psi},
+  \]
+  then $\theta$ is relevant.
+\end{remark}
+
+\begin{definition}
+  We define the $n$-qubit \emph{quantum phase estimator}\index{quantum phase estimator} for $\ket{\psi}$ as:
+  \begin{center}
+    \begin{quantikz}
+      & \lstick{$\ket{0}$} & \qw & \gate[5, nwires=4]{H} & \ctrl{5} \qw & \qw & \qw & \qw & \qw & \cdots & \qw & \gate[5, nwires=4]{\qft} & \meter{} & \qw \\
+      & \lstick{$\ket{0}$} & \qw  & \qw & \qw & \qw & \ctrl{4} & \qw & \qw & \cdots & \qw & \qw & \meter{} & \qw \\
+      & \lstick{$\ket{0}$} &\qw & \qw & \qw & \qw & \qw & \ctrl{3} & \qw & \cdots & \qw & \qw & \meter{} & \qw \\
+      & \lstick{$\ \vdots \ $} & & & \qw & \qw & \qw & \qw & \qw & \cdots & \qw & \meter{} & \qw \\
+      & \lstick{$\ket{0}$} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \cdots & \ctrl{1} & \qw & \meter{} & \qw \\
+      & \lstick{$\ket{\psi}$} & \qw & \qw & \gate{U} & \qw & \gate{U^2} & \gate{U^{2^2}} & \qw & \cdots & \gate{U^{2^{n-1}}} & \qw & \qw & \qw
+    \end{quantikz}
+  \end{center}
+\end{definition}
+
+We then have that
+\[
+  \qpe \ket{0}_n \ket{\psi} = \ket{2^n \theta}_F \ket{\psi}.
+\]
+Hence, measuring the first $n$ qubits, we get either $\lfloor 2^n \theta \rfloor$ or $\lceil 2^n \theta \rceil$ with probability at least $82\%$.  Pick the most likely $x_{\theta} \in \Z$ and then $\theta \approx x_{\theta} / 2^n$.
 
 \printindex[not]
 \printindex

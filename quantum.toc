@@ -10,14 +10,17 @@
 \contentsline {subsection}{\tocsubsection {}{8.2}{Multiple Control Gates}}{12}{subsection.8.2}%
 \contentsline {subsection}{\tocsubsection {}{8.3}{Toffoli Gate}}{12}{subsection.8.3}%
 \contentsline {subsection}{\tocsubsection {}{8.4}{Other Controlled Gates}}{12}{subsection.8.4}%
-\contentsline {section}{\tocsection {}{9}{Measuring Singular Qubits}}{12}{section.9}%
+\contentsline {section}{\tocsection {}{9}{Measuring Singular Qubits}}{13}{section.9}%
 \contentsline {section}{\tocsection {}{10}{Entanglement}}{13}{section.10}%
-\contentsline {section}{\tocsection {}{11}{Phase Kickback}}{14}{section.11}%
+\contentsline {section}{\tocsection {}{11}{Phase Kickback}}{15}{section.11}%
 \contentsline {section}{\tocsection {}{12}{Superdense Coding}}{15}{section.12}%
 \contentsline {section}{\tocsection {}{13}{Grover's Algorithm}}{16}{section.13}%
 \contentsline {section}{\tocsection {}{14}{Quantum Fourier Transform}}{21}{section.14}%
 \contentsline {subsection}{\tocsubsection {}{14.1}{Discrete Fourier Transform}}{22}{subsection.14.1}%
 \contentsline {subsection}{\tocsubsection {}{14.2}{Quantum Fourier Transform}}{23}{subsection.14.2}%
-\contentsline {subsection}{\tocsubsection {}{14.3}{Application: Adder Circuit}}{25}{subsection.14.3}%
-\contentsline {section}{\tocsection {}{}{Notation}}{28}{section*.2}%
-\contentsline {section}{\tocsection {}{}{Index}}{29}{section*.3}%
+\contentsline {subsection}{\tocsubsection {}{14.3}{Application: Adder Circuit}}{24}{subsection.14.3}%
+\contentsline {section}{\tocsection {}{15}{Quantum Phase Estimation}}{27}{section.15}%
+\contentsline {subsection}{\tocsubsection {}{15.1}{Fejér States}}{27}{subsection.15.1}%
+\contentsline {subsection}{\tocsubsection {}{15.2}{Quantum Phase Estimator/Digitizer}}{28}{subsection.15.2}%
+\contentsline {section}{\tocsection {}{}{Notation}}{30}{section*.2}%
+\contentsline {section}{\tocsection {}{}{Index}}{31}{section*.3}%
