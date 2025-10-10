@@ -1,24 +1,26 @@
-\indexentry{ket zero@$\ket{0}$}{3}
-\indexentry{ket one@$\ket{1}$}{3}
-\indexentry{ket plus@$\ket{+}$}{3}
-\indexentry{ket minus@$\ket{-}$}{3}
-\indexentry{ket i@$\ket{\mi}$}{3}
-\indexentry{ket minus i@$\ket{-\mi}$}{3}
-\indexentry{ket psi@$\ket{\psi}$}{3}
+\indexentry{ket zero@$\ket{0}$}{4}
+\indexentry{ket one@$\ket{1}$}{4}
+\indexentry{ket plus@$\ket{+}$}{4}
+\indexentry{ket minus@$\ket{-}$}{4}
+\indexentry{ket i@$\ket{\mi}$}{4}
+\indexentry{ket minus i@$\ket{-\mi}$}{4}
+\indexentry{ket psi@$\ket{\psi}$}{4}
 \indexentry{ket theta phi@$\ket{\psi(\theta, \phi)}$}{4}
-\indexentry{bar psi@$\bra{\psi}$}{5}
-\indexentry{X@$X$}{7}
-\indexentry{Y@$Y$}{7}
-\indexentry{Z@$Z$}{7}
-\indexentry{H@$H$}{8}
-\indexentry{ket s@$\ket{s}$}{8}
-\indexentry{S@$S$}{8}
-\indexentry{T@$T$}{8}
-\indexentry{R sub X@$R_X$}{9}
-\indexentry{R sub Y@$R_Y$}{9}
-\indexentry{R sub Z@$R_Z$}{9}
-\indexentry{phi plus@$\ket{\Phi^+}$}{14}
-\indexentry{phi minus@$\ket{\Phi^-}$}{14}
-\indexentry{psi plus@$\ket{\Psi^+}$}{14}
-\indexentry{psi minus@$\ket{\Psi^-}$}{14}
-\indexentry{ket k of F@$\ket{k}_F$}{27}
+\indexentry{bar psi@$\bra{\psi}$}{6}
+\indexentry{X@$X$}{8}
+\indexentry{Y@$Y$}{8}
+\indexentry{Z@$Z$}{8}
+\indexentry{H@$H$}{9}
+\indexentry{ket s@$\ket{s}$}{9}
+\indexentry{S@$S$}{9}
+\indexentry{T@$T$}{9}
+\indexentry{R sub X@$R_X$}{10}
+\indexentry{R sub Y@$R_Y$}{10}
+\indexentry{R sub Z@$R_Z$}{10}
+\indexentry{phi plus@$\ket{\Phi^+}$}{15}
+\indexentry{phi minus@$\ket{\Phi^-}$}{15}
+\indexentry{psi plus@$\ket{\Psi^+}$}{15}
+\indexentry{psi minus@$\ket{\Psi^-}$}{15}
+\indexentry{ket k of F@$\ket{k}_F$}{28}
+\indexentry{c x zero X@$C_{x_0}^n X$}{36}
+\indexentry{swap@$\swpg$}{37}
