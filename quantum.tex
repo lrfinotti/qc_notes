@@ -32,8 +32,6 @@
 
 % references
 \usepackage{varioref}
-\usepackage{hyperref}  % hyperlinks
-\usepackage[poorman,capitalize]{cleveref}
 
 % better lists
 \usepackage[shortlabels]{enumitem}
@@ -63,6 +61,8 @@
 \usepackage{setspace}
 \setstretch{1.33}
 
+\usepackage{hyperref}  % hyperlinks
+\usepackage[poorman,capitalize]{cleveref}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % THEOREM STYLING
@@ -2003,7 +2003,7 @@ This works since we get
 One more observation.  Let:
 
 \begin{definition}
-  Given $\theta : \F_2^n \to [0, 1)$ as above, a\emph{multiplexer}\index{multiplexer} of type $Y$ (or $X$, or $Z$):
+  Given $\theta : \F_2^n \to [0, 1)$ as above, a \emph{multiplexer}\index{multiplexer} of type $Y$ (or $X$, or $Z$):
   \[
     R_Y(\theta) \ket{x}_n \ket{\psi}_1 = \ket{x}_n R_Y(\theta(x)) \ket{\psi}_1,
   \]

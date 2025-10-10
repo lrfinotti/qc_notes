@@ -1,104 +1,104 @@
 \begin{theindex}
 
-  \item adjoint, 9
-  \item Ancillas, 25
+  \item adjoint, \hyperpage{9}
+  \item Ancillas, \hyperpage{25}
 
   \indexspace
 
-  \item Bell states, 15
-  \item Bloch sphere, 7
-  \item bra vector, 6
+  \item Bell states, \hyperpage{15}
+  \item Bloch sphere, \hyperpage{7}
+  \item bra vector, \hyperpage{6}
 
   \indexspace
 
-  \item $\cnot$ Gate, 12
-  \item computational basis, 5
-  \item controlled NOT gate, 12
-  \item controlled swap gate, 38
+  \item $\cnot$ Gate, \hyperpage{12}
+  \item computational basis, \hyperpage{5}
+  \item controlled NOT gate, \hyperpage{12}
+  \item controlled swap gate, \hyperpage{38}
 
   \indexspace
 
-  \item data access oracle, 35
-  \item diagonal unitaries, 35
-  \item Dirac notation, 4
-  \item Discrete Fourier Transform (DFT), 23
+  \item data access oracle, \hyperpage{35}
+  \item diagonal unitaries, \hyperpage{35}
+  \item Dirac notation, \hyperpage{4}
+  \item Discrete Fourier Transform (DFT), \hyperpage{23}
 
   \indexspace
 
-  \item eigenstate, 16
-  \item entangled qubits, 14
-  \item entangled state, 14
+  \item eigenstate, \hyperpage{16}
+  \item entangled qubits, \hyperpage{14}
+  \item entangled state, \hyperpage{14}
 
   \indexspace
 
-  \item Fejér kernel, 28
-  \item Fejér state, 28
+  \item Fejér kernel, \hyperpage{28}
+  \item Fejér state, \hyperpage{28}
 
   \indexspace
 
-  \item gate, 8
+  \item gate, \hyperpage{8}
 
   \indexspace
 
-  \item Hadamard gate, 9
+  \item Hadamard gate, \hyperpage{9}
 
   \indexspace
 
-  \item inner product, 6
+  \item inner product, \hyperpage{6}
 
   \indexspace
 
-  \item ket vector, 4
+  \item ket vector, \hyperpage{4}
 
   \indexspace
 
-  \item maximally entangled qubits, 15
-  \item multiplexer, 45
+  \item maximally entangled qubits, \hyperpage{15}
+  \item multiplexer, \hyperpage{45}
 
   \indexspace
 
-  \item $P$ gate, 25
-  \item Parseval identity, 23
-  \item partially entangled, 15
-  \item Pauli gates, 9
-  \item phase kickback, 16
-  \item plus $k$ adder, 26
+  \item $P$ gate, \hyperpage{25}
+  \item Parseval identity, \hyperpage{23}
+  \item partially entangled, \hyperpage{15}
+  \item Pauli gates, \hyperpage{9}
+  \item phase kickback, \hyperpage{16}
+  \item plus $k$ adder, \hyperpage{26}
 
   \indexspace
 
-  \item quantum phase estimator, 30
-  \item quantum state, 4
-  \item qubit, 4
+  \item quantum phase estimator, \hyperpage{30}
+  \item quantum state, \hyperpage{4}
+  \item qubit, \hyperpage{4}
 
   \indexspace
 
-  \item relative phase, 7
-  \item rotations, 10
+  \item relative phase, \hyperpage{7}
+  \item rotations, \hyperpage{10}
 
   \indexspace
 
-  \item $S$ gate, 9
-  \item swap gate, 37
+  \item $S$ gate, \hyperpage{9}
+  \item swap gate, \hyperpage{37}
 
   \indexspace
 
-  \item $T$ gate, 9
-  \item Toffoli Gate, 13
+  \item $T$ gate, \hyperpage{9}
+  \item Toffoli Gate, \hyperpage{13}
 
   \indexspace
 
-  \item unitary, 9
+  \item unitary, \hyperpage{9}
 
   \indexspace
 
-  \item $X$ gate, 8
+  \item $X$ gate, \hyperpage{8}
 
   \indexspace
 
-  \item $Y$ gate, 8
+  \item $Y$ gate, \hyperpage{8}
 
   \indexspace
 
-  \item $Z$ gate, 8
+  \item $Z$ gate, \hyperpage{8}
 
 \end{theindex}

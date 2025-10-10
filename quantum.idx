@@ -1,43 +1,43 @@
-\indexentry{qubit}{4}
-\indexentry{quantum state}{4}
-\indexentry{Dirac notation}{4}
-\indexentry{ket vector}{4}
-\indexentry{computational basis}{5}
-\indexentry{inner product}{6}
-\indexentry{bra vector}{6}
-\indexentry{relative phase}{7}
-\indexentry{Bloch sphere}{7}
-\indexentry{gate}{8}
-\indexentry{X gate@$X$ gate}{8}
-\indexentry{Y gate@$Y$ gate}{8}
-\indexentry{Z gate@$Z$ gate}{8}
-\indexentry{Hadamard gate}{9}
-\indexentry{S gate@$S$ gate}{9}
-\indexentry{T gate@$T$ gate}{9}
-\indexentry{Pauli gates}{9}
-\indexentry{unitary}{9}
-\indexentry{adjoint}{9}
-\indexentry{rotations}{10}
-\indexentry{cnot gate@$\cnot$ Gate}{12}
-\indexentry{controlled NOT gate}{12}
-\indexentry{Toffoli Gate}{13}
-\indexentry{entangled qubits}{14}
-\indexentry{entangled state}{14}
-\indexentry{maximally entangled qubits}{15}
-\indexentry{Bell states}{15}
-\indexentry{partially entangled}{15}
-\indexentry{eigenstate}{16}
-\indexentry{phase kickback}{16}
-\indexentry{Discrete Fourier Transform (DFT)}{23}
-\indexentry{Parseval identity}{23}
-\indexentry{Ancillas}{25}
-\indexentry{P gate@$P$ gate}{25}
-\indexentry{plus $k$ adder}{26}
-\indexentry{Fejér state}{28}
-\indexentry{Fejér kernel}{28}
-\indexentry{quantum phase estimator}{30}
-\indexentry{data access oracle}{35}
-\indexentry{diagonal unitaries}{35}
-\indexentry{swap gate}{37}
-\indexentry{controlled swap gate}{38}
-\indexentry{multiplexer}{45}
+\indexentry{qubit|hyperpage}{4}
+\indexentry{quantum state|hyperpage}{4}
+\indexentry{Dirac notation|hyperpage}{4}
+\indexentry{ket vector|hyperpage}{4}
+\indexentry{computational basis|hyperpage}{5}
+\indexentry{inner product|hyperpage}{6}
+\indexentry{bra vector|hyperpage}{6}
+\indexentry{relative phase|hyperpage}{7}
+\indexentry{Bloch sphere|hyperpage}{7}
+\indexentry{gate|hyperpage}{8}
+\indexentry{X gate@$X$ gate|hyperpage}{8}
+\indexentry{Y gate@$Y$ gate|hyperpage}{8}
+\indexentry{Z gate@$Z$ gate|hyperpage}{8}
+\indexentry{Hadamard gate|hyperpage}{9}
+\indexentry{S gate@$S$ gate|hyperpage}{9}
+\indexentry{T gate@$T$ gate|hyperpage}{9}
+\indexentry{Pauli gates|hyperpage}{9}
+\indexentry{unitary|hyperpage}{9}
+\indexentry{adjoint|hyperpage}{9}
+\indexentry{rotations|hyperpage}{10}
+\indexentry{cnot gate@$\cnot$ Gate|hyperpage}{12}
+\indexentry{controlled NOT gate|hyperpage}{12}
+\indexentry{Toffoli Gate|hyperpage}{13}
+\indexentry{entangled qubits|hyperpage}{14}
+\indexentry{entangled state|hyperpage}{14}
+\indexentry{maximally entangled qubits|hyperpage}{15}
+\indexentry{Bell states|hyperpage}{15}
+\indexentry{partially entangled|hyperpage}{15}
+\indexentry{eigenstate|hyperpage}{16}
+\indexentry{phase kickback|hyperpage}{16}
+\indexentry{Discrete Fourier Transform (DFT)|hyperpage}{23}
+\indexentry{Parseval identity|hyperpage}{23}
+\indexentry{Ancillas|hyperpage}{25}
+\indexentry{P gate@$P$ gate|hyperpage}{25}
+\indexentry{plus $k$ adder|hyperpage}{26}
+\indexentry{Fejér state|hyperpage}{28}
+\indexentry{Fejér kernel|hyperpage}{28}
+\indexentry{quantum phase estimator|hyperpage}{30}
+\indexentry{data access oracle|hyperpage}{35}
+\indexentry{diagonal unitaries|hyperpage}{35}
+\indexentry{swap gate|hyperpage}{37}
+\indexentry{controlled swap gate|hyperpage}{38}
+\indexentry{multiplexer|hyperpage}{45}
