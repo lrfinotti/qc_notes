@@ -4,23 +4,23 @@
 \indexentry{ket minus@$\ket{-}$|hyperpage}{4}
 \indexentry{ket i@$\ket{\mi}$|hyperpage}{4}
 \indexentry{ket minus i@$\ket{-\mi}$|hyperpage}{4}
-\indexentry{ket psi@$\ket{\psi}$|hyperpage}{4}
-\indexentry{ket theta phi@$\ket{\psi(\theta, \phi)}$|hyperpage}{4}
+\indexentry{ket psi@$\ket{\psi}$|hyperpage}{5}
+\indexentry{ket theta phi@$\ket{\psi(\theta, \phi)}$|hyperpage}{5}
 \indexentry{bar psi@$\bra{\psi}$|hyperpage}{6}
 \indexentry{X@$X$|hyperpage}{8}
-\indexentry{Y@$Y$|hyperpage}{8}
-\indexentry{Z@$Z$|hyperpage}{8}
+\indexentry{Y@$Y$|hyperpage}{9}
+\indexentry{Z@$Z$|hyperpage}{9}
 \indexentry{H@$H$|hyperpage}{9}
 \indexentry{ket s@$\ket{s}$|hyperpage}{9}
 \indexentry{S@$S$|hyperpage}{9}
 \indexentry{T@$T$|hyperpage}{9}
-\indexentry{R sub X@$R_X$|hyperpage}{10}
-\indexentry{R sub Y@$R_Y$|hyperpage}{10}
-\indexentry{R sub Z@$R_Z$|hyperpage}{10}
-\indexentry{phi plus@$\ket{\Phi^+}$|hyperpage}{15}
-\indexentry{phi minus@$\ket{\Phi^-}$|hyperpage}{15}
-\indexentry{psi plus@$\ket{\Psi^+}$|hyperpage}{15}
-\indexentry{psi minus@$\ket{\Psi^-}$|hyperpage}{15}
-\indexentry{ket k of F@$\ket{k}_F$|hyperpage}{28}
-\indexentry{c x zero X@$C_{x_0}^n X$|hyperpage}{36}
-\indexentry{swap@$\swpg$|hyperpage}{37}
+\indexentry{R sub X@$R_X$|hyperpage}{11}
+\indexentry{R sub Y@$R_Y$|hyperpage}{11}
+\indexentry{R sub Z@$R_Z$|hyperpage}{11}
+\indexentry{phi plus@$\ket{\Phi^+}$|hyperpage}{16}
+\indexentry{phi minus@$\ket{\Phi^-}$|hyperpage}{16}
+\indexentry{psi plus@$\ket{\Psi^+}$|hyperpage}{16}
+\indexentry{psi minus@$\ket{\Psi^-}$|hyperpage}{16}
+\indexentry{ket k of F@$\ket{k}_F$|hyperpage}{29}
+\indexentry{c x zero X@$C_{x_0}^n X$|hyperpage}{37}
+\indexentry{swap@$\swpg$|hyperpage}{38}

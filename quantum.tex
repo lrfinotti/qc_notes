@@ -23,6 +23,9 @@
 % graphics
 \usepackage{graphicx}
 
+% tables
+\usepackage{booktabs}
+
 % diagrams and figures
 \usepackage{tikz}
 % \usetikzlibrary{quantikz}  % quantum gates!
@@ -144,6 +147,11 @@
 \DeclareMathOperator{\mmod}{mod}
 \DeclareMathOperator{\swpg}{SWAP}
 \DeclareMathOperator{\cswp}{CSWAP}
+\DeclareMathOperator{\spec}{spec}
+\DeclareMathOperator{\Poly}{Poly}
+\DeclareMathOperator{\sspan}{span}
+\DeclareMathOperator{\stab}{stab}
+\newcommand{\shr}[1]{#1^{\mathrm{Shor}}}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2036,22 +2044,22 @@ Here is a construction that is not always the best, but always works and often i
   \begin{align*}
     \ket{\psi}_n
     &= \sum_{x \in \F_2^n} \psi_x \ket{x}_n \\
-    &= \sum_{y \in \F_2^{n-1}} \psi_{y0} \ket{y}_{n-1} \ket{0} +  \psi_{y1} \ket{y}_{n-1} \ket{1} \\
+    &= \sum_{y \in \F_2^{n-1}} \psi_{y,0} \ket{y}_{n-1} \ket{0} +  \psi_{y,1} \ket{y}_{n-1} \ket{1} \\
     &= \ket{\chi}_{n-1} \otimes \left( C(y) \ket{0} +  S(y) \ket{1} \right),
   \end{align*}
   where
   \begin{align*}
-    \ket{\chi}_{n-1} &\idef \sum_{y \in \F_2^{n-1}} \sqrt{\psi_{y0}^2 + \psi_{y1}^2} \ket{y}_{n-1}, \\
-    C(y) &\idef \frac{\psi_{y0}}{\sqrt{\psi_{y0}^2 + \psi_{y1}^2}}, \\
-    S(y) & \idef \frac{\psi_{y1}}{\sqrt{\psi_{y0}^2 + \psi_{y1}^2}}.
+    \ket{\chi}_{n-1} &\idef \sum_{y \in \F_2^{n-1}} \sqrt{\psi_{y,0}^2 + \psi_{y,1}^2} \ket{y}_{n-1}, \\
+    C(y) &\idef \frac{\psi_{y,0}}{\sqrt{\psi_{y,0}^2 + \psi_{y,1}^2}}, \\
+    S(y) & \idef \frac{\psi_{y,1}}{\sqrt{\psi_{y,0}^2 + \psi_{y,1}^2}}.
   \end{align*}
-  (Note that if $\psi_{y0} = \psi_{y1} = 0$ above, we can just skip the term in the summation.)
+  (Note that if $\psi_{y,0} = \psi_{y,1} = 0$ above, we can just skip the term in the summation.)
 
   Note that since $C(y), S(y) \geq 0$ and ${C(y)}^2 + {S(y)}^2 = 1$, there exists a unique $\theta(y) \in [0, \mpi]$ such that $C(y) = \cos(\theta(y)/2)$ and $S(y) = \sin(\theta(y)/2)$.
 
   Also,
   \[
-    \langle \chi \mid \chi \rangle = \sum_{y \in \F_2^{n-1}} \psi_{y0}^2 + \psi_{y1}^2 = \sum_{x \in \F_2^n} \psi_x^2 = \langle \psi \mid \psi \rangle = 1.
+    \langle \chi \mid \chi \rangle = \sum_{y \in \F_2^{n-1}} \psi_{y,0}^2 + \psi_{y,1}^2 = \sum_{x \in \F_2^n} \psi_x^2 = \langle \psi \mid \psi \rangle = 1.
   \]
 
 
@@ -2063,6 +2071,556 @@ Here is a construction that is not always the best, but always works and often i
   \item Finally, we can prepare any initial $1$-qubit state, exactly as above, as given $\ket{\psi}_1 = a \ket{0} + b \ket{1}$ there is some $\theta$ such that $R_Y(\theta) \ket{0} = \ket{\psi}_1$.
 
 \end{enumerate}
+
+
+\begin{example}
+  Let's look at the $n=2$ case, with $\psi_x \geq 0$:
+  \begin{align*}
+    \ket{\psi}
+    &= \psi_{0,0} \ket{00} + \psi_{1,0} \ket{10} + \psi_{0,1} \ket{01} + \psi_{1,1} \ket{11} \\
+    &= \ket{0} \left( \psi_{0,0} \ket{0} + \psi_{0,1} \ket{1} \right) + \ket{1} \left( \psi_{1,0} \ket{0} + \psi_{1,1} \ket{1} \right) \\
+    &= \sqrt{\psi_{0,0}^2 + \psi_{0,1}^2} \ket{0} \left( \frac{\psi_{0,0}}{\sqrt{\psi_{0,0}^2 + \psi_{0,1}^2}} \ket{0} + \frac{\psi_{0,1}}{\sqrt{\psi_{0,0}^2 + \psi_{0,1}^2}} \ket{1} \right) \\
+    &\phantom{=} + \sqrt{\psi_{1,0}^2 + \psi_{1,1}^2} \ket{1} \left( \frac{\psi_{1,0}}{\sqrt{\psi_{1,0}^2 + \psi_{1,1}^2}} \ket{0} + \frac{\psi_{1,1}}{\sqrt{\psi_{1,0}^2 + \psi_{1,1}^2}} \ket{1}\right).
+  \end{align*}
+  Then,
+  \begin{align*}
+    \cos\left( \frac{\theta(0)}{2} \right) &\idef  \frac{\psi_{0,0}}{\sqrt{\psi_{0,0}^2 + \psi_{0,1}^2}}, \\
+    \cos\left( \frac{\theta(1)}{2} \right) &\idef  \frac{\psi_{1,0}}{\sqrt{\psi_{1,0}^2 + \psi_{1,1}^2}}, \\
+    \cos\left( \frac{\phi}{2} \right) &\idef  \sqrt{\psi_{0,0}^2 + \psi_{0,1}^2}.
+  \end{align*}
+
+  Hence, we have:
+  \begin{multline*}
+    \ket{\psi} = \cos\left( \frac{\phi}{2} \right) \ket{0} \left( \cos\left( \frac{\theta(0)}{2} \right) + \sin\left( \frac{\theta(0)}{2} \right)\right) \\
+    + \sin\left( \frac{\phi}{2} \right) \ket{0} \left( \cos\left( \frac{\theta(1)}{2} \right) + \sin\left( \frac{\theta(1)}{2} \right)\right).
+  \end{multline*}
+
+  So, we need:
+  \begin{center}
+    \begin{quantikz}
+      \lstick{$\ket{0}$} & \gate{R_Y(\phi)} & \gate{X} & \ctrl{1} & \gate{X} & \ctrl{1} &\\
+      \lstick{$\ket{1}$} & & & \gate{R_Y(\theta(0))} & & \gate{R_Y(\theta(1))} &
+    \end{quantikz}
+  \end{center}
+\end{example}
+
+
+\section{Quantum (Hamiltonian) Simulations}
+
+Quantum systems modeled by Hilbert spaces $\mathcal{H}$.
+
+\textbf{Important operator:} $H$, the Hamiltonian.  $H$ is a self-adjoint operator, so it has real spectrum, and it can be diagonalized with an eigenbasis that is orthonormal.
+
+Physical meanings:
+\begin{enumerate}
+
+\item The spectrum of $H$ are the possible energies of the system.  For every energy value $E$, there is a quantum state $\ket{\psi_E}$ such that $H \ket{\psi_E} = E \ket{\psi_E}$.
+
+\item The \emph{time dependent Schr\"odinger equation}\index{time dependent Schr\"odinger equation}: the \emph{initial value problem}
+  \begin{align*}
+    \ket{\psi(t_0)} &= \ket{\psi_0}, \\
+    \frac{\md}{\md t} \ket{\psi(t)} &= - i \hbar H \ket{\psi(t)},
+  \end{align*}
+  where $\hbar$ is an universal constant.  ($H$ is assumed here to not depend on time.)  The solution is
+  \[
+    \ket{\psi(t)} = \exp \left( - \frac{\mi}{\hbar} t H \right) \ket{\psi_0}.
+  \]
+
+\end{enumerate}
+
+
+We want to simulate the time evolution!
+
+
+\begin{itemize}
+
+\item[\emph{Input:}] $\ket{\psi_0}$, $H$, and $t$.
+
+\item[\emph{Output:}] $\ket{\psi(t)}$, or at least an approximation.
+
+\end{itemize}
+
+We have the formula, but it is hard to compute.
+
+
+\begin{definition}
+  For an operator $U$, a \emph{singular value}\index{singular value} of $U$ is the square root of an eigenvalue of the self-adjoint operator $\adj{U} U$. (The eigenvalues are then necessarily real and non-negative).  Then, the \emph{operator norm}\index{operator norm} of $U$, denoted by $\left\| U \right\|$, is the maximal singular value of $U$.
+\end{definition}
+
+\begin{remark}
+  If $U$ is diagonalizable, with real eigenvalues (like self-adjoint matrices), then $\left\| U \right\|$ is the maximal absolute value of the eigenvalues of $U$.
+\end{remark}
+
+\begin{definition}
+  A Hamiltonian on $n$ qubits can be \emph{efficiently simulated}\index{efficiently simulated} if there exists a quantum circuit $U_{t, \epsilon}$, for any small $t, \epsilon > 0$, such that
+  \[
+    \left\| \exp(-\mi t H/\hbar) - U_{t, \epsilon}\right\| = \max \left(\spec \left(\exp(-\mi t H/\hbar)\right)\right) < \epsilon,
+  \]
+  and $U$ is made out of $\Poly(n, t, 1/\epsilon)$ gate.
+\end{definition}
+
+
+\begin{example}
+  Consider:
+  \[
+    H = \sum_{r=1}^{m} H_r,
+  \]
+  where each $H_r$ is acting on at most $k \ll n$ qubits.  (These are called \emph{$k$-local Hamiltonians}\index{k-local Hamiltonians@$k$-local Hamiltonians}.)
+\end{example}
+
+
+\section{Trotter's Formula}
+
+\begin{theorem}[Trotter]
+  We have
+  \[
+  \exp\left( - \frac{\mi}{\hbar} (H_1 + H_2 + \cdots + H_m )t\right) = \lim_{\ell \to \infty} {\left( \exp\left( - \frac{\mi H_1}{\hbar \frac{t}{\ell}} \right) \exp\left( - \frac{\mi H_2}{\hbar \frac{t}{\ell}} \right) \cdots \exp\left( - \frac{\mi H_m}{\hbar \frac{t}{\ell}} \right)\right)}^\ell
+\]
+\end{theorem}
+
+
+So, fix $\ell > 0$: if you can construct $\exp(-\mi H_r / \hbar \cdot t/\ell)$ for each $r$, then we have:
+\[
+  \exp\left( - \frac{\mi}{\hbar} Ht \right) \approx  {\left( \exp\left( - \frac{\mi H_1}{\hbar \frac{t}{\ell}} \right) \exp\left( - \frac{\mi H_2}{\hbar \frac{t}{\ell}} \right) \cdots \exp\left( - \frac{\mi H_m}{\hbar \frac{t}{\ell}} \right)\right)}^\ell.
+\]
+
+(See more details at the \href{https://people.maths.bris.ac.uk/~csxam/teaching/qc2020/lecturenotes.pdf}{Montanaro's Notes}.)
+
+
+\begin{example}
+  Suppose that $H_r = \alpha_r \left( \sigma_{r,0} \otimes \sigma_{r,1} \otimes \cdots \otimes \sigma_{r, n-1} \right)$, with $\alpha_r \in \R$ and $\sigma_{r,s} \in \{\idt, X, Y, Z\}$.  $H = \sum_{r=1}^m H_r$ is $k$-local if and only if the number of non-identities is less than or equal to $k$ in each $H_r$.
+
+  \emph{Claim:} $\exp\left( -\mi H_r t / \hbar \right)$ can be constructed (exactly, not approximated) using a single $R_Z$ rotation, $\mathcal{O}(1)$ $1$-qubit gates, and $\mathcal{O}(n)$ $CX$ gates.
+
+  The idea of the proof is that
+  \[
+    Y = SH Z H\adj{S}, \qquad X = HZH,
+  \]
+  (so $X$, $Y$, and $Z$ are conjugates of each other).  So,
+  \begin{align*}
+    \exp\left( - \frac{\mi H_r}{\hbar} t \right)
+    &= \exp\left( - \frac{\mi}{\hbar}\alpha_r(\sigma_{r,0} \otimes \sigma_{r,1} \otimes \cdots \otimes \sigma{r, n-1})t \right) \\
+    &= \exp\left({- \frac{\mi \alpha_r t}{\hbar} R \sigma \adj{R}}\right) \\
+    &= R \exp\left( - \frac{\mi \alpha_r t}{\hbar} \sigma \right) \adj{R},
+  \end{align*}
+  where $R$ is an unitary operator made of factors of $H$, $S$, and $\sigma$ is a tensor products of $\idt$'s and $Z$'.
+
+  Then, we have
+  \[
+    \exp\left( -\mi t Z^{\otimes c} \right) =
+  \]
+\end{example}
+
+
+
+\section{Quantum Error Correction}
+
+
+\begin{definition}
+  A \emph{$[n,k,d]$-code}\index{nkd code@$[n,k,d]$-code} is an error correcting code with $n$ physical bits, i.e., the number of bits in the code words (or the dimension of the space of code words), $k$ is the number of logical bits, i.e., the number of bits of a decoded code word, and minimum distance $k$, i.e., the number of bit flips needed to get from a code word to another.
+\end{definition}
+
+
+\begin{remarks}
+  \begin{enumerate}
+
+  \item We must have $k < n$.
+
+  \item Also, $d \leq n$ and we can correct $\lfloor (d-1)/2 \rfloor$ errors.
+
+  \end{enumerate}
+\end{remarks}
+
+Errors in quantum computing are more complicated, even if all errors are one-qubit errors, as besides bit-flips, we also might have phase-flips.
+
+Moreover, they can occur at any stage, e.g., quantum state preparation, applying Pauli gates, measuring, or even while idling!  Note that we need to recover the \emph{superposition}, not just the $0$/$1$ state.
+
+A $1$-qubit error $U_{\epsilon}$, with $\left\| U_{\epsilon} -\idt \right\| < \mathcal{O}(\epsilon)$.  For example,
+\[
+  U_{\epsilon} = \sqrt{1 - \epsilon^2} \idt + \epsilon \left( aX + bY + cZ \right),
+\]
+for some $a$, $b$, and $c$ fixed.  (So, $X$ gives a bit-flip, $Z$ gives a phase-flip, and $Y$ gives both.)
+
+So, we might start with $\ket{0}$ and end with $U_{\epsilon} \ket{0}$.
+
+\subsection{Quantum $3$-Qubit Code}
+
+We have one logical qubit with three physical one:
+\begin{align*}
+  \ket{0_L} &\idef \ket{000}, \\
+  \ket{1_L} &\idef \ket{111}.
+\end{align*}
+The code states have the form:
+\[
+  \ket{\psi_L} = \alpha \ket{000} + \beta \ket{111}, \qquad |\alpha|^2 + |\beta|^2 = 1.
+\]
+We need something such that:
+\begin{center}
+  \begin{quantikz}
+    \lstick[3]{$\ket{\psi_L}$} & \gate[3]{\text{error}} & \gate[3]{\text{?}} & \rstick[3]{$\ket{\psi_l}$ (with high prob.)} \\
+    &&& \\
+    &&&
+  \end{quantikz}
+\end{center}
+
+Here is the idea:
+\begin{center}
+  \begin{quantikz}
+    \lstick[3]{$\ket{\psi_L}$} & \gate[3]{U_{\epsilon}}\slice{} & \ctrl{3} & & & & &\\
+    &&& \ctrl{2} && \ctrl{3} &&\\
+    &&&& &&\ctrl{2} & \\
+    \ket{0} &&\targ{} & \targ{} & &&& \meter{} & \rstick{$s_0$}\\
+    \ket{0} &&&&  &\targ{} & \targ{} & \meter{} & \rstick{$s_1$}
+  \end{quantikz}
+\end{center}
+
+(These $s_0$ and $s_1$ are \href{https://en.wikipedia.org/wiki/Decoding_methods#Syndrome_decoding}{syndromes}.)
+
+Here $U_{\epsilon}$ is the error.  (We write it as gate, but it is unintentional, unlike the gates we apply to a circuit.)  Suppose we get $\ket{abc}$ after the error (so, after the barrier/slice in the figure), then $s_0 = a + b$ and $s_1 = b + c$. \emph{Assuming} that no errors occurred in the ancilla, we have
+\begin{align*}
+  s_0 = 1 \quad &\Longleftrightarrow \quad a \neq b, \\
+  s_1 = 1 \quad &\Longleftrightarrow \quad b \neq c.
+\end{align*}
+Since we want $a = b = c$, if either $s_0$ or $s_1$ is $1$, we have an error.  More precisely,
+\begin{center}
+  \begin{tabular}{c|cccc}
+    \toprule
+    $(s_0, s_1)$ & $(0, 0)$ & $(1, 0)$ & $(0, 1)$ & $(1, 1)$ \\
+    \textbf{Equalities} & $a=b=c$ & $a \neq b = c$ & $a = b \neq c$ & $b \neq a = c$ \\
+    \textbf{Error} & None & $a$ is off & $c$ is off & $b$ is off \\
+    \textbf{Fix} & None & $X$ on $\ket{x_0}$ & $X$ on $\ket{x_2}$ & $X$ on $\ket{x_1}$\\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+
+To make it concrete, let's assume that the error is that one of the of the qubits are chosen, e.g., the first one, and $R_X(\epsilon)$ is acted on it, remembering that $R_X(\epsilon) = \me^{-\mi \epsilon X/2} = \cos\left(\epsilon/2 \right) \idt - \mi \sin(\epsilon/2) X$.  So, $U_{\epsilon} = R_X(\epsilon) \otimes \idt \otimes \idt$:
+
+\begin{center}
+  \begin{quantikz}
+    \lstick[3]{$\ket{\psi_L}$} & \gate{R_X(\epsilon)}\slice{} & \ctrl{3} & & & & &\\
+    &&& \ctrl{2} && \ctrl{3} &&\\
+    &&&& &&\ctrl{2} & \\
+    \ket{0} &&\targ{} & \targ{} & &&& \meter{} & \rstick{$s_0$}\\
+    \ket{0} &&&&  &\targ{} & \targ{} & \meter{} & \rstick{$s_1$}
+  \end{quantikz}
+\end{center}
+
+
+Now,
+\begin{align*}
+  (R_X(\epsilon) \otimes \idt \otimes \idt) \ket{\psi}
+  &= (R_X(\epsilon) \otimes \idt \otimes \idt)(\alpha \ket{000} + \beta \ket{111})  \\
+  &= \alpha(R_X(\epsilon) \ket{0}) \ket{00} + \beta (R_X(\epsilon) \ket{1}) \ket{11} \\
+  &= \alpha \cos(\epsilon/2) \ket{000} - \alpha \mi \sin(\epsilon/2) \ket{100} \\
+  &\qquad + \beta \cos(\epsilon/2) \ket{111} - \beta \mi \sin(\epsilon/2) \ket{011}.
+\end{align*}
+
+So, in the whole process, we get:
+\begin{align*}
+  \ket{\psi}_3 \ket{00}
+  &\mapsto \alpha \cos(\epsilon/2) \ket{000}\ket{00} - \alpha \mi \sin(\epsilon/2) \ket{100}\ket{00} \\
+  &\qquad + \beta \cos(\epsilon/2) \ket{111}\ket{00} - \beta \mi \sin(\epsilon/2) \ket{011}\ket{00} \\
+  &\mapsto \alpha \cos(\epsilon/2) \ket{000}\ket{00} - \alpha \mi \sin(\epsilon/2) \ket{100}\ket{10} \\
+  &\qquad + \beta \cos(\epsilon/2) \ket{111}\ket{00} - \beta \mi \sin(\epsilon/2) \ket{011}\ket{10} \\
+  & = \cos(\epsilon/2)\left(\alpha \ket{000} + \beta \ket{111} \right) \ket{00} \\
+  &\qquad - \mi \sin(\epsilon/2) \left( \alpha \ket{100}+ \beta \ket{011} \right)\ket{10}.
+\end{align*}
+
+We then measure the last two qubits.  For small $\epsilon$, it is likely we measure $s_0 = 0$ (with probability $\cos^2(\epsilon/2)$).  And, in the case of our example, we are sure that $s_1$ will measure zero.
+
+If we get $s_0 = 0$, then we get the correct $\alpha \ket{000} + \beta \ket{111}$ back.  If we get $s_0 = 1$, we get $\alpha \ket{100} + \beta \ket{011}$ back, and we need to apply an $X$-gate to the first qubit.
+
+\begin{remark}
+  Note that if there are two qubit-flips, the process above will ``correct'' incorrectly.  More importantly, it does not correct $Z$-errors.
+\end{remark}
+
+
+\subsection{Correcting $Z$-Errors}
+
+Note that $Z=HXH$, and so
+\[
+  Z \ket{+} = \ket{-}, \qquad Z \ket{-} = \ket{+}.
+\]
+
+Thus, one can use a similar idea as above, where we apply $H = H^{-1}$ to make it into an $X$-error, and then another $H$ to restore.  More precisely, let
+\begin{align*}
+  \ket{\tilde{0}_L} &\idef \ket{+++} = H^{\otimes 3} \ket{000}, \\
+  \ket{\tilde{1}_L} &\idef \ket{---} = H^{\otimes 3} \ket{111},
+\end{align*}
+and given $\ket{\tilde{\psi}_L}$, we can detect $Z$-errors with:
+
+\begin{center}
+  \begin{quantikz}
+    \lstick[3]{$\ket{\tilde{\psi}_L}$} & \gate[3]{U_{\epsilon}}\slice{} & \gate{H} & \ctrl{3} & \gate{H} &&& & & && &&\\
+    &&&&& \gate{H} & \ctrl{2} && \ctrl{3} & \gate{H} &&&&\\
+    &&&&&&& &&& \gate{H} & \ctrl{2} & \gate{H} &\\
+    \ket{0} && &\targ{}& && \targ{} & &&&&&& \meter{} & \rstick{$s_0$}\\
+    \ket{0} &&&&&&&  &\targ{} &&& \targ{} && \meter{} & \rstick{$s_1$}
+  \end{quantikz}
+\end{center}
+
+The basic circuit is:
+\begin{center}
+  \begin{quantikz}
+   \lstick{$x$} & \gate{H} & \ctrl{1} & \gate{H} & \\
+   \lstick{$c$} & & \targ{} & &
+  \end{quantikz}
+\end{center}
+
+Then, the idea is that $Z \ket{\pm} = Z \ket{\mp}$, so
+
+\begin{center}
+  \begin{tikzcd}[cramped, sep=8ex]
+    \ket{+} \ket{0} \arrow[r, mapsto, "H \otimes \idt"] &\ket{0} \ket{0} \arrow[r, mapsto, "\cnot"] &\ket{0} \ket{0} \arrow[r, mapsto, "H \otimes \idt"] &\ket{+} \ket{0} \\
+    \ket{-} \ket{0} \arrow[r, mapsto, "H \otimes \idt"] &\ket{1} \ket{0} \arrow[r, mapsto, "\cnot"] &\ket{1} \ket{1} \arrow[r, mapsto, "H \otimes \idt"] &\ket{-} \ket{0}
+  \end{tikzcd}
+\end{center}
+
+On the other hand, note that the circuit above is equivalent to
+\begin{center}
+  \begin{quantikz}
+    \lstick{$x$} & & \targ{} & & \\
+    \lstick{$c$} & \gate{H} & \ctrl{-1} & \gate{H} &
+  \end{quantikz}
+\end{center}
+
+Indeed, for $x \in \{0,1\}$, we have:
+\begin{align*}
+  \ket{+} \ket{x}
+  & \mapsto \ket{+} \ket{{(-1)}^x} \\
+  &= \frac{1}{2} \left[ \left( \ket{0} + \ket{1} \right) \otimes  \left( \ket{0} + {(-1)}^x \ket{1} \right) \right] \\
+  &= \frac{1}{2} \left[ \ket{00} + \ket{10} + {(-1)}^x \ket{01} + {(-1)}^x \ket{11} \right] \\
+  &\mapsto \frac{1}{2} \left[ \ket{00} + \ket{10} + {(-1)}^x \ket{11} + {(-1)}^x \ket{01} \right] \\
+  &= \ket{+} \ket{{(-1)}^x} \\
+  &\mapsto \ket{+} \ket{x},
+\end{align*}
+and
+\begin{align*}
+  \ket{-} \ket{x}
+  & \mapsto \ket{-} \ket{{(-1)}^x} \\
+  &= \frac{1}{2} \left[ \left( \ket{0} - \ket{1} \right) \otimes  \left( \ket{0} + {(-1)}^x \ket{1} \right) \right] \\
+  &= \frac{1}{2} \left[ \ket{00} - \ket{10} + {(-1)}^x \ket{01} - {(-1)}^x \ket{11} \right] \\
+  &\mapsto \frac{1}{2} \left[ \ket{00} - \ket{10} + {(-1)}^x \ket{11} - {(-1)}^x \ket{01} \right] \\
+  &= \ket{-} \ket{{(-1)}^{x \oplus 1}} \\
+  &\mapsto \ket{-} \ket{x \oplus 1}.
+\end{align*}
+
+This second representation can save some gates, since $H^2 = \idt$, in the implementation of the error detection.  For instance, the full circuit above becomes:
+
+\begin{center}
+  \begin{quantikz}
+    \lstick[3]{$\ket{\tilde{\psi}_L}$} & \gate[3]{U_{\epsilon}}\slice{} & & \targ{} & & &&& &\\
+    &&& \targ{} && & \targ{} & &&\\
+    &&&&& & \targ{} && &\\
+    \ket{0} && \gate{H} & \ctrl{-3} & \gate{H} & && & \meter{} & \rstick{$s_0$} \\
+    \ket{0} &&&&& \gate{H} & \ctrl{-3} & \gate{H} & \meter{} & \rstick{$s_1$}
+  \end{quantikz}
+\end{center}
+
+
+
+\subsection{Shor's $9$-Qubit Code}
+
+(See also:\href{https://abdullahkhalid.com/qecft/qec-intro/shor-code/}{A Methods Focused Guide to Quantum Error Correction and Fault-Tolerant Quantum Computation} by Abdullah Khalid.)
+
+Shor's $9$-qubit code is a combination of a $3$-qubit repetition code to correct $X$ errors and $Z$ errors.  We have:
+\begin{align*}
+  \ket{\shr{0}_L} &\idef {\left[ \frac{1}{\sqrt{2}} \left( \ket{000} + \ket{111} \right) \right]}^{\otimes 3}, \\
+  \ket{\shr{1}_L} &\idef {\left[ \frac{1}{\sqrt{2}} \left( \ket{000} - \ket{111} \right) \right]}^{\otimes 3}.
+\end{align*}
+
+Each bundle of three can be used to correct $Z$-errors, and the subbundles of three can be used to correct $X$-errors.  It can correct arbitrary $1$-qubit errors.  It can also correct one $X$ and one $Z$ error on any different groups of $3$ (bundles).
+
+So, Shor's code is a $[[9, 1, 3]]$ code.
+
+An alternative point of view: the physical Hilbert space is $\mathcal{H}_{\mathrm{phys}} = {(\C^2)}^{\otimes 9}$ while the logical Hilbert space is $\mathcal{H}_{\mathrm{logical}} = \sspan\left( \ket{\shr{0}_L}, \ket{\shr{1}_L} \right)$.  We also can describe $\mathcal{H}_{\mathrm{logical}}$ as the simultaneous $+1$-eigenspace of the group
+\[
+  S \idef \left\langle Z_{0,1}, Z_{1,2}, Z_{3, 4}, Z_{4, 5}, Z_{6, 7}, Z_{7,8}, X_{0,1,2,3,4,5}, X_{3,4,5,6,7,8} \right\rangle
+\]
+where $Z_{i,j}$ is the tensor product of nine $\idt$ and $Z$, with $Z$ appearing in the $i$-th and $j$-th components only (counting from $0$), and similarly for the $X_{i, j, \ldots}$ above.  In other words,
+\[
+  \mathcal{H}_{\mathrm{logical}} = \stab(S) \idef \{ \ket{\psi} \in \mathcal{H}_{\mathrm{phys}} \st A \ket{\psi} = \ket{\psi} \text{ for all } A \in S\}.
+\]
+
+Note that $S$ is commutative and for all $A \in S$, we have that $A^2 = \idt$.  In fact, one can prove that $S \cong \F_2^8$.
+
+\begin{definition}
+  A group $S = \langle P_1, P_2, \ldots , P_k \rangle$ is an $n$-qubit \emph{stabilizer group}\index{stabilizer group} if
+  \begin{enumerate}
+
+  \item $P_i$ is a tensor product of $\idt$'s, $X$'s, and $Z$'s, i.e., it is a \emph{Pauli string}\index{Pauli string};
+
+  \item $S$ is commutative (i.e., $P_i P_j = P_j P_i$ for all $i$ and $j$).  (This is needed for the sake of diagonalization.)
+
+  \end{enumerate}
+
+  Note that for all $P \in S$, then, we have that $P^2 = \idt$.
+
+  We then define
+  \[
+    \mathcal{H}_{\mathrm{logical}}^S \idef \stab(S) \idef \{ \ket{\psi} \in \mathcal{H}_{\mathrm{phys}} \st P \ket{\psi} = \ket{\psi} \text{ for all } P \in S\}.
+  \]
+\end{definition}
+
+\begin{remark}
+  If $S = \langle P_1, P_2, \ldots, P_k \rangle$, with the $P_i$'s \emph{independent}\index{independent} (i.e., removing any $P_i$ would yield a different group, or, alternatively, if $S$ as an $\F_2$-vector space has dimension $k$, with the $P_i$'s forming a basis), then $\mathcal{H}_{\mathrm{logical}}^S$ is a Hilbert space of dimension $2^{n-k}$.
+\end{remark}
+
+
+Remembering that $P_i$ is a tensor product of $\idt$, $X$, and $X$, then if, say, an $X$-error $U$ occurs on a qubit for which $P_i$ has a $Z$ factor, then $P_i U = -U P_i$, since $XZ = -ZX$.  Then, for $\ket{\psi_L} \in \mathcal{H}_{\mathrm{logical}}^S$, we have
+\[
+  P_i (U \ket{\psi_L}) = -U (P_i \ket{\psi_L}) = - (U \ket{\psi_L}).
+\]
+So, the erroneous state is not a $+1$ eigenvector of $P_i$, but a $-1$ eigenvector!
+
+Thus, if we can measure eigenvalues of $P_i$, we can get syndromes for errors.
+
+Then, back to Shor's Code, with $Z_{i,j}$ we can detect $X$ errors on $i$ or $j$.
+
+\begin{center}
+  \begin{quantikz}
+    \lstick{$i$} & \ctrl{2} & & \\
+    \lstick{$j$} & & \ctrl{1} & \\
+    \lstick{s} & \targ{} & \targ{} &
+  \end{quantikz}
+\end{center}
+
+
+Similarly, with $X_{i,j,k,l,m,n}$ we can detect $Z$ errors on the corresponding indices.
+
+\begin{center}
+  \begin{quantikz}
+    \lstick{$i$} & & \targ{} & & \\
+    \lstick{$j$} & & \targ{} & & \\
+    \lstick{$k$} & & \targ{} & & \\
+    \lstick{$l$} & & \targ{} & & \\
+    \lstick{$m$} & & \targ{} & & \\
+    \lstick{$m$} & & \targ{} & & \\
+    \lstick{$s$} & \gate{H} & \ctrl{-6} & \gate{H} & \\
+  \end{quantikz}
+\end{center}
+
+
+\begin{remark}
+  Shor's $9$-qubit code is ``low quality'', since we need $9$ qubits for a single logical qubit and still can fix only one error, but it illustrates important ideas.
+
+  There are quantum \emph{low density parity check} (LDPC) that are $[[n,k,d]]$ with $k \approx n(1 - \epsilon_1)$ and $d \approx n(1 - \epsilon_2)$, which scale well.
+\end{remark}
+
+
+\subsection{$5$ Qubit Code}
+
+Here is an example of a more efficient code, using only $5$ qubits per logical qubit:
+
+\begin{example}
+  Consider $S \idef \langle P_1, P_2, P_3, P_4 \rangle$ with:
+  \begin{align*}
+    P_1 &\idef \idt \otimes X \otimes Z \otimes Z \otimes X ,\\
+    P_2 &\idef X \otimes \idt \otimes X \otimes Z \otimes Z ,\\
+    P_3 &\idef Z \otimes X \otimes \idt \otimes X \otimes Z, \\
+    P_4 &\idef X \otimes Z \otimes Z \otimes X \otimes \idt.
+  \end{align*}
+  (Note how the $P_i$'s are ``rotations'' of $P_1$ as strings.)  Then $S$ is a $5$-qubit stabilizer group.  It yields (via the simultaneous $+1$-eigenspaces for the $P_i$'s) a $[[5,1,3]]$ code.
+\end{example}
+
+
+\subsection{Extracting Syndromes}
+
+A syndrome $s$ associated to some $P$ in a stabilizer group, is either $0$ or $1$, by $P \ket{\psi} = {(-1)}^s \ket{\psi}$.  But how do we measure it.
+
+For example, consider $P_1 = \idt \otimes X \otimes Z \otimes Z \otimes X$, as in the $5$-qubit code.  We add $\cnot$ gates targeting the syndrome where we have $X$'s and $\cnot$ gates, surrounded by $H$ gates, controlled by the syndrome, where we have $Z$'s:
+
+\begin{center}
+  \begin{quantikz}
+    \lstick[5]{$\ket{\psi}$} && &&&&&&\rstick[5]{$\ket{\psi}$}\\
+    & \ctrl{4} & &&&&&&\\
+    && && \targ{}&&&&\\
+    & &&&& \targ{} &&&\\
+    & & \ctrl{1}&&&&&&\\
+   \lstick{$\ket{0}$} & \targ{}& \targ{}\slice{} & \gate{H}& \ctrl{-3}& \ctrl{-2}& \gate{H}\slice{}& & \rstick{$\ket{s}$}
+  \end{quantikz}
+\end{center}
+
+This is just like the Shor's code, as described above.
+
+If $\ket{\psi}_5 = \ket{\phi}_1 \left(H \ket{s_1}_1 \right) \ket{s_2}_1 \ket{s_3}_1 \left( H \ket{s_4}_1 \right)$, with $\ket{\phi}$ an arbitrary $1$-qubit state and $s_i \in \F_2$, then $\ket{\psi}$ is an eigenvector of $P_1$ (remembering that the only possible eigenvalues are $\pm 1$).  Indeed, since $XH = HZ$ and $Z \ket{s} = {(-1)}^s \ket{s}$, we have
+\begin{align*}
+  P_1 \ket{\psi}
+  &= \ket{\phi} \left( XH \ket{s_1} \right) Z \ket{s_2} Z \ket{s_3} \left( XH \ket{s_4} \right) \\
+  &= \ket{\phi} \left( HZ \ket{s_1} \right) {(-1)}^{s_2} \ket{s_2} {(-1)}^{s_3} \ket{s_3} \left( HZ \ket{s_4} \right) \\
+  &= \ket{\phi} \left( H {(-1)}^{s_1} \ket{s_1} \right) {(-1)}^{s_2} \ket{s_2} {(-1)}^{s_3} \ket{s_3} \left( H  {(-1)}^{s_4} \ket{s_4} \right) \\
+  &= {(-1)}^{s_1 + s_2 + s_3 + s_4} \ket{\phi} \left( H \ket{s_1} \right) \ket{s_2}  \ket{s_3} \left( H \ket{s_4} \right) \\
+  &=  {(-1)}^{s_1 + s_2 + s_3 + s_4} \ket{\psi}.
+\end{align*}
+
+Note that these $\ket{\psi}$'s, as above, with $\ket{\phi}$ as $\ket{0}$ and $\ket{1}$, give a basis for the whole space, so this is a basis of eigenvectors.
+
+Now, noticing that if $s \in \F_2$ we have
+\begin{center}
+  \begin{quantikz}
+    \lstick{$\ket{\phi}$} & \gate{X} & \ctrl{1} & \\
+    \lstick{$\ket{s}$} & & \targ{} &
+  \end{quantikz}
+  \quad = \quad
+  \begin{quantikz}
+    \lstick{$\ket{\phi}$}  & \ctrl{1} & \gate{X} & \\
+    \lstick{$\ket{s}$} &\targ{} & \gate{X} &
+  \end{quantikz}
+\end{center}
+and, as observed above
+\begin{center}
+  \begin{quantikz}
+   \lstick{$\ket{\phi}$} & \gate{H} & \ctrl{1} & \gate{H} & \\
+   \lstick{$\ket{s}$} & & \targ{} & &
+ \end{quantikz}
+ \quad = \quad
+  \begin{quantikz}
+    \lstick{$\ket{\phi}$} & & \targ{} & & \\
+    \lstick{$\ket{s}$} & \gate{H} & \ctrl{-1} & \gate{H} &
+  \end{quantikz}
+\end{center}
+
+Hence, breaking the process with the slices/barriers marked in the circuit above, we have
+\begin{align*}
+  \ket{\psi}_5 \ket{0}_1
+  &= \ket{\phi} \left( H \ket{s_1} \right)  \ket{s_2}  \ket{s_3} \left( H \ket{s_4} \right) \ket{0} \\
+  &\mapsto \ket{\phi} \left( H \ket{s_1} \right)  \ket{s_2}  \ket{s_3} \left( H \ket{s_4} \right) \ket{s_1 \oplus s_4}  \\
+  &\mapsto \ket{\phi} \left( H \ket{s_1} \right)  \ket{s_2}  \ket{s_3} \left( H \ket{s_4} \right) \ket{s_1 \oplus s_4 \oplus s_2 \oplus s_3}.
+\end{align*}
+(Here it seems we've used only the second equality of circuits above.)
+
+
+Hence, indeed, the circuit above gives $\ket{s} = \ket{s_1 \oplus s_2 \oplus s_3 \oplus s_4}$.
+
+With $P_2$, $P_3$, and $P_4$, we narrow down the $+1$-eigenvectors (as so far we only have that $s_4 = s_1 + s_2 + s_3$), giving our logical qubits, and the corresponding syndromes would help detect errors.
+
+But how do we now correct an error using the syndromes?
+
+\begin{remark}
+  After measuring syndromes an error, that is not necessarily a Pauli error, but after measuring the syndromes they become a Pauli error.  For instance, if we start with $\ket{\psi}$ and have an error $U_\epsilon$ that is a tensor product of $1$-qubit gates (so, no entangling), say, $U_\epsilon = \cos(\epsilon) \idt + \sin(\epsilon) X_i$, then after measuring the syndromes, $U_\epsilon \ket{\psi}$ becomes $E \ket{\psi}$, where $E$ is either $\idt$ or $X_i$.  Even though $U_\epsilon$ is very close to the identity, it could collapse to $X_i$ instead, but we still can fix it easily, as it is a ``simple'' error.
+\end{remark}
+
+
+The process to go from the syndromes to the recovery is the \emph{decoding}: if we have a stabilizer group $S = \langle P_1, \ldots, P_k \rangle$, then the syndromes are $\ket{s}_k$ with $s \in \F_2^k$.  Then, given an Pauli string error $E$, if $\sigma(E) = (s_1, \ldots , s_k) \in \F_2^k$ is the syndrome generated by the error, then
+\[
+  E P_i = {(-1)}^{s_i} P_i E.
+\]
+
+The \emph{decoder}\index{decoder} is a map:
+\[
+  \mathcal{D} : \F_2^k \to \mathcal{P}_n
+\]
+where $\mathcal{P}_n$ is the \emph{Pauli group}\index{Pauli group} (the group of Pauli strings of length $n$) such that for any error $E \in \mathcal{P}_n$, $\mathcal{D}(\sigma(E)) = E' \equiv E \pmod{S}$, i.e., $E = E'P$ for some $P \in S$.  Noting that $S$ fixes the logical qubits (and therefore code states), by definition, we have that the actions of $E$ and $E'$ on logical qubits are identical.  So, the recovery is applying $E'$ to the erroneous state, since $E' E \ket{\psi} = PEE \ket{\psi} = P \ket{\psi} = \ket{\psi}$, where $\ket{\psi}$ is a code state.
+
+
+
+\subsection{Steane's Code}
+
+Steane's code is a $[[7, 1, 3]]$ code, defined with $S= \langle X_{0356}, X_{1346}, X_{2456}, Z_{0356}, Z_{1346}, Z_{2456}\rangle$.  Stabilizer codes that have only $X$ and $Z$-type stabilizers are called \emph{CSS codes}\index{CSS codes}.
+
+Another example of CSS codes are the Kitaev's toric codes, which are $[[2k^2, 2, k]]$, for $k \in \Z_{>0}$.
+
 
 \printindex[not]
 \printindex
