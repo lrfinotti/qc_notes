@@ -1,34 +1,44 @@
 \begin{theindex}
 
-  \item $\bra{\psi}$, \hyperpage{6}
+  \item $\adj{A}$, \hyperpage{9}
 
   \indexspace
 
-  \item $C_{x_0}^n X$, \hyperpage{37}
+  \item $\bra{\psi}$, \hyperpage{7}
 
   \indexspace
 
-  \item $H$, \hyperpage{9}
+  \item $C_{x_0}^n X$, \hyperpage{48}
+  \item $CP(\theta)$, \hyperpage{17}
 
   \indexspace
 
-  \item $\ket{\mi}$, \hyperpage{4}
-  \item $\ket{k}_F$, \hyperpage{29}
-  \item $\ket{-}$, \hyperpage{4}
-  \item $\ket{-\mi}$, \hyperpage{4}
-  \item $\ket{1}$, \hyperpage{4}
-  \item $\ket{+}$, \hyperpage{4}
+  \item $\equiv$, \hyperpage{7}
+
+  \indexspace
+
+  \item $H$, \hyperpage{12}
+
+  \indexspace
+
+  \item $\ket{\mi}$, \hyperpage{5}
+  \item $\ket{k}_F$, \hyperpage{38}
+  \item $\ket{-}$, \hyperpage{5}
+  \item $\ket{-\mi}$, \hyperpage{5}
+  \item $\ket{1}$, \hyperpage{5}
+  \item $\ket{+}$, \hyperpage{5}
   \item $\ket{\psi}$, \hyperpage{5}
-  \item $\ket{s}$, \hyperpage{9}
-  \item $\ket{\psi(\theta, \phi)}$, \hyperpage{5}
-  \item $\ket{0}$, \hyperpage{4}
+  \item $\ket{s}$, \hyperpage{13}
+  \item $\ket{\psi(\theta, \phi)}$, \hyperpage{6}
+  \item $\ket{0}$, \hyperpage{5}
 
   \indexspace
 
-  \item $\ket{\Phi^-}$, \hyperpage{16}
-  \item $\ket{\Phi^+}$, \hyperpage{16}
-  \item $\ket{\Psi^-}$, \hyperpage{16}
-  \item $\ket{\Psi^+}$, \hyperpage{16}
+  \item $P$, \hyperpage{12}
+  \item $\ket{\Phi^-}$, \hyperpage{20}
+  \item $\ket{\Phi^+}$, \hyperpage{20}
+  \item $\ket{\Psi^-}$, \hyperpage{20}
+  \item $\ket{\Psi^+}$, \hyperpage{20}
 
   \indexspace
 
@@ -38,23 +48,31 @@
 
   \indexspace
 
-  \item $S$, \hyperpage{9}
-  \item $\swpg$, \hyperpage{38}
+  \item $S$, \hyperpage{12}
+  \item $\sigma_1$, \hyperpage{10}
+  \item $\sigma_2$, \hyperpage{10}
+  \item $\sigma_3$, \hyperpage{10}
+  \item $\sg$, \hyperpage{17}
+  \item $\swpg$, \hyperpage{49}
 
   \indexspace
 
-  \item $T$, \hyperpage{9}
+  \item $T$, \hyperpage{12}
 
   \indexspace
 
-  \item $X$, \hyperpage{8}
+  \item $\un$, \hyperpage{9}
 
   \indexspace
 
-  \item $Y$, \hyperpage{9}
+  \item $X$, \hyperpage{10}
 
   \indexspace
 
-  \item $Z$, \hyperpage{9}
+  \item $Y$, \hyperpage{10}
+
+  \indexspace
+
+  \item $Z$, \hyperpage{10}
 
 \end{theindex}

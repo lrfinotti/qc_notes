@@ -1,121 +1,133 @@
 \begin{theindex}
 
-  \item adjoint, \hyperpage{10}
-  \item Ancillas, \hyperpage{26}
+  \item adjoint, \hyperpage{9}
+  \item Ancillas, \hyperpage{34}
 
   \indexspace
 
-  \item Bell states, \hyperpage{16}
+  \item Bell states, \hyperpage{20}
   \item Bloch sphere, \hyperpage{8}
-  \item bra vector, \hyperpage{6}
+  \item bra vector, \hyperpage{7}
 
   \indexspace
 
-  \item $\cnot$ Gate, \hyperpage{12}
+  \item $\cnot$ Gate, \hyperpage{15}
   \item computational basis, \hyperpage{6}
-  \item controlled NOT gate, \hyperpage{12}
-  \item controlled swap gate, \hyperpage{39}
+  \item controlled NOT gate, \hyperpage{15}
+  \item controlled swap gate, \hyperpage{50}
+  \item controlled-phase gate, \hyperpage{17}
+  \item CSS codes, \hyperpage{75}
 
   \indexspace
 
-  \item data access oracle, \hyperpage{36}
-  \item decoder, \hyperpage{63}
-  \item diagonal unitaries, \hyperpage{36}
+  \item data access oracle, \hyperpage{47}
+  \item decoder, \hyperpage{74}
+  \item depth, \hyperpage{14}
+  \item diagonal unitaries, \hyperpage{47}
   \item Dirac notation, \hyperpage{5}
-  \item Discrete Fourier Transform (DFT), \hyperpage{24}
+  \item Discrete Fourier Transform (DFT), \hyperpage{31}
 
   \indexspace
 
-  \item efficiently simulated, \hyperpage{50}
-  \item eigenstate, \hyperpage{16}
-  \item entangled qubits, \hyperpage{15}
-  \item entangled state, \hyperpage{15}
+  \item efficiently simulated, \hyperpage{61}
+  \item eigenstate, \hyperpage{21}
+  \item entangled qubits, \hyperpage{19}
+  \item entangled state, \hyperpage{20}
 
   \indexspace
 
-  \item Fejér kernel, \hyperpage{29}
-  \item Fejér state, \hyperpage{29}
+  \item Fejér kernel, \hyperpage{38}
+  \item Fejér state, \hyperpage{38}
 
   \indexspace
 
-  \item gate, \hyperpage{8}
+  \item gate, \hyperpage{9}
 
   \indexspace
 
-  \item Hadamard gate, \hyperpage{9}
+  \item Hadamard gate, \hyperpage{12}
 
   \indexspace
 
-  \item independent, \hyperpage{59}
-  \item inner product, \hyperpage{6}
+  \item independent, \hyperpage{70}
+  \item inner product, \hyperpage{7}
 
   \indexspace
 
-  \item $k$-local Hamiltonians, \hyperpage{50}
+  \item $k$-local Hamiltonians, \hyperpage{62}
   \item ket vector, \hyperpage{5}
 
   \indexspace
 
-  \item maximally entangled qubits, \hyperpage{16}
-  \item multiplexer, \hyperpage{46}
+  \item maximally entangled qubits, \hyperpage{20}
+  \item multiplexer, \hyperpage{57}
 
   \indexspace
 
-  \item $[n,k,d]$-code, \hyperpage{51}
+  \item $[n,k,d]$-code, \hyperpage{63}
 
   \indexspace
 
-  \item operator norm, \hyperpage{49}
+  \item operator norm, \hyperpage{61}
 
   \indexspace
 
-  \item $P$ gate, \hyperpage{26}
-  \item Parseval identity, \hyperpage{24}
-  \item partially entangled, \hyperpage{16}
+  \item $\hat{P}$ gate, \hyperpage{35}
+  \item Parseval identity, \hyperpage{31}
+  \item partially entangled, \hyperpage{20}
   \item Pauli gates, \hyperpage{10}
-  \item Pauli group, \hyperpage{63}
-  \item Pauli string, \hyperpage{58}
-  \item phase kickback, \hyperpage{17}
-  \item plus $k$ adder, \hyperpage{27}
+  \item Pauli group, \hyperpage{74}
+  \item Pauli string, \hyperpage{70}
+  \item phase gate, \hyperpage{12}
+  \item phase kickback, \hyperpage{21}
+  \item physically equivalent, \hyperpage{6}
+  \item plus $k$ adder, \hyperpage{37}
 
   \indexspace
 
-  \item quantum phase estimator, \hyperpage{31}
+  \item quantum phase estimator, \hyperpage{40}
   \item quantum state, \hyperpage{5}
-  \item qubit, \hyperpage{4}
+  \item qubit, \hyperpage{5}
 
   \indexspace
 
-  \item relative phase, \hyperpage{7}
+  \item relative phase, \hyperpage{8}
   \item rotations, \hyperpage{11}
 
   \indexspace
 
-  \item $S$ gate, \hyperpage{9}
-  \item singular value, \hyperpage{49}
-  \item stabilizer group, \hyperpage{58}
-  \item swap gate, \hyperpage{38}
+  \item $S$ gate, \hyperpage{12}
+  \item $\sigma_1$ gate, \hyperpage{10}
+  \item $\sigma_2$ gate, \hyperpage{10}
+  \item $\sigma_3$ gate, \hyperpage{10}
+  \item singular value, \hyperpage{61}
+  \item stabilizer group, \hyperpage{70}
+  \item swap gate, \hyperpage{17}, \hyperpage{49}
 
   \indexspace
 
-  \item $T$ gate, \hyperpage{9}
-  \item time dependent Schr\"odinger equation, \hyperpage{49}
-  \item Toffoli Gate, \hyperpage{14}
+  \item $T$ gate, \hyperpage{12}
+  \item time dependent Schr\"odinger equation, \hyperpage{61}
+  \item Toffoli Gate, \hyperpage{18}
 
   \indexspace
 
-  \item unitary, \hyperpage{10}
+  \item unitary, \hyperpage{9}
 
   \indexspace
 
-  \item $X$ gate, \hyperpage{8}
+  \item width, \hyperpage{14}
 
   \indexspace
 
-  \item $Y$ gate, \hyperpage{9}
+  \item $X$ gate, \hyperpage{10}
 
   \indexspace
 
-  \item $Z$ gate, \hyperpage{9}
+  \item $Y$ gate, \hyperpage{10}
+
+  \indexspace
+
+  \item $Z$ gate, \hyperpage{10}
 
 \end{theindex}

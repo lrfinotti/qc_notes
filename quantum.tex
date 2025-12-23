@@ -136,11 +136,13 @@
 % EXTRA SHORTCUTS
 
 \newcommand{\cnot}{\mathrm{CNOT}}  % CNOT gate
+\newcommand{\sg}{\mathrm{SWAP}}  % swap gate
 \newcommand{\adj}[1]{#1^{\dagger}}  % adjoint
 \DeclareMathOperator{\U}{U}  % unitary matrices
 \newcommand{\un}{\U_n(\C)}
 \newcommand{\idt}{\mathbb{I}}
 \newcommand{\prob}{\mathbb{P}}
+\newcommand{\cprob}[2]{\prob\left(#1\;\middle|\;#2\right)}
 \newcommand{\ft}{\mathcal{F}}  % Fourier transform
 \DeclareMathOperator{\qft}{QFT}  % quantum Fourier transform
 \DeclareMathOperator{\qpe}{QPE}  % quantum phase estimator
@@ -179,7 +181,7 @@
   \item{} \emph{Qubit}\index{qubit}:
     \begin{align*}
       % \ket{0}\index[not]{ket zero@$\ket{0}$} &\idef \begin{pmatrix}
-      %   1 \\
+  %   1 \\
       %   0
       % \end{pmatrix},
       % & \ket{1}\index[not]{ket one@$\ket{1}$} &\idef \begin{pmatrix}
@@ -243,7 +245,10 @@
       \beta
     \end{pmatrix} , \qquad \text{with } |\alpha|^2 + |\beta|^2 = 1,
   \]
-  where $|\alpha|^2$ is the probability of the qubit measuring as the $0$ state and $|\beta|^2$ is the probability of the qubit measuring as the $1$ state.
+  where $|\alpha|^2$ is the probability of the qubit measuring as the $0$ state and $|\beta|^2$ is the probability of the qubit measuring as the $1$ state.  In other words
+  \[
+    \cprob{0}{\psi} = |\alpha|^2 \quad \text{and} \quad \cprob{1}{\psi} = |\beta|^2.
+  \]
 
 \item{} \emph{Dirac Notation}\index{Dirac notation} (and the \emph{ket vector}\index{ket vector}):
   \[
@@ -269,7 +274,7 @@
   \]
   (See \cref{sec:bloch_sphere} below.)
 
-\item If $\ket{\phi} = \lambda \ket{\psi}$ with $\abs{\lambda} = 1$, then $\ket{\phi}$ and $\ket{\psi}$ are \emph{physically equivalent}.  So we can disregard the overall phase.
+\item If $\ket{\phi} = \lambda \ket{\psi}$ with $\abs{\lambda} = 1$, then $\ket{\phi}$ and $\ket{\psi}$ are \emph{physically equivalent}\index{physically equivalent}.  So we can disregard the overall phase.
 
 \end{enumerate}
 \end{notation}
@@ -302,15 +307,31 @@
 
 
 \begin{definition}
-  The \emph{computational basis}\index{computational basis} is simply the induced basis of ${\left({\C^2}\right)}^{\otimes n}$: $\{\ket{i_1i_2 \ldots i_n} \st i_j \in \{0, 1\}\}$.  The order in qiskit is done via the binary representation (with unit digit coming \emph{first}), e.g.,
+  The \emph{computational basis}\index{computational basis} is simply the induced basis of ${\left({\C^2}\right)}^{\otimes n}$: $\{\ket{i_1i_2 \ldots i_n} \st i_j \in \F_2\}$.  The order in Qiskit is done via the binary representation (with unit digit coming \emph{last}), e.g.,
   \[
-    \{\ket{000}, \ket{100}, \ket{010}, \ket{110}, \ket{001}, \ket{101}, \ket{011}, \ket{111}\}.
+    \{\ket{000}, \ket{001}, \ket{010}, \ket{011}, \ket{100}, \ket{101}, \ket{110}, \ket{111}\}.
   \]
   One can sometimes represent this basis (in this same order) as
   \[
     \{\ket{0}_3, \ket{1}_3, \ket{2}_3, \ket{3}_3, \ldots, \ket{7}_3\}.
   \]
 \end{definition}
+
+
+If $\ket{\psi} = \sum_{x \in \F_2^n} \psi_{x} \ket{x}$, then we have:
+\[
+  \cprob{x}{\psi} = |\psi_{x}|^2 \quad \text{and} \quad \sum_{x \in \F_2^n} |\psi_x|^2 = 1.
+\]
+
+
+\begin{notation}
+  Note that two qubit-strings $\ket{\psi_1}$ and $\ket{\psi_2}$ are such that $\ket{\psi_2} = \lambda \ket{\psi_1}$, with $|\lambda|=1$, then they are physically equivalent (and hence indistinguishable).  We shall write:
+  \[
+    \ket{\psi_1} \equiv\index[not]{equivalent@$\equiv$} \ket{\psi_2}.
+  \]
+\end{notation}
+
+
 
 
 
@@ -341,7 +362,7 @@ Hence,
 \textbf{Reference:} \href{https://www.youtube.com/watch?v=AYGHS9hXgyw}{Bloch Sphere | Visualizing Qubits and Spin | Quantum Information}
 
 
-Note that if $|\rho|=1$, then $\ket{\psi} \sim \rho \ket{\psi}$, as we don't care about the \emph{overall} phase.  So, if
+Note that if $|\rho|=1$, then $\ket{\psi} \equiv \rho \ket{\psi}$, as we don't care about the \emph{overall} phase.  So, if
 \[
   \ket{\psi} = \begin{pmatrix}
     \alpha \\
@@ -357,13 +378,13 @@ with $\gamma, \delta, \epsilon \in \R$.  Now,
 \begin{align*}
   \ket{\psi} &= \cos(\gamma) \me^{\mi \delta} \ket{0} + \sin(\gamma) \me^{\mi \epsilon} \ket{1} \\
              &=\me^{\mi \delta} \left( \cos(\gamma) \ket{0} + \me^{\mi (\epsilon - \delta)} \sin(\gamma) \ket{1}\right) \\
-  &\sim \cos(\gamma) \ket{0} + \me^{\mi (\epsilon - \delta)} \sin(\gamma) \ket{1}.
+  &\equiv \cos(\gamma) \ket{0} + \me^{\mi (\epsilon - \delta)} \sin(\gamma) \ket{1}.
 \end{align*}
 
 
 So, we have that
 \begin{equation}\label{eq:bloch_coord}
-  \ket{\psi} \sim \ket{\psi(\theta, \phi)} \idef \cos(\theta/2) \ket{0} + \me^{\mi \phi} \sin(\theta/2) \ket{1}, \qquad \theta \in [0, \mpi], \; \phi \in [0, 2 \mpi].
+  \ket{\psi} \equiv \ket{\psi(\theta, \phi)} \idef \cos(\theta/2) \ket{0} + \me^{\mi \phi} \sin(\theta/2) \ket{1}, \qquad \theta \in [0, \mpi], \; \phi \in [0, 2 \mpi].
 \end{equation}
 
 Note that $\epsilon - \delta$ is the \emph{relative phase}\index{relative phase}.  Clearly, the relative phase does not change the probabilities.
@@ -396,18 +417,44 @@ Let
 be a direction/point on the sphere (in spherical coordinates).  Then, the spin operator in the direction of $\hat{\eta}$ (with angles $\theta$ and $\phi$ as above) the Bloch state $\ket{\psi(\theta, \phi)}$ is an eigenfunction with positive eigenvalue $\hbar/2$.  (FIXME!  Need details!)
 
 
-\section{Gates}
 
-\begin{definition}
-  A $1$-qubit \emph{gate}\index{gate} is simply an element of $\U_2(\C)$ acting on a singe qubit.  More gerenerally an $n$-qubit gate is an element of $U_{2^n}(\C)$.
-\end{definition}
+\section{$1$-Qubit Gates}
+
 
 \begin{notation}
   \begin{enumerate}
 
-  \item{} \emph{$X$ Gate\index{X gate@$X$ gate}}: multiplication by:
+  \item If $A$ is a square complex (or real) matrix, then we denote by $\adj{A}$\index[not]{adjoint@$\adj{A}$} the \emph{adjoint}\index{adjoint}, i.e., the complex conjugate of the transpose of $A$).
+
+  \item An $n \times n$ matrix is \emph{unitary}\index{unitary} if $\adj{A} = A^{-1}$.  (So, it must be invertible.)
+
+  \item We shall denote the set of $n \times n$ unitary complex matrices by $\un$\index[not]{U sub n of C@$\un$}.
+
+  \end{enumerate}
+\end{notation}
+
+
+\begin{remark}
+  Note that unitary matrices preserve inner product, and therefore norms.
+\end{remark}
+
+A physically closed system, quantum systems evolve through unitary operations.
+
+\begin{definition}
+  A $1$-qubit \emph{gate}\index{gate} is simply an element of $\U_2(\C)$ acting on a single qubit.  More gerenerally an $n$-qubit gate is an element of $\U_{2^n}(\C)$.
+\end{definition}
+
+In a \emph{physical} level, implementing $1$-qubit gates is ``easy'', but $n$-qubit gates are usually hard.  So, we need a small set of simple (physically, so $n$-qubit gates with $n$ small, i.e., mostly $n=1$, and a few with $n=2$, and maybe $n=3$, and also easy to understand and use) and universal (meaning that we can produce any $n$-gate from them) set of gates.
+
+
+\subsection{Pauli Gates}
+
+\begin{notation}
+  \begin{enumerate}
+
+  \item{} \emph{$X$ Gate\index{X gate@$X$ gate}} or \emph{$\sigma_1$ Gate}\index{sigma 1 gate@$\sigma_1$ gate}: multiplication by:
     \[
-      X\index[not]{X@$X$} \idef \left(
+      \sigma_1\index[not]{sigma 1@$\sigma_1$} = X\index[not]{X@$X$} \idef \left(
         \begin{array}{rr}
           0 & 1 \\
           1 & 0
@@ -415,19 +462,19 @@ be a direction/point on the sphere (in spherical coordinates).  Then, the spin o
     \]
     It is basically the NOT gate, $\ket{x} \mapsto \ket{x \oplus 1}$.  So, $\alpha \ket{0} + \beta \ket{1} \mapsto \beta \ket{0} + \alpha \ket{1}$.
 
-  \item{} \emph{$Y$ Gate\index{Y gate@$Y$ gate}}: multiplication by:
+  \item{} \emph{$Y$ Gate\index{Y gate@$Y$ gate}} or \emph{$\sigma_2$ Gate}\index{sigma 2 gate@$\sigma_2$ gate}: multiplication by:
     \[
-      Y\index[not]{Y@$Y$} \idef \left(
+      \sigma_2\index[not]{sigma 2@$\sigma_2$} = Y\index[not]{Y@$Y$} \idef \left(
         \begin{array}{rr}
           0 & -\mi \\
           \mi & 0
         \end{array}\right)
     \]
-    So, $\alpha \ket{0} + \beta \ket{1} \mapsto -\mi\beta \ket{0} + \alpha \mi\ket{1} \sim \beta \ket{0} - \alpha \ket{1}$.
+    So, $\alpha \ket{0} + \beta \ket{1} \mapsto -\mi\beta \ket{0} + \alpha \mi\ket{1} \equiv \beta \ket{0} - \alpha \ket{1}$.
 
-  \item{} \emph{$Z$ Gate\index{Z gate@$Z$ gate}}: multiplication by:
+  \item{} \emph{$Z$ Gate\index{Z gate@$Z$ gate}} or \emph{$\sigma_3$ Gate}\index{sigma 3 gate@$\sigma_3$ gate}: multiplication by:
     \[
-      Z\index[not]{Z@$Z$} \idef \left(
+      \sigma_3\index[not]{sigma 3@$\sigma_3$} = Z\index[not]{Z@$Z$} \idef \left(
         \begin{array}{rr}
           1 &  0\\
           0 & -1
@@ -435,95 +482,34 @@ be a direction/point on the sphere (in spherical coordinates).  Then, the spin o
     \]
     So, $\alpha \ket{0} + \beta \ket{1} \mapsto \alpha \ket{0} - \beta \ket{1}$, or $Z \ket{x} = {(-1)}^x \ket{x}$, for $x \in \F_2$.  Note then that the $Z$ gate is a \emph{phase flip}.
 
-  \item \emph{Hadamard Gate}\index{Hadamard gate}: multiplication by
-    \[
-      H\index[not]{H@$H$} \idef \frac{\sqrt{2}}{2}
-      \left(
-        \begin{array}{rr}
-          1 & 1 \\
-          1 & -1
-        \end{array}
-      \right)
-    \]
-    Note that, with the Hadamard gate we have
-    \begin{align*}
-      \ket{0} &\mapsto \ket{+}, & \ket{+} &\mapsto \ket{0}, \\
-      \ket{1} &\mapsto \ket{-}, & \ket{-} &\mapsto \ket{1}.
-    \end{align*}
-    So, it is a change of basis between $\{\ket{0}, \ket{1}\}$ and $\{\ket{+}, \ket{-}\}$ and back.  Moreover:
-    \[
-      \ket{s}\index[not]{ket s@$\ket{s}$} \idef H^{\otimes n} \ket{0}^{\otimes n} = \sum_{x \in \F_2^n} \frac{1}{2^{n/2}}\ket{x},
-    \]
-    and hence it changes $\ket{00 \ldots 0}$ to one of equal probabilities, i.e., an equal (unbiased) superposition of all computational basis elements.
-
-  \item We also have the \emph{$S$ gate}\index{S gate@$S$ gate} and \emph{$T$ gate}\index{T gate@$T$ gate}:
-  \[
-    S\index[not]{S@$S$} \idef \left(
-      \begin{array}{rr}
-        1 & 0 \\
-        0 & \me^{\mi \mpi /2}
-      \end{array}
-    \right), \qquad
-    T\index[not]{T@$T$} \idef \left(
-      \begin{array}{rr}
-        1 & 0 \\
-        0 & \me^{\mi \mpi /4}
-      \end{array}
-    \right)
-  \]
-
-\end{enumerate}
+  \end{enumerate}
 \end{notation}
-
-
-\begin{remark}
-  Note that if we have two gates $U_1$ and $U_2$, with $U_1 \sim U_2$, if they are affecting a single qubit, they can be exchanged without affecting the physical result, as they only add a global phase.  On the other hand, if they come with a \emph{controlled gate}, as seen in \cref{ssec:control_gates}, then they introduce a relative phase and \emph{cannot} be switched!
-\end{remark}
 
 \begin{remarks}
   \begin{enumerate}
 
-  \item The $X$, $Y$, and $Z$ gates can also be denoted by $\sigma_1$, $\sigma_2$, and $\sigma_3$, respectively, and are referred to as \emph{Pauli gates}\index{Pauli gates}.
+  \item The $X$, $Y$, and $Z$ are referred to as \emph{Pauli gates}\index{Pauli gates}.
 
-  \item Note that $Y = i XZ \sim XZ$.
+  \item Note that $Y = i XZ \equiv XZ$.
 
-  \item $XY \sim Z$, $YZ \sim X$, and $XZ \sim Y$.
+  \item $XY = -\mi Z \equiv Z$, $YZ = \mi X \equiv X$, and $XZ = \mi Y \equiv Y$.
 
-  \item Note that all the matrices of these gates are their own inverses.
+  \item Note that all the matrices of these gates are unitary and their own inverses.
 
-  \item  In fact, they are all \emph{unitary}\index{unitary}, meaning $\adj{A} = A^{-1}$ (where $\adj{A}$ is the \emph{adjoint}\index{adjoint}, i.e., the complex conjugate of the transpose of $A$).  We shall denote the set of $n \times n$ unitary complex matrices by $\un$.
-
-  \item More over, quantum evolutions are \emph{always} unitary, and therefore preserve inner products and norms.
-
-
-  \item Note that $\ket{+}$ and $\ket{-}$ have the same probabilities for $0$ and $1$ (half for each), but after applying $H$ (getting $\ket{0}$ and $\ket{1}$ respectively), they do not!
-
-  \item Note that $S$ and $T$ introduce relative phases of $\mpi/2$ and $\mi / 4$.
+  \item Note that
+    \[
+      Y \equiv \begin{pmatrix*}[r]
+        0 & -1 \\
+        1 & 0
+      \end{pmatrix*}.
+    \]
+    But, if we have \emph{controlled gates} in a circuit, we cannot replace one with the other.
 
   \end{enumerate}
 \end{remarks}
 
 
-\begin{theorem}
-  If $U \in \U_2(\C)$, then
-  \[
-    U = \me^{\mi \chi} \left(
-      \begin{array}{rr}
-        \cos(\theta/2) & -\me^{\mi \lambda}\sin(\theta/2) \\
-        \me^{\mi \phi} \sin(\theta/2) & \me^{\mi (\phi + \lambda)} \cos(\theta/2)
-      \end{array}
-    \right),
-  \]
-  for some $\chi, \theta, \phi, \lambda \in \R$.  (Note that $\chi$ only affects the overall phase, so it is irrelevant.)
-\end{theorem}
-
-
-\begin{remark}
-  Most quantum algorithms start with $\ket{s}$ (equal probabilities) and then amplify the coefficient of the answer.  Then, measuring will most likely give you the correct answer.
-\end{remark}
-
-
-\section{Rotations}\label{sec:rotations}
+\subsection{Rotations}\label{sec:rotations}
 
 We also have \emph{rotations}\index{rotations} around the $X$, $Y$, and $Z$ angles:
 \begin{align*}
@@ -548,7 +534,7 @@ We also have \emph{rotations}\index{rotations} around the $X$, $Y$, and $Z$ angl
                   0 & \me^{\mi \theta/2}
                 \end{array}
                                           \right)
-                                          % \sim
+                                          % \equiv
                 % \left(
                 % \begin{array}{rr}
                 %   1 & 0 \\
@@ -564,23 +550,154 @@ Note that if $R$ is one of these, then:
 
 \item $R(\theta_1 + \theta_2) = R(\theta_1) R(\theta_2)$;
 
-\item $R(2 \mpi) = - \idt \sim \idt$.
+\item $R(2 \mpi) = - \idt \equiv \idt$.
 
 \end{itemize}
 
 
-\begin{remark}
-  Note that $R_Z(\pi/2) \sim S$ and $R_Z(\pi/4) \sim T$.
-\end{remark}
 
-
-\begin{theorem}
+\begin{theorem}\label{th:repres}
   If $U \in \U_2(\C)$, then
   \[
     U = \me^{\mi \chi} R_X(\theta_1) R_{Y}(\theta_2) R_X(\theta_3),
   \]
   for some $\chi, \theta_1, \theta_2, \theta_3 \in \R$.  Moreover the $X$ and $Y$ can be replaces by any two of $X$, $Y$, and $Z$.
 \end{theorem}
+
+
+\begin{corollary}\label{cor:repres}
+  If $U \in \U_2(\C)$, then
+  \[
+    U = \me^{\chi \xi} AXBXC,
+  \]
+  for some $\chi \in \R$ and $A, B, C \in \U_2(\C)$.
+\end{corollary}
+
+\begin{proof}
+  As in Theorem~\ref{th:repres}, let $U = \me^{\mi \chi} R_Z(\theta_1) R_{Y}(\theta_2) R_Z(\theta_3)$, and set
+  \begin{align*}
+    A &= R_Z(\theta_1)R_Y(\theta_2/2), \\
+    B &= R_Y(-\theta_2/2)R_Y(-(\theta_1 + \theta_3)/2), \\
+    C &= R_Z((\theta_3 - \theta_1)/2).
+  \end{align*}
+
+  Then, it is clear that $ABC = \idt$.  One can also check that
+  \begin{align*}
+    XBX &= X R_Y\left( -\frac{\theta_2}{2} \right) XX R_Z\left( -\frac{\theta_1 + \theta_2}{2} \right) X \\
+    &= R_Y\left( \frac{\theta_2}{2} \right) R_Z\left(\frac{\theta_1 + \theta_3}{2}\right).
+  \end{align*}
+  Then,
+  \begin{align*}
+    AXBXC &= R_Z(\theta_1) R_Y\left( \frac{\theta_2}{2} \right) R_Y\left( \frac{\theta_2}{2} \right) R_Z\left(\frac{\theta_1 + \theta_3}{2}\right) R_Z \left( \frac{\theta_3 - \theta_1}{2} \right) \\
+    &= R_Z(\theta_1) R_Y(\theta_2) R_Z(\theta_3),
+  \end{align*}
+  which finishes the proof.
+\end{proof}
+
+
+
+\subsection{Hadamard, $S$, $T$, and Phase Gates}
+
+\begin{notation}
+  \begin{enumerate}
+
+  \item \emph{Hadamard Gate}\index{Hadamard gate}: multiplication by
+    \[
+      H\index[not]{H@$H$} \idef \frac{\sqrt{2}}{2}
+      \left(
+        \begin{array}{rr}
+          1 & 1 \\
+          1 & -1
+        \end{array}
+      \right)
+    \]
+
+
+  \item We also have the \emph{$S$ gate}\index{S gate@$S$ gate} and \emph{$T$ gate}\index{T gate@$T$ gate}:
+    \[
+      S\index[not]{S@$S$} \idef \left(
+        \begin{array}{rr}
+          1 & 0 \\
+          0 & \me^{\mi \mpi /2}
+        \end{array}
+      \right), \qquad
+      T\index[not]{T@$T$} \idef \left(
+        \begin{array}{rr}
+          1 & 0 \\
+          0 & \me^{\mi \mpi /4}
+        \end{array}
+      \right)
+    \]
+
+  \item The \emph{phase gate}\index{phase gate} is given by
+    \[
+      P\index[not]{P@$P$}(\phi) \idef\begin{pmatrix*}[c]
+        1 & 0 \\
+        0 & \me^{\mi \phi}
+      \end{pmatrix*} =  \me^{-\mi\phi/2} R_Z(\phi).
+    \]
+
+  \end{enumerate}
+\end{notation}
+
+
+\begin{remark}
+  Note that if we have two gates $U_1$ and $U_2$, with $U_1 \equiv U_2$, if they are affecting a single qubit, they can be exchanged without affecting the physical result, as they only add a global phase.  On the other hand, if they come with a \emph{controlled gate}, as seen in \cref{ssec:control_gates}, then they introduce a relative phase and \emph{cannot} be switched!
+\end{remark}
+
+\begin{remarks}
+  \begin{enumerate}
+
+  \item $H^2 = \idt$.
+
+  \item $T^2 = S$ and $S^2 = Z$.
+
+  \item $S = P(\pi/2)$ and $T = P(\pi/4)$.
+
+  \item Note that, with the Hadamard gate we have
+    \begin{align*}
+      \ket{0} &\mapsto \ket{+}, & \ket{+} &\mapsto \ket{0}, \\
+      \ket{1} &\mapsto \ket{-}, & \ket{-} &\mapsto \ket{1}.
+    \end{align*}
+    So, it is a change of basis between $\{\ket{0}, \ket{1}\}$ and $\{\ket{+}, \ket{-}\}$ and back.
+
+  \item We have that
+    \[
+      \ket{s}\index[not]{ket s@$\ket{s}$} \idef H^{\otimes n} \ket{0}^{\otimes n} = \sum_{x \in \F_2^n} \frac{1}{2^{n/2}}\ket{x},
+    \]
+    and hence it changes $\ket{00 \ldots 0}$ to one of equal probabilities, i.e., an equal (unbiased) superposition of all computational basis elements.
+
+  \item Note that all the matrices of these gates are their own inverses.
+
+  \item Note that $\ket{+}$ and $\ket{-}$ have the same probabilities for $0$ and $1$ (half for each), but after applying $H$ (getting $\ket{0}$ and $\ket{1}$ respectively), they do not!
+
+  \item Note that $S$ and $T$ introduce relative phases of $\mpi/2$ and $\mi / 4$.
+
+  \item Note that $R_Z(\pi/2) =\me^{-\mi\pi/4} S \equiv S$ and $R_Z(\pi/4) = \me^{-\mi\pi/8} \equiv T$.
+
+  \end{enumerate}
+\end{remarks}
+
+
+\begin{theorem}
+  If $U \in \U_2(\C)$, then
+  \[
+    U = \me^{\mi \chi} \left(
+      \begin{array}{rr}
+        \cos(\theta/2) & -\me^{\mi \lambda}\sin(\theta/2) \\
+        \me^{\mi \phi} \sin(\theta/2) & \me^{\mi (\phi + \lambda)} \cos(\theta/2)
+      \end{array}
+    \right),
+  \]
+  for some $\chi, \theta, \phi, \lambda \in \R$.  (Note that $\chi$ only affects the overall phase, so it is irrelevant.)
+\end{theorem}
+
+
+\begin{remark}
+  Most quantum algorithms start with $\ket{s} = H^{\otimes n}\ket{0}^{\otimes n}$ (equal probabilities) and then amplify the coefficient of the answer.  Then, measuring will most likely give you the correct answer.
+\end{remark}
+
+
 
 
 
@@ -590,10 +707,10 @@ Circuits apply gates to particular qubits.  For instance:
 
 \begin{center}
   \begin{quantikz}
-    \lstick{$\ket{0}$} &  &  & \gate{X} &
+    \lstick{$\ket{0}$} &          &          & \gate{X} &
     \rstick[wires=3]{$\frac{\ket{100} + \ket{110}}{\sqrt{2}}$} \\
-    \lstick{$\ket{0}$} & \gate{X}& \gate{H} &   & \\
-    \lstick{$\ket{1}$} &  &  & \gate{X} &
+    \lstick{$\ket{0}$} & \gate{X} & \gate{H} &          &      \\
+    \lstick{$\ket{1}$} &          &          & \gate{X} &
   \end{quantikz}
 \end{center}
 
@@ -619,6 +736,26 @@ We can also add measurements to the circuit:
 \end{center}
 
 
+\begin{definition}
+  The \emph{depth}\index{depth} of a circuit is the number of \emph{layers} of the circuit, i.e., the number of time steps need to execute all gates.  The circuit's \emph{width}\index{width} is the maximum number of gates to be executed (in parallel) at single time step.  (Narrow usually means that we use few ancillas.)
+\end{definition}
+
+Note that the depth is not the same as the number of gates, since these may run in parallel.  For instance, the depth of
+\begin{center}
+  \begin{quantikz}
+    & \gate{X} &  &  & \\
+    &  & \gate{Y} &  & \\
+    &  &  & \gate{Z} & \\
+  \end{quantikz}
+  \quad $=$ \quad
+  \begin{quantikz}
+    & \gate{X} & \\
+    & \gate{Y} & \\
+    & \gate{Z} & \\
+  \end{quantikz}
+\end{center}
+is one, and its width is three.
+
 \section{Multi-Qubit Gates}\label{sec:mq-gates}
 
 \subsection{$\cnot$ Gate}
@@ -635,8 +772,8 @@ Here is the \emph{$\cnot$ Gate}\index{cnot gate@$\cnot$ Gate} (for \emph{control
 The dot is the control and the circle is the target.  So, if the first qubit is the control and the second is the target, then this takes:
 \begin{align*}
   \ket{00} &\mapsto \ket{00}, \\
-  \ket{10} &\mapsto \ket{11}, \\
   \ket{01} &\mapsto \ket{01}, \\
+  \ket{10} &\mapsto \ket{11}, \\
   \ket{11} &\mapsto \ket{10}.
 \end{align*}
 Or, we can represent:
@@ -652,12 +789,21 @@ As a matrix:
   \cnot =
   \begin{pmatrix}
     1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
     0 & 0 & 0 & 1 \\
-    0 & 0 & 1 & 0 \\
-    0 & 1 & 0 & 0
+    0 & 0 & 1 & 0
   \end{pmatrix}.
 \]
 
+
+Also note that
+\begin{align*}
+  \cnot \ket{++} & = \ket{++}, \\
+  \cnot \ket{-+} & = \ket{-+}, \\
+  \cnot \ket{+-} & = \ket{--}, \\
+  \cnot \ket{--} & = \ket{+-},
+\end{align*}
+and hence it is not ``controlled'' by the second $\ket{\pm}$ basis element: if it is $\ket{+}$, leaves unchanged, if it is $\ket{-}$, flip the sign of the first.
 
 
 \begin{theorem}
@@ -670,10 +816,73 @@ As a matrix:
 
 
 \begin{theorem}
-  We have that $\dim_{\R}U_n(\C)$ is $2n^2$ (as an Euclidean space), so $\dim_{\R}\U_{n^2}(\C) = 2 \cdot {(2^n)}^2 = 2 \cdot 2^{2n} = 2 \cdot 4^n$.
+  We have that $\dim_{\R}\U_n(\C)$ is $2n^2$ (as an Euclidean space), so $\dim_{\R}\U_{n^2}(\C) = 2 \cdot {(2^n)}^2 = 2 \cdot 2^{2n} = 2 \cdot 4^n$.
 \end{theorem}
 
 
+Note that using Corollary~\ref{cor:repres}, we can produce any controlled gate with rotations.  More precisely, we have that if $U = \me^{\mi \chi} AXBXC$, with $A, B, C \in \U_2(\C)$ such that $ABC = 1$, then $CU$ can be constructed as:
+
+\begin{center}
+  \begin{quantikz}
+    &  & \ctrl{1} &  & \ctrl{1} & \gate{P(\chi)} & \\
+    & \gate{C} & \targ{} & \gate{B} & \targ{} & \gate{A} &
+  \end{quantikz}
+\end{center}
+
+
+
+\subsection{Swap Gate}
+
+The \emph{swap gate}\index{swap gate} $\sg\index[not]{swap@$\sg$}$ is defined by for $a, b \in \F_2$ as
+\[
+  \sg \ket{ab} \idef \ket{ba}.
+\]
+The corresponding matrix is
+\[
+  \sg =
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 1 & 0 & 0 \\ \
+    0 & 0 & 0 & 1
+  \end{pmatrix}
+\]
+
+It is represented by
+\begin{center}
+  \begin{quantikz}
+    & \swap{1} & \\
+    & \swap{-1} & \\
+  \end{quantikz}
+\end{center}
+
+It can be constructed from $\cnot$ gates:
+
+\begin{center}
+  \begin{quantikz}
+    & \ctrl{1} & \targ{} & \ctrl{1} & \\
+    & \targ{} & \ctrl{-1} & \targ{} & \\
+  \end{quantikz}
+\end{center}
+
+\subsection{Controlled-Phase Gate}
+
+The \emph{controlled-phase gate}\index{controlled-phase gate} $CP(\theta)\index[not]{cp theta@$CP(\theta)$}$, given by
+\[
+  \begin{pmatrix*}[c]
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & \me^{\mi \theta}
+  \end{pmatrix*},
+\]
+can be constructed as:
+\begin{center}
+  \begin{quantikz}
+    & \ctrl{1} &  & \ctrl{1} & \gate{P(\theta/2)} & \\
+    & \targ{} & \gate{P(-\theta/2)} & \targ{} & \gate{P(\theta/2)}  &
+  \end{quantikz}
+\end{center}
 
 \subsection{Multiple Control Gates}
 
@@ -693,6 +902,18 @@ The \emph{Toffoli Gate}\index{Toffoli Gate} is $C^2X$, so it has two controls an
     & \targ{} &
   \end{quantikz}
 \end{center}
+
+We can construct the Toffoli gate from $H$, $T$ (and $\adj{T} = T^7 = P(-\pi/4)$), and $\cnot$ gates:
+
+\begin{center}
+  \begin{quantikz}
+    &  &  &  & \ctrl{2} &  &  &  & \ctrl{2} & \ctrl{1} &  & \ctrl{1} & \gate{T} & \\
+    &  & \ctrl{1} &  &  &  & \ctrl{1} &  &  & \targ{} & \gate{\adj{T}} & \targ{} & \gate{T} & \\
+    & \gate{H} & \targ{} & \gate{\adj{T}} & \targ{} & \gate{T} & \targ{} & \gate{\adj{T}} & \targ{} & \gate{T} & \gate{H} &  &  & \\
+  \end{quantikz}
+\end{center}
+
+
 
 \subsection{Other Controlled Gates}\label{ssec:control_gates}
 
@@ -809,6 +1030,11 @@ More precisely:
 \end{definition}
 
 
+\begin{remark}
+  Note that if your algorithm does not entangle qubits, most likely it can be implemented in a classical computer, and a quantum computer would have no advantage.
+\end{remark}
+
+
 \section{Phase Kickback}
 
 Consider:
@@ -886,7 +1112,7 @@ So, we need to find $j$ such that $f(j) = 1$.
     \phantom{-}\ket{j}, & \text{otherwise}.
   \end{cases}
 \]
-Hence, $U_f$ allows us to check if $j$ is the index for $y$ in the list by checking for a phase change.  (\emph{Question:} Can we create such circuit in practice?)
+Hence, $U_f$ allows us to check if $j$ is the index for $y$ in the list by checking for a phase change.  This is equivalent to saying that we can query the list.  (\emph{Question:} Can we create such circuit in practice?)  Depending on the nature of the objects in the list, this oracle can be quite difficult to implement.
 
 Define
 \[
@@ -900,6 +1126,11 @@ Note that, for $x \in \F_2^n$, we have
     \phantom{-}\ket{x}, & \text{otherwise}.
   \end{cases}
 \]
+
+\begin{remark}
+  Synthesizing the $C^{n-1}Z$ gate can be quite difficult in practice.  We need to find a way to do it with only $1$-qubit gates and $\cnot$.
+\end{remark}
+
 
 Then, we have:
 \begin{align*}
@@ -917,7 +1148,7 @@ Then, we have:
 \begin{proof}
   Since $H^{\otimes n}$ is unitary, we have that
   \[
-    0 = \langle \psi \mid s  \rangle = \langle H^{\otimes n} \ket{\psi} \mid  H^{\otimes n} \ket{s} \rangle = \langle H^{\otimes n} \ket{\psi} \mid H^{\otimes s} H^{\otimes n} \ket{0}^{\otimes n} \rangle = \langle H^{\otimes n }\ket{\psi} \mid \ket{0}^{\otimes n} \rangle,
+    0 = \langle \psi \mid s  \rangle = \langle H^{\otimes n} \ket{\psi} \mid  H^{\otimes n} \ket{s} \rangle = \langle H^{\otimes n} \ket{\psi} \mid H^{\otimes n} H^{\otimes n} \ket{0}^{\otimes n} \rangle = \langle H^{\otimes n }\ket{\psi} \mid \ket{0}^{\otimes n} \rangle,
   \]
   and hence the component of $H^{\otimes n} \ket{\psi}$ in $\ket{0}^{\otimes n}$ is $0$.
 
@@ -934,23 +1165,29 @@ Then, we have:
 
 \textbf{Summary}:
 \begin{align*}
-  \text{target state:}& \ket{j_0} & U_f \ket{j} &=
+  \text{target state: }& \ket{j_0} & U_f \ket{j} &=
                               \begin{cases}
                                 - \ket{j},& \text{if $j = j_0$;} \\
-                                \phantom{-} \ket{j},& \text{otherwise (or $\langle j \mid j_0  \rangle = 0$)}.
+                                \phantom{-} \ket{j},& \text{otherwise (or if $\langle j \mid j_0  \rangle = 0$)}.
                               \end{cases} \\
-  \text{initial state:}& \ket{s} & U_S \ket{\psi} &=
+  \text{initial state: }& \ket{s} & U_S \ket{\psi} &=
                               \begin{cases}
                                 - \ket{\psi},& \text{if $\ket{\psi} = \ket{s}$;} \\
                                 \phantom{-} \ket{\psi},& \text{if $\langle \psi \mid s \rangle = 0$}.
                               \end{cases} \\
 \end{align*}
 
-We define \emph{Grover's oracle} as $G = - U_s U_f$.
+
+\begin{remark}
+  Since the operators $U_f$ and $U_S$ negate one non-zero vector, and fix all vectors perpendicular to this one, they are \emph{reflections} on the orthogonal space to the span of the non-zero vector.  (Just think in terms of orthonormal bases.)
+\end{remark}
+
+
+We define \emph{Grover's oracle} as $G = - U_S U_f$.
 \begin{theorem}[Grover, 1996]
   Let $k$ be a positive integer and let $\ket{\psi_k} \idef G^k \ket{s}$.  Then, when measuring, we have
   \[
-    \prob(\text{getting $j_0$} \mid \psi_k) = \abs{\langle j_0 \mid \psi_k \rangle}^2 = \sin^2 \left( (2k+1) \arcsin \left( 2^{-n/2} \right) \right).
+    \cprob{j_0}{\psi_k} = \abs{\langle j_0 \mid \psi_k \rangle}^2 = \sin^2 \left( (2k+1) \arcsin \left( 2^{-n/2} \right) \right).
   \]
 \end{theorem}
 
@@ -961,9 +1198,9 @@ We define \emph{Grover's oracle} as $G = - U_s U_f$.
   \[
     k \idef \left\lfloor \frac{\mpi}{4 \arcsin(2^{-n/2})} - \frac{1}{2} \right\rceil \approx \frac{\mpi}{4} 2^{n/2} = \frac{\pi}{4} \sqrt{N},
   \]
-  then
+  (where $\left\lfloor x \right\rceil$ is the closest integer to $x$) then
   \[
-    \prob(\text{getting $j_0$} \mid \psi_k) = 1 - \mcal{O}\left( \frac{1}{N} \right).
+    \cprob{j_0}{\psi_k} = 1 - \mcal{O}\left( \frac{1}{N} \right).
   \]
 \end{corollary}
 
@@ -1131,6 +1368,115 @@ We define \emph{Grover's oracle} as $G = - U_s U_f$.
 \end{proof}
 
 
+
+\section{Application of Grover's Algorithm: Solving Pseudo-Boolean Equations}
+
+We illustrate Grover's algorithm with a simple example.  Let $F: {\{0, 1\}}^2 \to \Z$ given by $F(x_0, x_1) = 2x_0 + x_1$.  Our goal is to solve $F(x_0, x_1) = 2$.  Note that the image is $\{0, 1, 2, 3\}$, so we can actually see $F$ as $F: \Z/{4}\Z \to \Z/{4}\Z$, where we use the binary representation of the input to get $(x_0, x_1)$, i.e., $2x_1 + x_0 \mapsto (x_0, x_1)$.
+
+\subsection{The Maker Circuit}
+
+The first idea is to create a circuit such that $\ket{x}_2 \ket{0}_2 \mapsto \ket{x}_2 \ket{F(x)}$, or, more generally, $\ket{x}_2 \ket{y}_2 \mapsto \ket{x}_2 \ket{x + y \mod{4}}$.  The following circuit accomplishes that:
+
+\begin{center}
+  \begin{quantikz}
+    \lstick{$\ket{x_{0}}$} & \gate[4]{F_{\mathrm{add}}} & \\
+    \lstick{$\ket{x_{1}}$} &  & \\
+    \lstick{$\ket{y_{0}}$} &  & \\
+    \lstick{$\ket{y_{1}}$} &  &
+  \end{quantikz}
+  \quad $\idef$ \quad
+  \begin{quantikz}
+    \lstick{$\ket{x_{0}}$} & \ctrl{3} &  &  & \\
+    \lstick{$\ket{x_{1}}$} &  & \ctrl{2} & \ctrl{1} & \\
+    \lstick{$\ket{y_{0}}$} &  & \ctrl{0} & \targ{} & \\
+    \lstick{$\ket{y_{1}}$} & \targ{} & \targ{} &  &
+  \end{quantikz}
+\end{center}
+
+The first $\cnot$ gate adds $2x_0$ to $y_1$, the second takes care of ``carrying-over'' when $x_1 = y_1 = 1$, while the last add $x_1$ to $y_0$.  Let's refer to this circuit as the $F_{\mathrm{adder}}$ gate.
+
+Now, we need an Oracle $U$ that can determine if $F(x_0, x_1) = 2$.  So, the ``target state'' is $2$, associated to $\ket{10}$, and we want $U$ so that $U \ket{10} = - \ket{10}$ and $U \ket{y_1y_0} = \ket{y_1y_0}$ if $(y_0, y_1) \neq (0,1)$.  The following circuit accomplishes that step:
+
+\begin{center}
+  \begin{quantikz}
+    \lstick{$\ket{y_{0}}$} & \gate[2]{U} & \\
+    \lstick{$\ket{y_{1}}$} &  & \\
+  \end{quantikz}
+  \quad $\idef$ \quad
+  \begin{quantikz}
+    \lstick{$\ket{y_{0}}$} & \gate{X} & \ctrl{1} & \gate{X} & \\
+    \lstick{$\ket{y_{1}}$} &  & \gate{Z} &  &
+  \end{quantikz}
+\end{center}
+
+Indeed:
+\begin{align*}
+  \ket{00} &\mapsto \ket{10} \mapsto \phantom{-} \ket{10} \mapsto \phantom{-} \ket{00} \\
+  \ket{01} &\mapsto \ket{00} \mapsto \phantom{-} \ket{00} \mapsto \phantom{-} \ket{01} \\
+  \ket{10} &\mapsto \ket{11} \mapsto           - \ket{11} \mapsto           - \ket{10} \\
+  \ket{11} &\mapsto \ket{01} \mapsto \phantom{-} \ket{01} \mapsto \phantom{-} \ket{11}
+\end{align*}
+
+So, we implement is as:
+\begin{center}
+  \begin{quantikz}
+    \lstick{$\ket{x_{0}}$} & \gate[4]{U_F} & \\
+    \lstick{$\ket{x_{1}}$} &  & \\
+    \lstick{$\ket{y_{0}}$} &  & \\
+    \lstick{$\ket{y_{1}}$} &  &
+  \end{quantikz}
+  \quad $\idef$ \quad
+  \begin{quantikz}
+    \lstick{$\ket{x_{0}}$} & \gate[4]{F_{\mathrm{add}}} &  & \gate[4]{F_{\mathrm{add}}^{-1}} & \\
+    \lstick{$\ket{x_{1}}$} &  &  &  & \\
+    \lstick{$\ket{y_{0}}$} &  & \gate[2]{U} &  & \\
+    \lstick{$\ket{y_{1}}$} &  &  &  &
+  \end{quantikz}
+\end{center}
+
+So, $U_F\ket{x_1x_0}\ket{00} = - \ket{x_1x_0}\ket{00}$ if $F(x_0, x_1) = 2$, and $0$ otherwise, as needed for Grover's algorithm.
+
+
+\subsection{Diffuser Circuit}
+
+We now simply create the gate $U_S$ as in the description the algorithm:
+\begin{center}
+  \begin{quantikz}
+    \lstick{$\ket{x_{0}}$} & \gate[2]{U_S} & \\
+    \lstick{$\ket{x_{1}}$} &  &
+  \end{quantikz}
+  \quad $\idef$ \quad
+  \begin{quantikz}
+    \lstick{$\ket{x_{0}}$} & \gate[2]{H} & \gate[2]{X} & \ctrl{1} & \gate[2]{X} & \gate[2]{H} & \\
+    \lstick{$\ket{x_{1}}$} &  &  & \gate{Z} &  &  &
+  \end{quantikz}
+\end{center}
+
+
+\subsection{Full Grover Circuit}
+
+The number of iterations of $G = -U_S U$ we need is
+\[
+  k = \left\lfloor \frac{\pi}{4 \arcsin(1/2)} - 1/2 \right\rceil = \lfloor 1 \rceil = 1,
+\]
+so, only one round.
+
+Therefore, we have that the full Grover circuit is given by:
+\begin{center}
+  \begin{quantikz}
+\lstick{$\ket{0}$} & \gate[2]{H} & \gate[4]{U} & \gate[2]{U_S} & \rstick{$\ket{z_0}$}\\
+\lstick{$\ket{0}$} &  &  &  &  \rstick{$\ket{z_0}$}\\
+\lstick{$\ket{0}$} &  &  &  &  \rstick{$\ket{0}$}\\
+\lstick{$\ket{0}$} &  &  &  & \rstick{$\ket{0}$}
+\end{quantikz}
+\end{center}
+
+After running, $\ket{z_1z_0}$, associated to the input $(z_0, z_1)$, should have a high probability of being $\ket{01}$.
+
+
+
+
+
 \section{Quantum Fourier Transform}
 
 
@@ -1250,7 +1596,28 @@ Indeed, using Lemma~\ref{lemma:expsum} again:
   One can compute $\ft(f)$ from $f$ using the \href{https://en.wikipedia.org/wiki/Fast_Fourier_transform}{fast Fourier transform} in $\mcal{O}(\log_2(N) N)$ time.
 \end{remark}
 
-\textbf{Fact:} There are quantum circuits for the quantum Fourier transform using $\mcal{O}(n^2) = \mcal{O}({(\log_2(N))}^2)$ gates, using only $1$-qubit gates and $\cnot$ gates.  (See Nielsen-Chuang pg.~217 for a ``good'' exact implementation.)
+\textbf{Fact:} There are quantum circuits for the quantum Fourier transform using $\mcal{O}(n^2) = \mcal{O}({(\log_2(N))}^2)$ gates, using only $1$-qubit gates and $\cnot$ gates.  Here it is, letting $R_k \idef P(2\pi/2^k)$:
+\begin{center}
+  \tiny
+  \begin{quantikz}
+    \lstick{$\ket{q_{0}}$}              &   & \swap{4} &          & \; \cdots \; & \gate{H} & \gate{P(\pi/2)} & \; \cdots \; & \gate{P(\pi/2^{n-2})} & \gate{P(\pi/2^{n-1})} &          & \; \cdots \;\\
+    \lstick{$\ket{q_{1}}$}              &   &          & \swap{2} & \; \cdots \; &          & \ctrl{-1}    & \; \cdots \; &                &              & \gate{H} & \; \cdots \; \\
+    \setwiretype{n} \lstick{$\vdots$}  &  &           &          &              &          &              &              &                &              &          &              \\
+    \lstick{$\ket{q_{n-2}}$}             &  &          & \swap{0} & \; \cdots \; &          &              & \; \cdots \; & \ctrl{-3}      &              &          & \; \cdots \; \\
+    \lstick{$\ket{q_{n-1}}$}             &  & \swap{0} &          & \; \cdots \; &          &              & \; \cdots \; &                & \ctrl{-4}    &          & \; \cdots \;
+  \end{quantikz}
+
+  \begin{quantikz}
+    \cdots \; &                &              & \; \cdots \;   &          &              &          & \\
+    \cdots \; & \gate{P(\pi/2^{n-3})} & \gate{P(\pi/2^{n-2})} & \; \cdots \; &          &              &          & \\
+    \setwiretype{n} \vdots          &                &               &               &          &              &          & \\
+    \cdots \; & \ctrl{-2}      &              & \; \cdots \;    & \gate{H} & \gate{P(\pi/2)} &          & \\
+    \cdots \; &                & \ctrl{-3}    & \; \cdots \;    &          & \ctrl{-1}    & \gate{H} &
+  \end{quantikz}
+\end{center}
+Note that the initial swaps are done to invert all qubits.
+
+This implementation has no ancillas (auxiliary qubits), so it takes ``small space'', but there are more modern implementations that are ``shallower'', meaning lower depth, and therefore are faster.
 
 
 \begin{definition}
@@ -1258,44 +1625,77 @@ Indeed, using Lemma~\ref{lemma:expsum} again:
 \end{definition}
 
 
+\begin{example}
+  Here are some examples.  For one qubit, the QFT is
+  \begin{center}
+    \begin{quantikz}
+      \lstick{$\ket{q_{0}}$} & & \gate{H} & \\
+    \end{quantikz}
+  \end{center}
+
+  For two qubits:
+  \begin{center}
+    \begin{quantikz}
+      \lstick{$\ket{q_{0}}$} &  & \swap{1} & \gate{H}  & \gate{P(\pi/2)} &          & \\
+      \lstick{$\ket{q_{1}}$} &  & \swap{0} &           &  \ctrl{-1}      & \gate{H} & \\
+    \end{quantikz}
+  \end{center}
+
+  For three:
+  \begin{center}
+    \begin{quantikz}
+      \lstick{$\ket{q_{0}}$} & & \swap{2} & \gate{H} & \gate{P(\pi/2)} & \gate{P(\pi/4)} &  &  &  & \\
+      \lstick{$\ket{q_{1}}$} & &  &  & \ctrl{-1} &  & \gate{H} & \gate{P(\pi/2)} &  & \\
+      \lstick{$\ket{q_{2}}$} & & \swap{0} &  &  & \ctrl{-2} &  & \ctrl{-1} & \gate{H} & \\
+    \end{quantikz}
+  \end{center}
+
+\end{example}
+
+
 \subsection{Application: Adder Circuit}
 
-We will need the following definition:
+We will need the following (\emph{non-standard}) definition:
 
-\begin{definition}\label{def:p-gate}
-  We define the \emph{$P$ gate}\index{P gate@$P$ gate}:
+\begin{definition}\label{def:phat-gate}
+  We define the \emph{$\hat{P}$ gate}\index{P hat gate@$\hat{P}$ gate}:
   \[
-    P(k) \ket{x}_n \idef \me^{2 \mpi \mi xk/2^{n}} \ket{x}_n.
+    \hat{P}(k) \ket{x}_n \idef \me^{2 \mpi \mi xk/2^{n}} \ket{x}_n.
   \]
 \end{definition}
 
-
-\begin{remark}
-  \textbf{Careful!}  In qiskit we have
-  \[
-    P(\theta) = \begin{pmatrix*}[c]
-      1 & 0 \\
-      0 & \me^{\mi \theta}
-    \end{pmatrix*}.
-  \]
-  So here, $P(k)$ corresponds to qiskit's $P(\mpi k)$!
-\end{remark}
-
-
-Hence, of $n=1$ we have that
+Thus, ordering the basis as $0=\ket{00\cdots 00}, 1=\ket{00\cdots 01}, 2=\ket{00\cdots 10}, \ldots$ we have the following $2^n \times 2^n$ matrix representation:
 \[
-  P(k) = \begin{pmatrix*}[c]
-    1 & 0 \\
-    0 & \me^{\mpi \mi k}
-  \end{pmatrix*} = \me^{-\mpi \mi k/2} \begin{pmatrix*}[c]
-      \me^{-\mpi \mi k/2} & 0 \\
-      0 & \me^{\mpi \mi k/2}
-    \end{pmatrix*} = \me^{-\mpi \mi k/ 2} R_Z(\mpi k/2)
+  \hat{P}(k) =
+  \begin{pmatrix*}
+    1 & 0 & 0 & 0 & \cdots & 0 \\
+    0 & \me^{2\pi\mi k/2^n} & 0 & 0 & \cdots & 0 \\
+    0 & 0 & \me^{4\pi\mi k/2^n} & 0 & \cdots & 0 \\
+    0 & 0 & 0 & \me^{6\pi\mi k/2^n} & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & 0 & \cdots & \me^{\pi\mi k}
+  \end{pmatrix*}
 \]
-Hence, we can easily implement the $P$ gates.  The circuit
+
+Remembering that the phase gate
+\[
+  P(\theta) = \begin{pmatrix*}[c]
+    1 & 0 \\
+    0 & \me^{\mi \theta}
+  \end{pmatrix*}.
+\]
+we have
+\[
+  \hat{P}(k) =
+  \begin{pmatrix*}[c]
+    1 & 0 \\
+    0 & \me^{\pi \mi k}
+  \end{pmatrix*} = P(\pi k) = \me^{- \pi \mi/2} R_Z(\pi k/2).
+\]
+and hence, we can easily implement the $\hat{P}$ gates.  The circuit
 \begin{center}
   \begin{quantikz}
-    \lstick{$\ket{x_0}$} & \gate[5]{P(k)} & \\
+    \lstick{$\ket{x_0}$} & \gate[5]{\hat{P}(k)} & \\
     \lstick{$\ket{x_1}$} & & \\
     \lstick{$\ket{x_2}$} & &\\
     \setwiretype{n} \lstick{$\vdots \phantom{xi}$} & & \\
@@ -1305,43 +1705,13 @@ Hence, we can easily implement the $P$ gates.  The circuit
 which, as a multi-qubit gate, is the same as
 \begin{center}
   \begin{quantikz}
-    \lstick{$\ket{x_0}$} & \gate{P(k/2^{n-1})} & \\
-    \lstick{$\ket{x_1}$} & \gate{P(k/2^{n-2})} & \\
-    \lstick{$\ket{x_2}$} & \gate{P(k/2^{n-3})}&\\
+    \lstick{$\ket{x_0}$} & \gate{P(k\pi{}/2^{n-1})} & \\
+    \lstick{$\ket{x_1}$} & \gate{P(k\pi/2^{n-2})} & \\
+    \lstick{$\ket{x_2}$} & \gate{P(k\pi/2^{n-3})}&\\
     \setwiretype{n} \lstick{$\vdots \phantom{xx}$} & \vdots & & \\
-    \lstick{$\ket{x_{n-1}}$} & \gate{P(k)}&
+    \lstick{$\ket{x_{n-1}}$} & \gate{P(k\pi)}&
   \end{quantikz}
 \end{center}
-
-
-\begin{definition}
-  For $k \in \Z/{2^n}\Z$, define the \emph{plus $k$ adder}\index{plus $k$ adder}
-  \[
-    A_k \ket{x}_n \idef \ket{x + k}_n.
-  \]
-\end{definition}
-
-
-\begin{align*}
-  A_k \adj{\qft} \ket{x}_n
-  &= \frac{1}{2^{n/2}} \sum_{z=0}^{2^n - 1} \zeta_{2^n}^{-xz} \ket{z + k}_n \\
-  &= \frac{1}{2^{n/2}} \sum_{z=0}^{2^n - 1} \zeta_{2^n}^{-x(z-k)} \ket{z}_n \\
-  &= \frac{1}{2^{n/2}} \zeta_{2^n}^{xk }\sum_{z=0}^{2^n - 1} \zeta_{2^n}^{-xz} \ket{z}_n \\
-  &= \zeta_{2^n}^{xk} \adj{\qft} \ket{x}_n,
-\end{align*}
-i.e.,
-\begin{equation}
-  \label{eq:qftak}
-  (\qft \circ A_k \circ \adj{\qft}) \ket{x}_n = \zeta_{2^n}^{xk} \ket{x}_n = P(k) \ket{x}_n,
-\end{equation}
-or
-\begin{equation}\label{eq:ak}
-  A_k = \adj{\qft} \circ P(k) \qft.
-\end{equation}
-(So, \emph{shift} is turned in to \emph{phase})
-
-
-So, using~\cref{eq:ak}, and assuming that $\qft$ can be implemented, we can also implement $A_k$.
 
 \begin{proof}
   Let
@@ -1355,24 +1725,57 @@ So, using~\cref{eq:ak}, and assuming that $\qft$ can be implemented, we can also
 
   Also, note that for a qubit $x_r$, we have
   \[
-    R_Z(\theta) \ket{x_r} = \me^{-\mi \theta/2} \me^{\mi \theta x_r} \ket{x_r}.
+    P(\theta) \ket{x_r} = \me^{\mi \theta x_r} \ket{x_r}.
   \]
   So,
   \[
-    R_Z\left(\frac{k \mpi}{2^{n-1-r}}\right) \ket{x_r} = \exp\left(-\frac{k \mpi \mi}{2^{n-r}}\right) \cdot \exp\left(\frac{k \mpi \mi}{2^{n-1-r}} x_r\right) \ket{x_r}.
+    P\left(\frac{k \mpi}{2^{n-1-r}}\right) \ket{x_r} = \exp\left(\frac{k \mpi \mi}{2^{n-1-r}} x_r\right) \ket{x_r}.
   \]
 
   Therefore:
   \begin{align*}
-    \bigotimes_{r=0}^{n-1}R_Z\left(\frac{k \mpi} {2^{n-1-r}}\right) \ket{x_r}
-    &= \bigotimes_{r=0}^{n-1} \exp\left(-\frac{k \mpi \mi}{2^{n-r}}\right) \cdot \exp\left(\frac{k \mpi \mi}{2^{n-1-r}} x_r\right) \ket{x_r} \\
-    &= \left[\prod_{r=0}^{n-1} \exp\left(-\frac{k \mpi \mi}{2^{n-r}}\right) \cdot \prod_{r=0}^{n-1}  \exp\left(\frac{k \mpi \mi}{2^{n-1-r}} x_r\right)\right] \ket{x}_n \\
-    &= \left[\exp\left(-\frac{k \mpi \mi}{2^n} \sum_{r=0}^{n-1} 2^r\right) \cdot \exp\left(k \mpi \mi \sum_{r=0}^{n-1}\frac{1}{2^{n-1-r}} x_r\right)\right] \ket{x}_n \\
-    &= \exp\left(-\frac{(2^n-1) k \mpi \mi}{2^n}\right) \cdot \exp\left(\frac{2 \mpi \mi}{2^n} xk \right) \ket{x}_n \\
-    &= \exp\left(-\frac{(2^n-1) k \mpi \mi}{2^n}\right) \cdot P(k) \ket{x}_n.
+    \bigotimes_{r=0}^{n-1}P\left(\frac{k \mpi} {2^{n-1-r}}\right) \ket{x_r}
+    &= \bigotimes_{r=0}^{n-1} \exp\left(\frac{k \mpi \mi}{2^{n-1-r}} x_r\right) \ket{x_r} \\
+    &= \left[\prod_{r=0}^{n-1}  \exp\left(\frac{k \mpi \mi}{2^{n-1-r}} x_r\right)\right] \cdot \bigotimes_{r=0}^{n-1} \ket{x_r}_n \\
+    &= \left[\exp\left(k \mpi \mi \sum_{r=0}^{n-1}\frac{1}{2^{n-1-r}} x_r\right)\right] \ket{x}_n \\
+    &= \exp\left(\frac{2 \mpi \mi}{2^n} xk \right) \ket{x}_n \\
+    &= P(k) \ket{x}_n.
   \end{align*}
-  So, indeed the last circuit gives, up to a global phase, the $P(k)$ gate.
+  So, indeed the last circuit gives the $\hat{P}(k)$ gate.
 \end{proof}
+
+
+
+\begin{definition}
+  For $k \in \Z/{2^n}\Z$, define the \emph{plus $k$ adder}\index{plus $k$ adder}
+  \[
+    A_k \ket{x}_n \idef \ket{x + k}_n.
+  \]
+  (Note that the sum $x+k$ is modulo $2^n$.)
+\end{definition}
+
+We have:
+\begin{align}\label{eq:phatqft}
+  A_k \adj{\qft} \ket{x}_n
+  &= \frac{1}{2^{n/2}} \sum_{z=0}^{2^n - 1} \zeta_{2^n}^{-xz} \ket{z + k}_n \\
+  &= \frac{1}{2^{n/2}} \sum_{z=0}^{2^n - 1} \zeta_{2^n}^{-x(z-k)} \ket{z}_n \\
+  &= \frac{1}{2^{n/2}} \zeta_{2^n}^{xk }\sum_{z=0}^{2^n - 1} \zeta_{2^n}^{-xz} \ket{z}_n \\
+  &= \zeta_{2^n}^{xk} \adj{\qft} \ket{x}_n,
+\end{align}
+i.e.,
+\begin{equation}
+  \label{eq:qftak}
+  (\qft \circ A_k \circ \adj{\qft}) \ket{x}_n = \zeta_{2^n}^{xk} \ket{x}_n = \hat{P}(k) \ket{x}_n,
+\end{equation}
+or
+\begin{equation}\label{eq:ak}
+  A_k = \adj{\qft} \circ \hat{P}(k) \circ \qft.
+\end{equation}
+(So, \emph{shift} is turned in to \emph{phase}.)
+
+
+So, using~\cref{eq:ak}, and assuming that $\qft$ can be implemented, we can also implement $A_k$.
+
 
 
 \section{Quantum Phase Estimation}
@@ -1385,14 +1788,14 @@ What happens if we replace $k \in \Z$ in $A(k)$ by some $k \in  \R$?
   For $n$ bits and $k \in \R$, define $\ket{k}_F\index[not]{ket k of F@$\ket{k}_F$}$, the \emph{$k$-th Fejér state}\index{Fejér state} as
   \begin{align*}
     \ket{k}_F
-    &\idef \adj{\qft} \circ P(k) \circ \qft \ket{0}_n \\
-    &= \sum_{z=0}^{2^n-1} \exp\left(\mpi \mi (1 - 1/2)(k - z)\right) \frac{\sin(\mpi(k-z))}{2^n \sin(\mpi (k-z)/ 2^n)} \ket{z}_n.
+    &\idef \adj{\qft} \circ \hat{P}(k) \circ \qft \ket{0}_n \\
+    &= \sum_{z=0}^{2^n-1} \exp\left(\mpi \mi (1 - 1/2^n)(k - z)\right) \frac{\sin(\mpi(k-z))}{2^n \sin(\mpi (k-z)/ 2^n)} \ket{z}_n.
   \end{align*}
 \end{definition}
 
 Then, for $x \in \{0, 1, \ldots, 2^n-1\}$, we have
 \[
-  \prob(x \mid \ket{k}_F) = \abs{\langle x \mid k  \rangle_F}^2 = \frac{\sin^2(\mpi(k -x))}{4^n \sin^2(\mpi(k-x)/2^n)},
+  \cprob{x}{\ket{k}_F} = \abs{\langle x \mid k  \rangle_F}^2 = \frac{\sin^2(\mpi(k -x))}{4^n \sin^2(\mpi(k-x)/2^n)},
 \]
 the \emph{Fejér kernel}\index{Fejér kernel}.
 
@@ -1412,11 +1815,11 @@ for $n = 5$ and $k = 17.3$.
 
 If we let $k = x_0 + r$, where $x_0 = \lfloor k \rceil$, so $r \in [-1/2, 1/2]$, then
 \[
-  \prob(x_0 \mid \ket{k}_F) = \frac{\sin^2(\mpi r)}{4^n \sin^2(\mpi r/2^n)} \geq \frac{4}{\mpi^2} \approx 0.41,
+  \cprob{x_0}{\ket{k}_F} = \frac{\sin^2(\mpi r)}{4^n \sin^2(\mpi r/2^n)} \geq \frac{4}{\mpi^2} \approx 0.41,
 \]
 and in fact
 \[
-   \prob(\lfloor x \rfloor \mid \ket{k}_F) +  \prob(\lceil x \rceil \mid \ket{k}_F) \geq \frac{8}{\mpi^2} \approx 0.82.
+   \cprob{\lfloor x \rfloor}{\ket{k}_F} +  \cprob{\lceil x \rceil}{\ket{k}_F} \geq \frac{8}{\mpi^2} \approx 0.82.
 \]
 
 
@@ -1433,7 +1836,7 @@ Let $\mcal{H}$ be the Hilbert space of $m$-qubit states.  Given
 we want to find or estimate $\theta$.
 
 \begin{remark}
-  Note that $\ket{\psi} \sim \me^{2 \pi \mi \theta} \ket{\psi}$, so physically there is no difference (and hence asking for $\theta$, as is, is not a proper question). On the other hand, when we have a controlled gate $CU$ given by
+  Note that $\ket{\psi} \equiv \me^{2 \pi \mi \theta} \ket{\psi}$, so physically there is no difference (and hence asking for $\theta$, as is, is not a proper question). On the other hand, when we have a controlled gate $CU$ given by
   \[
     CU( \ket{a} \ket{\psi}) = \ket{a} U^a \ket{\psi} \quad \text{(for $a \in \F_2$)},
   \]
@@ -1448,30 +1851,62 @@ we want to find or estimate $\theta$.
   We define the $n$-qubit \emph{quantum phase estimator}\index{quantum phase estimator} $\qpe \ket{x}_n\ket{\psi}$ as:
   \begin{center}
     \begin{quantikz}
-      \lstick{$\ket{x_0}$} &  & \gate[5, nwires=4]{H} & \ctrl{5}  &  &  &  &  & \cdots &  & \gate[5, nwires=4]{\qft} & \meter{} &  \\
-      \lstick{$\ket{x_1}$} &   &  &  &  & \ctrl{4} &  &  & \cdots &  &  & \meter{} &  \\
-      \lstick{$\ket{x_2}$} & &  &  &  &  & \ctrl{3} &  & \cdots &  &  & \meter{} &  \\
-      \setwiretype{n} \lstick{$\ \vdots \ $} & & &  &  &  &  &  & \cdots & &  & \vdots  &  \\
-      \lstick{$\ket{x_{n-1}}$} &  &  &  &  &  &  &  & \cdots & \ctrl{1} &  & \meter{} &  \\
-      \lstick{$\ket{\psi}$} &  &  & \gate{U} &  & \gate{U^2} & \gate{U^{2^2}} &  & \cdots & \gate{U^{2^{n-1}}} &  &  &
+      \lstick{$\ket{x_0}$} &  & \gate[5, nwires=4]{H} & \ctrl{5}  &  &  &  &  & \; \cdots \; &  & \gate[5, nwires=4]{\adj{\qft}} & \meter{} &  \\
+      \lstick{$\ket{x_1}$} &   &  &  &  & \ctrl{4} &  &  & \; \cdots \; &  &  & \meter{} &  \\
+      \lstick{$\ket{x_2}$} & &  &  &  &  & \ctrl{3} &  & \; \cdots \; &  &  & \meter{} &  \\
+      \setwiretype{n} \lstick{$\ \vdots \ $} & & &  &  &  &  &  & \; \cdots \; & &  & \vdots  &  \\
+      \lstick{$\ket{x_{n-1}}$} &  &  &  &  &  &  &  & \; \cdots \; & \ctrl{1} &  & \meter{} &  \\
+      \lstick{$\ket{\psi}$} &  &  & \gate{U} &  & \gate{U^2} & \gate{U^{2^2}} &  & \; \cdots \; & \gate{U^{2^{n-1}}} &  &  &
     \end{quantikz}
   \end{center}
 \end{definition}
 
 We then have that
 \[
-  \qpe \ket{x}_n \ket{\psi} = \ket{x + 2^n \theta}_F \ket{\psi}.
+  \qpe \ket{x}_n \ket{\psi} = \ket{x + 2^n \theta}_F \ket{\psi}.  \qquad \text{(Is this really true?)}
 \]
 In particular,
 \[
   \qpe \ket{0}_n \ket{\psi} = \ket{2^n \theta}_F \ket{\psi}.
 \]
-Hence, measuring the first $n$ qubits, we get either $\lfloor 2^n \theta \rfloor$ or $\lceil 2^n \theta \rceil$ with probability at least $82\%$.  Pick the most likely $x_{\theta} \in \Z$ and then $\theta \approx x_{\theta} / 2^n$.
+Hence, measuring the first $n$ qubits, we get either $\lfloor 2^n \theta \rfloor$ or $\lceil 2^n \theta \rceil$ with probability at least $82\%$.  Pick the most likely $x_{\theta} \in \Z$ (i.e., repeat it a few times and choose the one that appears the most) and then $\theta \approx x_{\theta} / 2^n$.
+
+\begin{proof}
+  We prove only the fact that $\qpe \ket{0}_n \ket{\psi} = \ket{2^n\theta}_F \ket{\psi}$.  First, note that
+  \begin{align*}
+    \hat{P}(k) \qft \ket{0}_n
+    &= \hat{P}(k) \frac{1}{2^{n/2}} \sum_{z=0}^{2^n-1} \zeta_{2^n}^{0 \cdot z} \ket{z}_n \\
+    &= \frac{1}{2^{n/2}} \sum_{z=0}^{2^n-1} \zeta_{2^n}^{kz} \ket{z}_n.
+  \end{align*}
+  Also,
+  \begin{align*}
+    H^{\otimes n} \ket{0}_n
+    &= \bigotimes_{i=0}^{n-1} \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \\
+    &= \frac{1}{2^{n/2}} \sum_{z=0}^{2^{n-1}} \ket{z}_n.
+  \end{align*}
+  where $\sigma(z)$ is either $1$ or $-1$ depending on the binary digits of $z$.
+
+  Then, also denoting $z = z_0 + z_1 \cdot 2 + z_2 \cdot 2^2 + \cdots + z_n \cdot 2^{n-1}$, with $z_i \in \{0, 1\}$ and $k \idef 2^n \theta$, we have:
+  \begin{align*}
+    \ket{0}_n \ket{\psi}
+    &\mapsto \frac{1}{2^{n/2}} \sum_{z=0}^{2^{n-1}} \ket{z}_n \ket{\psi} \\
+    &\mapsto \frac{1}{2^{n/2}} \sum_{z=0}^{2^{n-1}} \me^{2 \pi \mi \theta z_0} \ket{z}_n \ket{\psi} \\
+    &\mapsto \frac{1}{2^{n/2}} \sum_{x=0}^{2^{n-1}} \me^{2 \pi \mi \theta (2z_1 + z_0)} \ket{z}_n \ket{\psi} \\
+    &\vdots \\
+    &\mapsto \frac{1}{2^{n/2}} \sum_{x=0}^{2^{n-1}} \me^{2 \pi \mi \theta z} \ket{z}_n \otimes \ket{\psi} \\
+    &= \frac{1}{2^{n/2}} \sum_{x=0}^{2^{n-1}} \zeta_{2n}^{kz} \ket{z}_n \otimes \ket{\psi} \\
+    &= \hat{P}(k) \qft \ket{0}_n \otimes \ket{\psi} \\
+    &\mapsto \adj{\qft} \hat{P}(k) \qft \ket{0}_n \otimes \ket{\psi} \\
+    &= \ket{k}_F \ket{\psi} = \ket{2^n \theta}_F \ket{\psi}.
+  \end{align*}
+\end{proof}
+
+
 
 
 \section{Shor's Algorithm}\label{sec:shor}
 
-Given $a \in \Z/{N}\Z$, with $\gcd(a, N) = 1$, f the order of $a \in {\Z/{N}\Z}^{\times}$.  Classical methods are \href{https://en.wikipedia.org/wiki/Time_complexity#Superpolynomial_time}{superpolynomial} in $\log_2(N)$, with $\mcal{O}\left({(1 + \epsilon)}^{\log_2(N)}\right)$ for any $\epsilon > 0$.
+Given $a \in \Z/{N}\Z$, with $\gcd(a, N) = 1$, we want to find the order of $a \in {\Z/{N}\Z}^{\times}$.  Classical methods are \href{https://en.wikipedia.org/wiki/Time_complexity#Superpolynomial_time}{superpolynomial} in $\log_2(N)$, with $\mcal{O}\left({(1 + \epsilon)}^{\log_2(N)}\right)$ for any $\epsilon > 0$.
 
 
 Let $n \idef \lceil \log_2(N) \rceil$.  Shor showed that one can implement
@@ -1491,16 +1926,43 @@ Suppose $\gcd(a, N) = 1$.  Then for $x \geq N$, we have that $\ket{x}_n$ is an e
 
 Now, let $r \idef \abs{a}$.  Then, clearly we have that $x^r - 1$ is the minimal polynomial of $U_a$, so the eigenvalues of $U_a$ are of the form $\me^{2 \mpi \mi k /r}$, for $k \in \{0, 1, \ldots , r-1\}$.
 
-Let $\zeta_s \idef \me^{2 \mpi \mi/r}$ and
+Let $\zeta_r \idef \me^{2 \mpi \mi/r}$ and
 \[
-  \ket{\phi_k} \idef \frac{1}{\sqrt{r}} \sum_{s=0}^{r-1} \zeta_r^{ks} \ket{a^s \mmod N}
+  \ket{\phi_k} \idef \frac{1}{\sqrt{r}} \sum_{s=0}^{r-1} \zeta_r^{-ks} \ket{a^s \mmod N}
 \]
-for $k \in \{0, 1, \ldots, r-1\}$.  Then,
+for $k \in \{0, 1, \ldots, r-1\}$.  Then, it is easy to check that
 \begin{align*}
-  U_a \ket{\phi_k} &= \zeta_r^k \ket{\phi_k}; \\
+  U_a \ket{\phi_k} &= \zeta_r^{-k} \ket{\phi_k}; \\
   \langle \phi_{k_1} \mid \phi_{k_2} \rangle &= \delta_{k_1, k_2}; \\
-  \frac{1}{\sqrt{r}} \sum_{k=0}^{r-1} \ket{\phi_k} &= \ket{1}_n = \ket{100 \ldots 0}.
+  \frac{1}{\sqrt{r}} \sum_{k=0}^{r-1} \ket{\phi_k} &= \ket{1}_n = \ket{00 \ldots 01}.
 \end{align*}
+
+\begin{proof}
+  We have, remembering that $r = \abs{a}$:
+  \begin{align*}
+    U_a \ket{\phi_k}
+    &= \frac{1}{\sqrt{r}} \sum_{s=0}^{r-1} \zeta_r^{-ks} \ket{a^{s+1} \mmod N} \\
+    &= \frac{1}{\sqrt{r}} \sum_{s=0}^{r-1} \zeta_r^{-k(s-1)} \ket{a^{s} \mmod N} \\
+    &= \zeta_r^k \frac{1}{\sqrt{r}} \sum_{s=0}^{r-1} \zeta_r^{-ks} \ket{a^{s} \mmod N} \\
+    &= \zeta_r^k \ket{\phi_k}.
+  \end{align*}
+
+  Also,
+  \begin{align*}
+    \langle \phi_{k_1} \mid \phi_{k_2} \rangle
+    &= \frac{1}{r} \sum_{s=0}^{r-1} \zeta_r^{k_1s} \zeta_r^{-k_2s} \\
+    &= \frac{1}{r} \sum_{s=0}^{r-1} \zeta_r^{(k_1-k_2)s} \\
+    &= \delta_{k_1, k_2}.
+  \end{align*}
+
+  Finally,
+  \begin{align*}
+    \frac{1}{\sqrt{r}} \sum_{k=0}^{r-1} \ket{\phi_k}
+    &= \frac{1}{\sqrt{r}} \sum_{k=0}^{r-1} \frac{1}{\sqrt{r}} \sum_{s=0}^{r-1} \zeta_r{-ks} \ket{a^s \mmod N} \\
+    &= \frac{1}{r} \sum_{s=0}^{r-1}  \left[\sum_{k=0}^{r-1} \zeta_r{-ks}\right] \ket{a^s \mmod N} \\
+    &= \ket{1}_n.
+  \end{align*}
+\end{proof}
 
 
 Consider the circuit:
@@ -1510,7 +1972,7 @@ Consider the circuit:
     &  &  & \meter{} & \\
     \setwiretype{n} & \ \vdots\ & & \vdots & \\
     &   &  &  \meter{} & \\
-    \lstick[4]{$\ket{1}_{n}$} & & & \rstick[4]{$\ket{a^k \mmod 2^n}$ (for some $k$)}\\
+    \lstick[4]{$\ket{1}_{n}$} & & & \rstick[4]{$\ket{1}_n$}\\
     & & & \\
     \setwiretype{n} & \vdots & & \\
     & & &
@@ -1518,22 +1980,33 @@ Consider the circuit:
 \end{center}
 Since $U_{a^{2^k}}$ needs $\mcal{O}(n^2)$ gates, we have that $\qpe_{U_a}$ needs $\mcal{O}(n^3)$ gates.
 
-Now:
+Now, since $U_a \ket{\phi_k} = \me^{2 \mpi \mi k/ r}$:
 \begin{align*}
-  \ket{a ; n} &\idef \qpe_{U_a} (\ket{0}_{2n} \ket{1}_n) \\
+  \qpe_{U_a} (\ket{0}_{2n} \ket{1}_n)
   &= \qpe_{U_a}\left( \ket{0}_{2n}   \frac{1}{\sqrt{r}} \sum_{k=0}^{r-1} \ket{\phi_k} \right) \\
   &=\frac{1}{\sqrt{r}} \sum_{k=0}^{r-1} \qpe_{U_a}\left( \ket{0}_{2n}\ket{\phi_k} \right) \\
-  &=\frac{1}{\sqrt{r}} \sum_{k=0}^{r-1} \ket{2^{2n}k/r}_{F}\ket{\phi_k}
+  &=\frac{1}{\sqrt{r}} \sum_{k=0}^{r-1} \ket{2^{2n}k/r}_{F}\ket{\phi_k}.
 \end{align*}
+Let then
+\[
+  \ket{2^{2n}k/r}_{F} = \sum_{y=0}^{2^{2n}-1} c_{k, y} \ket{y},
+\]
+and hence $\abs{c_{k, y}}$ is quite small, except when $y$ is the integer closest to $2^{2n}k/r$.
 
-So, for $0 \leq y < 2^{2n}$, we have
-\begin{equation}\label{eq:ketan}
-  \prob(y \mid \ket{a; n}) = \frac{1}{r} \sum_{k=0}^{r-1}  \abs{\langle y \mid 2^{2n}k/r \rangle_F}^2.
-\end{equation}
-Now, for each $k$, the most likely $y$, i.e., the value that makes $\abs{\langle y \mid 2^{2n}k/r \rangle_F}^2$ the largest, is the integer $y$ closest to $2^{2n}k/r$, in which case we must have
+Then, we can write
+\[
+  \qpe_{U_a} (\ket{0}_{2n} \ket{1}_n) = \frac{1}{r} \sum_{k=0}^{r-1} \sum_{s=0}^{r-1} \sum_{y=0}^{2^{2n}-1} c_{k, y} \zeta_r^{-ks} \ket{y} \ket{a^s \mmod N},
+\]
+and therefore, the probability of reading $y$ in the first $2n$-qubits is
+\[
+  \sum_{s=0}^{r-1} \frac{1}{r^2} \abs{\sum_{k=0}^{r-1} c_{k, y} \zeta_r^{-ks}}^2 \leq \frac{1}{r^2} \sum_{s=0}^{r-1} \sum_{k=0}^{r-1} \abs{c_{k,y}}^2,
+\]
+which is quite small if $y$ is not the closest integer to $2^{2n}k/r$ for some $k$.  Therefore, we most likely will get $y = \lfloor 2^{2n}k/r \rceil$ for some $k$,  in which case we must have
 \[
   \abs{y - 2^{2n} \frac{k}{r}} \leq \frac{1}{2} \quad \Longleftrightarrow \quad \abs{\frac{y}{2^{2n}} - \frac{k}{r}} \leq \frac{1}{2^{2n+1}}.
 \]
+
+We now need the following result:
 
 
 \begin{lemma}\label{lemma:approx}
@@ -1542,11 +2015,11 @@ Now, for each $k$, the most likely $y$, i.e., the value that makes $\abs{\langle
     \abs{\frac{y}{2^{2n}} - \frac{k}{r}} < \frac{1}{2^{2n+1}}.
   \]
 
-  Conversely, given $y \in \{0, 1, 2, \ldots, 2^{2n}-1\}$, if there exists $k/r$ with $0 \leq k < r < N$ such that
-  \[
-    \abs{\frac{y}{2^{2n}} - \frac{k}{r}} < \frac{1}{2^{2n+1}},
-  \]
-  then this fraction $k/r$ is unique.
+  % Conversely, given $y \in \{0, 1, 2, \ldots, 2^{2n}-1\}$, if there exists $k/r$ with $0 \leq k < r < N$ such that
+  % \[
+  %   \abs{\frac{y}{2^{2n}} - \frac{k}{r}} < \frac{1}{2^{2n+1}},
+  % \]
+  % then this fraction $k/r$ is unique.
 \end{lemma}
 
 \begin{proof}
@@ -1558,7 +2031,7 @@ Now, for each $k$, the most likely $y$, i.e., the value that makes $\abs{\langle
   \[
      \frac{0}{2^{2n}} \leq \frac{k}{r} < \frac{2^{2n} - 2}{2^{2n}},
   \]
-  So, there $y_0 \in \{0, 1, \ldots, 2^{2n}-2\}$ such that
+  So, there is $y_0 \in \{0, 1, \ldots, 2^{2n}-2\}$ such that
   \[
     \frac{y_0}{2^{2n}} \leq \frac{k}{r} < \frac{y_0+1}{2^{2n}}.
   \]
@@ -1568,7 +2041,7 @@ Now, for each $k$, the most likely $y$, i.e., the value that makes $\abs{\langle
   \]
   On the other hand, the only way we get the equality is if
   \[
-    \frac{k}{r} = \frac{2y_0 + 1}{2^{2n+1}},
+    \frac{k}{r} - \frac{y_0}{2^{2n}} = \frac{1}{2^{2n+1}} \quad \Longrightarrow \quad \frac{k}{r} = \frac{2y_0 + 1}{2^{2n+1}},
   \]
   which would imply that $2^{2n+1} \mid r$ (since the fraction on the right is reduced), which is a contradiction, as $r \leq N \leq 2^{n}$.  Thus, we have that there exists $y$ with
   \[
@@ -1585,37 +2058,43 @@ Now, for each $k$, the most likely $y$, i.e., the value that makes $\abs{\langle
    \]
    which is a contradiction.
 
-   \bigskip
+   % \bigskip
 
-   For the second part, assume that $k/r \neq k'/r'$, within the corresponding ranges and such that
-   \[
-     \abs{\frac{y}{2^{2n}} - \frac{k}{r}} < \frac{1}{2^{2n+1}}, \quad     \abs{\frac{y}{2^{2n}} - \frac{k'}{r'}} < \frac{1}{2^{2n+1}}.
-   \]
-   Then, by the triangle inequality, we have that
-   \[
-     \frac{1}{N^2} < \frac{1}{rr'} \leq \frac{\abs{kr'-k'r}}{rr'} = \abs{\frac{k}{r} - \frac{k'}{r'}} < \frac{1}{2^{2n}},
-   \]
-   i.e., $N > 2^n$, or $\log_2(N) > n = \ceil{\log_2(N)}$, a contradiction.
+   % For the second part, assume that $k/r \neq k'/r'$, within the corresponding ranges and such that
+   % \[
+   %   \abs{\frac{y}{2^{2n}} - \frac{k}{r}} < \frac{1}{2^{2n+1}}, \quad     \abs{\frac{y}{2^{2n}} - \frac{k'}{r'}} < \frac{1}{2^{2n+1}}.
+   % \]
+   % Then, by the triangle inequality, we have that
+   % \[
+   %   \frac{1}{N^2} < \frac{1}{rr'} \leq \frac{\abs{kr'-k'r}}{rr'} = \abs{\frac{k}{r} - \frac{k'}{r'}} < \frac{1}{2^{2n}},
+   % \]
+   % i.e., $N > 2^n$, or $\log_2(N) > n = \ceil{\log_2(N)}$, a contradiction.
 \end{proof}
 
-So, by \cref{eq:ketan}, the first part of \cref{lemma:approx} and the previous section, when measuring the resulting $\ket{a; n}$, the first $2n$ qubits will correspond to some $y$ close to some $k/r$.  (If $y/2^{2n}$ is not close to any $k/r$, the probability in \cref{eq:ketan} is quite small!)  Then, by the second part, this $k/r$ is unique with
+Hence, by this lemma, if measuring $y$ in the first $2n$ qubits, then there is a unique fraction $k/r$ (where $r = \abs{a}$) such that
 \[
-  \abs{\frac{y}{2^{2n}} - \frac{k}{r}} < \frac{1}{2^{2n + 1}}.
+  \abs{\frac{y}{2^{2n}} - \frac{k}{r}} < \frac{1}{2^{2n+1}}.
 \]
 
 We then can use \emph{continued fractions} to find $r$: remember that there are $a_1, a_2, a_3, \ldots \in \Z$ such that
 \[
   \frac{y}{2^{2n}} = [a_1, a_2, a_3, \ldots] \idef  \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cdots}}}.
 \]
-Then, if $[a_1, a_2, \ldots, a_n] = p_n/q_n$, then
+Then, if $[a_1, a_2, \ldots, a_n] = p_n/q_n$ in reduced form, by the theory of continued fractions, we must have
 \[
-  \abs{\frac{y}{2^{2n}} - \frac{p_n}{q_n}} < \frac{1}{2q_n^2}
+  \abs{\frac{y}{2^{2n}} - \frac{p_n}{q_n}} < \frac{1}{2q_n^2}.
 \]
 Therefore, we use continued fractions until we get $\frac{1}{2q_n^2} \leq \frac{1}{2^{2n+1}}$ (with $q_n < N$ still).  Then, we must have
 \[
   \frac{k}{r} = \frac{p_n}{q_n},
 \]
-We can then try to compute $a^{q_n}$.  If we get $1$, we found the order $r$!  If not, we can try some small multiples that are still less than $N$.  If that also fails, we can repeat the method of $\abs{a^{q_n}}$.  Alternatively, we could do another reading, which would likely give us another $y$ with close $y/2^{2n}$ to (likely) another $k/r$, and find a new fraction $p_t'/q_t'$ using continued fractions.  If $q_t's$ also does not work, but it is different from $q_n$, we know that $\mathrm{lcm}(q_n, q_t') \mid r$.
+with $q_n \mid r$, since $p_n/q_n$ is reduced.  We can then compute $a^{q_n}$: if we get $1$, we found the order $r$.  If not, we can try some small multiples that are still less than $N$.  If that also fails, we can repeat the method to find $\abs{a^{q_n}}$.  Alternatively, we could do another reading, which would likely give us another $y'$ such that $y'/2^{2n}$ is close to $k'/r$, for some likely $k'$, with likely $k' \neq k$, and find a new fraction $p_t'/q_t'$ using continued fractions.  If $q_t's$ also does not work, but it is different from $q_n$, we know that $\mathrm{lcm}(q_n, q_t') \mid r$.
+
+\begin{remark}
+  Currently, the depth of for Shor's Algorithm is $\mathcal{O}(n \log(n))$
+\end{remark}
+
+
 
 
 \section{Quantum Data Access Oracles}
@@ -1626,20 +2105,28 @@ One possibility is to construct a \emph{data access oracle}\index{data access or
 \[
   U_f \ket{x}_n \ket{0}_d \idef \ket{x}_n \ket{f(x)}_d.
 \]
-(Note we do not specify $U_f \ket{x}_n \ket{y}_d$ for $y \neq 0$.)  (How do we construct $U_f$?)
+(Note we do not specify $U_f \ket{x}_n \ket{y}_d$ for $y \neq 0$.)  \emph{Problem:} How do we construct $U_f$?
+
+\begin{remark}
+  Quantum data access oracles are sometimes called QRAM, QROM, or quantum dictionaries.
+\end{remark}
 
 Alternatively, we could use \emph{diagonal unitaries}\index{diagonal unitaries}:
 \[
   \mathcal{D}_f \ket{x}_n \idef \me^{2 \pi \mi/2^d f(x)} \ket{x}_n
 \]
-(seeing $f(x)$ as the integer corresponding to the one given by its binary representation).  (How do we construct $\mathcal{D}_f$?)
+(seeing $f(x)$ as the integer corresponding to the one given by its binary representation).  \emph{Problem:} How do we construct $\mathcal{D}_f$?
+
+In most cases, having one constructions leads to the other.
 
 
-\section{Implementing $U_f$}
+\subsection{Implementing $U_f$}
 
-\subsection{Select QROM}
+There are two main implementations: select QROM and swap QRAM, and a combination of the two called select-swap.  (There are many others, though.)
 
-QROM means that $f$ is in the circuit, not in the quantum computer.
+\subsubsection{Select QROM}
+
+QROM means that $f$ is embedded in the circuit, and not coming from data in the quantum computer.
 
 \begin{definition}
   Given $x_0 \in \F_2^n$, we define the gate $C_{x_0}^n X\index[not]{c x zero X@$C_{x_0}^n X$}$ by:
@@ -1688,10 +2175,10 @@ Then, to implement $C_f$, we just use various $C_{x_0}^n X$ flipping the corresp
   Here is $C_f$:
   \begin{center}
     \begin{quantikz}[]
-    \lstick{$x_0$} & \gate{X} & \ctrl{1} & \gate{X} \slice{$f(0,0)$}&        & \ctrl{3} &          & & & \ctrl{3} \slice{$f(1,1)$} &\\
-      \lstick{$x_1$} & \gate{X} & \ctrl{1} & \gate{X}          & \gate{X} & \ctrl{1}  & \gate{X} & \slice{$f(1,0)$} & \slice[label style={pos=1, anchor=north}]{$f(0,1)$} & \ctrl{1}  & \\
-     \lstick{$y_0$} &          & \targ{}  &                   &          & \targ{}  &          & &&          &\\
-     \lstick{$y_1$} &           &         &                   &          & \targ{}  &          & && \targ{}  &
+    \lstick{$\ket{x_0}$} & \gate{X} & \ctrl{1} & \gate{X} \slice{$f(0,0)$}&        & \ctrl{3} &          & & & \ctrl{3} \slice{$f(1,1)$} &\\
+      \lstick{$\ket{x_1}$} & \gate{X} & \ctrl{1} & \gate{X}          & \gate{X} & \ctrl{1}  & \gate{X} & \slice{$f(1,0)$} & \slice[label style={pos=1, anchor=north}]{$f(0,1)$} & \ctrl{1}  & \\
+     \lstick{$\ket{0}$} &          & \targ{}  &                   &          & \targ{}  &          & &&          &\\
+     \lstick{$\ket{0}$} &           &         &                   &          & \targ{}  &          & && \targ{}  &
     \end{quantikz}
   \end{center}
 \end{example}
@@ -1701,23 +2188,21 @@ Then, to implement $C_f$, we just use various $C_{x_0}^n X$ flipping the corresp
 
   \item This naive implementation often have many cancellations of consecutive $X$ gates.
 
-  \item The state of the art implementation can be done with $\mathcal{O}(d2^n)$ $H$, $S$, and $CX$ gates, and $\mathcal{O}(2^n)$ $T$ gates.
+  \item The state of the art implementation can be done with $\mathcal{O}(d2^n)$ $H$, $S$, and $CX$ gates, and $\mathcal{O}(2^n)$ $T$ gates.  (Note that while $H$, $S$, and $CX$ gates are relatively ``cheap'', the $T$ gate is relatively ``expensive''.)  Here, $d2^n$ can, more or less, be replaced by the number of non-zero bits in all outputs (so at most $d 2^n$), and $2^n$ (for $T$ gates) be replaced by the number of outputs different from $(0, \ldots , 0)$ (at most $2n$).
 
   \item This select QROM is efficient when $f$ has either few non-zero entries or if its \emph{unstructured}.
 
-  \item The size of the ancilla in this case is just $d$, so it is \emph{shallow} (few ancillas).
+  \item The size of the ancilla in this case is just $d$, so it is narrow.
 
-  \item On the other hand, it is \emph{long}.
-
-  \item Much better if the data is sparse, with many zeros.
+  \item On the other hand, it is deep, meaning of high depth.
 
   \end{enumerate}
 \end{remarks}
 
 
-\subsection{Swap QRAM}
+\subsubsection{Swap QRAM}
 
-QRAM means that the quantum computer knows $f$, not the circuit.
+QRAM means that the quantum computer contains the data for $f$, while the circuit itself does not.
 
 \begin{definition}
   The \emph{swap gate}\index{swap gate} $\swpg\index[not]{swap@$\swpg$}$ is defined as
@@ -1770,32 +2255,32 @@ and $\cswp$ as
 \begin{example}
   Let's give an example of a QRAM swap with $n=2$ and $d=1$:
   \begin{align*}
-    f(0, 0) &= 0 , & f(1,0) &= 1 \\
-    f(0, 1) &= 1 , & f(1,1) &= 1
+    f(0, 0)                & = 0 ,    & f(1,0) & = 1 \\
+    f(0, 1)                & = 1 ,    & f(1,1) & = 1
   \end{align*}
   We first create the possible outputs in the last $2^n$ qubits, corresponding to $f(0,0)$, $f(1,0)$, $f(0,1)$, and $f(1,1)$ respectively:
   \begin{center}
     \begin{quantikz}
-      \lstick{$\ket{x_0}$} & &\\
-      \lstick{$\ket{x_1}$} & &\\
-      \lstick{output}   & & \\
-      \lstick{$f(0,0)$} & & \\
-      \lstick{$f(1,0)$} & \gate{X} & \\
-      \lstick{$f(0,1)$} & \gate{X} & \\
-      \lstick{$f(1,1)$} & \gate{X} &
+      \lstick{$\ket{x_0}$} &          &              \\
+      \lstick{$\ket{x_1}$} &          &              \\
+      \lstick{$\ket{0}$}   &          &              \\
+      \lstick{$f(0,0)$}    &          &              \\
+      \lstick{$f(1,0)$}    & \gate{X} &              \\
+      \lstick{$f(0,1)$}    & \gate{X} &              \\
+      \lstick{$f(1,1)$}    & \gate{X} &
     \end{quantikz}
   \end{center}
 
   If the last qubit of the input is $1$, we swap the correct output to the places where the last qubits were $0$:
   \begin{center}
     \begin{quantikz}
-      \lstick{$\ket{x_0}$} & & & &\\
-      \lstick{$\ket{x_1}$} & & \ctrl{3} & \ctrl{4} &\\
-      \lstick{output}   & & & & \\
-      \lstick{$f(0,0)$} & & \swap{2} & &\\
-      \lstick{$f(1,0)$} & \gate{X}\slice{} & & \swap{2} &\\
-      \lstick{$f(0,1)$} & \gate{X} & \swap{-2} & &\\
-      \lstick{$f(1,1)$} & \gate{X} & & \swap{-2}&
+      \lstick{$\ket{x_0}$} &                  &           &           & \\
+      \lstick{$\ket{x_1}$} &                  & \ctrl{3}  & \ctrl{4}  & \\
+      \lstick{$\ket{0}$}   &                  &           &           & \\
+      \lstick{$f(0,0)$}    &                  & \swap{2}  &           & \\
+      \lstick{$f(1,0)$}    & \gate{X}\slice{} &           & \swap{2}  & \\
+      \lstick{$f(0,1)$}    & \gate{X}         & \swap{-2} &           & \\
+      \lstick{$f(1,1)$}    & \gate{X}         &           & \swap{-2} &
     \end{quantikz}
   \end{center}
   This makes the correct output $f(x_0, x_1)$ to be in the spots of $f(x_0,0)$.
@@ -1805,7 +2290,7 @@ and $\cswp$ as
     \begin{quantikz}
       \lstick{$\ket{x_0}$} & & & & \ctrl{4} & \\
       \lstick{$\ket{x_1}$} & & \ctrl{3} & \ctrl{4}\slice{} & &\\
-      \lstick{output}   & & & & &\\
+      \lstick{$\ket{0}$}   & & & & &\\
       \lstick{$f(0,0)$} & & \swap{2} & & \swap{1} &\\
       \lstick{$f(1,0)$} & \gate{X}\slice{} & & \swap{2} &  \swap{-11}&\\
       \lstick{$f(0,1)$} & \gate{X} & \swap{-2} & & &\\
@@ -1817,7 +2302,7 @@ and $\cswp$ as
     \begin{quantikz}
       \lstick{$\ket{x_0}$} & & & & \ctrl{4} \slice{} & &\\
       \lstick{$\ket{x_1}$} & & \ctrl{3} & \ctrl{4}\slice{} & & &\\
-      \lstick{output}   & & & & & \swap{1} &  \rstick{$\ket{f(x_0, x_1)}$}\\
+      \lstick{$\ket{0}$}   & & & & & \swap{1} &  \rstick{$\ket{f(x_0, x_1)}$}\\
       \lstick{$f(0,0)$} & & \swap{2} & & \swap{1} & \swap{-1} & \\
       \lstick{$f(1,0)$} & \gate{X}\slice{} & & \swap{2} &  \swap{-11}& & \\
       \lstick{$f(0,1)$} & \gate{X} & \swap{-2} & & && \\
@@ -1864,10 +2349,10 @@ and $\cswp$ as
 
 
 \begin{remark}
-  The ancilla needed in this method needs $2^n d$ qubits, so it is very \emph{wide}, but is shallow (not long).  Even the state of the art has $\mathcal{O}(d 2^n)$ gates.  (Much better if the data is sparse, with many zeros.)
+  The ancilla needed in this method needs $2^n d$ qubits, so it is very \emph{wide}, but is shallow (low depth).  Even the state of the art has $\mathcal{O}(d 2^n)$ gates.  (The, $d2^n$ can be replaced by the number of non-zero bits in the outputs of $f$, which is much better if the data is sparse, with many zeros.)
 \end{remark}
 
-\subsection{Select-Swap}
+\subsubsection{Select-Swap}
 
 One can combine the two methods.  We can select $k$ qubits at the end of the input of $f$ to obtain a function $g : \F_2^{n-k} \to \F_2^{d2^k}$:
 \[
@@ -1878,9 +2363,9 @@ where $g_i : \F_2^{n-k} \to \F_2^d$ is defined as
   g_i(x_0, \ldots , x_{n-k-1}) \idef f(x_0, \ldots ,x_{n-k-1}, \text{``$k$ binary representation of $i$''}).
 \]
 
-We can then use the select method for each $g_i$ and then swap to get the correct answer in the $f(0,0, \ldots , 0)$ spot.
+We can then use the select method for each $g_i$ and then swap to get the correct answer in the $f(0,0, \ldots , 0)$ spot.  This makes it so we need $d2^{k}$ ancillas, compared to the $d2^n$ of the swap method.
 
-This makes it so we need $d2^{k}$ ancillas, compared to the $d2^n$ of the swap method.
+Note that if $k=n$, then we are using the swap method, and if $k=0$, then we are using the select method.
 
 
 \begin{example}
@@ -1964,7 +2449,7 @@ So,
   U_f^{\mathrm{Sel-Swap}} \ket{x}_n \ket{0}_{d2^k} = \ket{x}_n \ket{f(x)}_d \ket{\text{garbage}}_{d(2^k - 1).}
 \]
 
-The total cost is the cost of the $2^k$ select, plus the swap of $k$.  So, the total gate cost is $\mathcal{O}(d2^k)$ and width $\mathcal{O}(2^{n-k} + d2^k)$.  Choosing $k \approx n/2$, we get $\mathcal{O}\left(\sqrt{d2^n}\right)$.
+The total cost is the cost of the $2^k$ select, plus the swap of $k$.  So, the total gate cost is still $\mathcal{O}(d2^n)$ and width $\mathcal{O}(2^{n-k} + d2^k)$.  Choosing $k$ such that $2^k \approx \sqrt{2^n/d}$ (or, more roughly, $k \approx n/2$), we get width of $\mathcal{O}\left(\sqrt{d2^n}\right)$.
 
 \begin{remark}
   If we restrict to $H$, $T$, $S$, and $CX$, then the $T$ cost is only $\mathcal{O}\left( \sqrt{d2^n} \right)$.  (A bit higher on the others.)
@@ -1972,7 +2457,7 @@ The total cost is the cost of the $2^k$ select, plus the swap of $k$.  So, the t
 
 \subsection{Diagonal Unitary}
 
-Given some $\theta : \F_2^n \to [0, 1)$, we might want
+Given some $\theta : \F_2^n \to [0, 1)$, we might want to construct the operator
 \[
   U_\theta \ket{x}_n = \me^{2 \mpi \mi \theta(x)} \ket{x}_n.
 \]
@@ -1988,13 +2473,15 @@ So, with the data access oracle $U_{\theta_d}$, we can make
 \begin{center}
   \begin{quantikz}
     \lstick{$\ket{x}_n$} & \gate[2]{U_{\theta_d}} & & \gate[2]{U_{\theta_d}^{-1}} & \meter{} & \\
-    \lstick{$\ket{0}_d$} & & \gate{P(1)} & & &
+    \lstick{$\ket{0}_d$} & & \gate{\hat{P}(1)} & & &
   \end{quantikz}
 \end{center}
-where the $P$ gate is given as in Definition~\ref{def:p-gate}:
-\[
-  P(1) \ket{x}_n \idef P(1/2^{n-1}) \ket{x_0} \otimes P(1/2^{n-2}) \ket{x_1} \otimes \cdots \otimes P(1) \ket{x_{n-1}}.
-\]
+where the $\hat{P}$ gate is given as in Definition~\ref{def:phat-gate}:
+\begin{align*}
+  \hat{P}(1) \ket{x}_n
+  &\idef \hat{P}(1/2^{n-1}) \ket{x_0} \otimes \hat{P}(1/2^{n-2}) \ket{x_1} \otimes \cdots \otimes \hat{P}(1) \ket{x_{n-1}} \\
+  &= P(\pi/2^{n-1}) \ket{x_0} \otimes P(\pi/2^{n-2}) \ket{x_1} \otimes \cdots \otimes P(\pi) \ket{x_{n-1}}.
+\end{align*}
 
 
 This works since we get
@@ -2002,9 +2489,9 @@ This works since we get
   \ket{x}_n \ket{0}_d
   &\mapsto \ket{x}_n \ket{\theta_d(x)}_d \\
   &\mapsto \ket{x}_n \me^{2\pi \mi \theta_d(x)/2^{d}} \ket{\theta_d(x)}_d \\
-  &= \me^{2\pi \mi \theta_d(x)/2^{d}} \ket{0}_n \ket{\theta_d(x)}_d \\
-  &\mapsto \left(\me^{2\pi \mi \theta_d(x)/2^{d}} \ket{0}_n\right) \ket{0}_d \\
-  &\approx \left(\me^{2\pi \mi \theta(x)} \ket{0}_n\right) \ket{0}_d.
+  &= \me^{2\pi \mi \theta_d(x)/2^{d}} \ket{x}_n \ket{\theta_d(x)}_d \\
+  &\mapsto \left(\me^{2\pi \mi \theta_d(x)/2^{d}} \ket{x}_n\right) \ket{0}_d \\
+  &\approx \left(\me^{2\pi \mi \theta(x)} \ket{x}_n\right) \ket{0}_d.
 \end{align*}
 
 
@@ -2038,18 +2525,21 @@ Here is a construction that is not always the best, but always works and often i
 
 \begin{enumerate}
 
-\item Let $\psi_x = \me^{2 \pi\mi \theta(x)} \rho_x$, where $\rho_x \idef \abs{\psi_x}$.  Then, $\ket{\psi} = U_{\theta} \ket{\rho}$.  (We can choose, for instance, $\theta(x) = 0$ if $\rho_x = 0$.)  Since we can get $U_\theta$, we may assume without loss of generality that $\psi_x \geq 0$ for all $x$.
+\item Let $\psi_x = \me^{2 \pi\mi \theta(x)} \rho_x$, where $\rho_x \idef \abs{\psi_x}$.  Then, if
+  \[
+    \rho \idef \sum_{x=0}^{2^n-1} \rho_x \ket{x},
+  \]
+  we have that $\ket{\psi} = U_{\theta} \ket{\rho}$.  (We can choose, for instance, $\theta(x) = 0$ if $\rho_x = 0$.)  Since we can get $U_\theta$, it suffices to prepare $\rho$, and hence we may assume without loss of generality that $\psi_x \geq 0$ for all $x$ (and therefore, real).
 
 \item Let
   \begin{align*}
     \ket{\psi}_n
     &= \sum_{x \in \F_2^n} \psi_x \ket{x}_n \\
     &= \sum_{y \in \F_2^{n-1}} \psi_{y,0} \ket{y}_{n-1} \ket{0} +  \psi_{y,1} \ket{y}_{n-1} \ket{1} \\
-    &= \ket{\chi}_{n-1} \otimes \left( C(y) \ket{0} +  S(y) \ket{1} \right),
+    &= \sum_{y \in \F_2^{n-1}}  \sqrt{\psi_{y,0}^2 + \psi_{y,1}^2} \ket{y}_{n-1} \otimes \left( C(y) \ket{0} +  S(y) \ket{1} \right),
   \end{align*}
   where
   \begin{align*}
-    \ket{\chi}_{n-1} &\idef \sum_{y \in \F_2^{n-1}} \sqrt{\psi_{y,0}^2 + \psi_{y,1}^2} \ket{y}_{n-1}, \\
     C(y) &\idef \frac{\psi_{y,0}}{\sqrt{\psi_{y,0}^2 + \psi_{y,1}^2}}, \\
     S(y) & \idef \frac{\psi_{y,1}}{\sqrt{\psi_{y,0}^2 + \psi_{y,1}^2}}.
   \end{align*}
@@ -2057,18 +2547,23 @@ Here is a construction that is not always the best, but always works and often i
 
   Note that since $C(y), S(y) \geq 0$ and ${C(y)}^2 + {S(y)}^2 = 1$, there exists a unique $\theta(y) \in [0, \mpi]$ such that $C(y) = \cos(\theta(y)/2)$ and $S(y) = \sin(\theta(y)/2)$.
 
-  Also,
+  Also, if we let
+  \[
+    \ket{\chi}_{n-1} \idef \sum_{y \in \F_2^{n-1}} \sqrt{\psi_{y,0}^2 + \psi_{y,1}^2} \ket{y}_{n-1},
+  \]
+  we have that
   \[
     \langle \chi \mid \chi \rangle = \sum_{y \in \F_2^{n-1}} \psi_{y,0}^2 + \psi_{y,1}^2 = \sum_{x \in \F_2^n} \psi_x^2 = \langle \psi \mid \psi \rangle = 1.
   \]
 
 
-\item If we can prepare $\ket{\chi}_{n-1}$, we can prepare $\ket{\psi}_n$, as
+\item Hence, if we can prepare $\ket{\chi}_{n-1}$, we can prepare $\ket{\psi}_n$ using a multiplexer (as defined above, but not explicitly shown), as
   \[
-    \ket{\psi}_n = (\idt \otimes R_Y(\theta)) \ket{\chi}_{n-1} \ket{0}_1.
+    \ket{\psi}_n = R_Y(\theta) \ket{\chi}_{n-1} \ket{0}_1,
   \]
+  where $\theta$ is the function on $y$ above.
 
-  \item Finally, we can prepare any initial $1$-qubit state, exactly as above, as given $\ket{\psi}_1 = a \ket{0} + b \ket{1}$ there is some $\theta$ such that $R_Y(\theta) \ket{0} = \ket{\psi}_1$.
+\item Iterating this process, we see that it suffices to prepare any initial $1$-qubit state, which we can do exactly as above, as given $\ket{\psi}_1 = a \ket{0} + b \ket{1}$, with $a, b \geq 0$ there is some $\theta$ such that $R_Y(\theta) \ket{0} = \ket{\psi}_1$.
 
 \end{enumerate}
 
@@ -2091,17 +2586,29 @@ Here is a construction that is not always the best, but always works and often i
 
   Hence, we have:
   \begin{multline*}
-    \ket{\psi} = \cos\left( \frac{\phi}{2} \right) \ket{0} \left( \cos\left( \frac{\theta(0)}{2} \right) + \sin\left( \frac{\theta(0)}{2} \right)\right) \\
-    + \sin\left( \frac{\phi}{2} \right) \ket{0} \left( \cos\left( \frac{\theta(1)}{2} \right) + \sin\left( \frac{\theta(1)}{2} \right)\right).
+    \ket{\psi} = \cos\left( \frac{\phi}{2} \right) \ket{0} \left( \cos\left( \frac{\theta(0)}{2} \right) \ket{0} + \sin\left( \frac{\theta(0)}{2} \right)\right) \ket{1} \\
+    + \sin\left( \frac{\phi}{2} \right) \ket{1} \left( \cos\left( \frac{\theta(1)}{2} \right) \ket{0} + \sin\left( \frac{\theta(1)}{2} \right) \ket{1} \right).
   \end{multline*}
 
   So, we need:
   \begin{center}
     \begin{quantikz}
       \lstick{$\ket{0}$} & \gate{R_Y(\phi)} & \gate{X} & \ctrl{1} & \gate{X} & \ctrl{1} &\\
-      \lstick{$\ket{1}$} & & & \gate{R_Y(\theta(0))} & & \gate{R_Y(\theta(1))} &
+      \lstick{$\ket{0}$} & & & \gate{R_Y(\theta(0))} & & \gate{R_Y(\theta(1))} &
     \end{quantikz}
   \end{center}
+
+  Indeed, we have:
+  \begin{align*}
+    \ket{00}
+    &\mapsto \left( \cos(\phi/2) \ket{0} + \sin(\phi/2) \ket{1} \right) \otimes \ket{0} \\
+    &=  \cos(\phi/2) \ket{0} \ket{0} + \sin(\phi/2) \ket{1}\ket{0} \\
+    &\mapsto \cos(\phi/2) \ket{1} \ket{0} + \sin(\phi/2) \ket{0}\ket{0} \\
+    &\mapsto \cos(\phi/2) \ket{1} \left( \cos(\theta(0)/2) \ket{0} + \sin(\theta(0)/2) \ket{1}  \right) + \sin(\phi/2) \ket{0}\ket{0} \\
+    &\mapsto \cos(\phi/2) \ket{0} \left( \cos(\theta(0)/2) \ket{0} + \sin(\theta(0)/2) \ket{1}  \right) + \sin(\phi/2) \ket{1}\ket{0} \\
+    &\mapsto \cos(\phi/2) \ket{0} \left( \cos(\theta(0)/2) \ket{0} + \sin(\theta(0)/2) \ket{1}  \right) \\
+    & \qquad + \sin(\phi/2) \ket{1}\left( \cos(\theta(1)/2) \ket{0} + \sin(\theta(1)/2) \ket{1} \right).
+  \end{align*}
 \end{example}
 
 
@@ -2119,11 +2626,11 @@ Physical meanings:
 \item The \emph{time dependent Schr\"odinger equation}\index{time dependent Schr\"odinger equation}: the \emph{initial value problem}
   \begin{align*}
     \ket{\psi(t_0)} &= \ket{\psi_0}, \\
-    \frac{\md}{\md t} \ket{\psi(t)} &= - i \hbar H \ket{\psi(t)},
+    \frac{\md}{\md t} \ket{\psi(t)} &= - \frac{i}{\hbar} H \ket{\psi(t)},
   \end{align*}
   where $\hbar$ is an universal constant.  ($H$ is assumed here to not depend on time.)  The solution is
   \[
-    \ket{\psi(t)} = \exp \left( - \frac{\mi}{\hbar} t H \right) \ket{\psi_0}.
+    \ket{\psi(t)} = \exp \left( - \frac{i}{\hbar} t H \right) \ket{\psi_0}.
   \]
 
 \end{enumerate}
@@ -2134,13 +2641,17 @@ We want to simulate the time evolution!
 
 \begin{itemize}
 
-\item[\emph{Input:}] $\ket{\psi_0}$, $H$, and $t$.
+\item[\emph{Input:}] $\ket{\psi_0}$, $H$, and $t>0$.
 
 \item[\emph{Output:}] $\ket{\psi(t)}$, or at least an approximation.
 
 \end{itemize}
 
 We have the formula, but it is hard to compute.
+
+\begin{remark}
+  This, along with Shor's algorithm, is one of the most important applications of quantum computing, resulting in an exponential speed-up over conventional algorithms.
+\end{remark}
 
 
 \begin{definition}
@@ -2154,9 +2665,9 @@ We have the formula, but it is hard to compute.
 \begin{definition}
   A Hamiltonian on $n$ qubits can be \emph{efficiently simulated}\index{efficiently simulated} if there exists a quantum circuit $U_{t, \epsilon}$, for any small $t, \epsilon > 0$, such that
   \[
-    \left\| \exp(-\mi t H/\hbar) - U_{t, \epsilon}\right\| = \max \left(\spec \left(\exp(-\mi t H/\hbar)\right)\right) < \epsilon,
+    \left\| \exp(-\mi t H/\hbar) - U_{t, \epsilon}\right\| < \epsilon,
   \]
-  and $U$ is made out of $\Poly(n, t, 1/\epsilon)$ gate.
+  and $U$ is made out of $\Poly(n, t, 1/\epsilon)$ gates.
 \end{definition}
 
 
@@ -2169,7 +2680,7 @@ We have the formula, but it is hard to compute.
 \end{example}
 
 
-\section{Trotter's Formula}
+\subsection{Trotter's Formula}
 
 \begin{theorem}[Trotter]
   We have
@@ -2179,7 +2690,7 @@ We have the formula, but it is hard to compute.
 \end{theorem}
 
 
-So, fix $\ell > 0$: if you can construct $\exp(-\mi H_r / \hbar \cdot t/\ell)$ for each $r$, then we have:
+So, fix large $\ell > 0$: if you can construct $\exp(-\mi H_r / \hbar \cdot t/\ell)$ for each $r$, then we have:
 \[
   \exp\left( - \frac{\mi}{\hbar} Ht \right) \approx  {\left( \exp\left( - \frac{\mi H_1}{\hbar \frac{t}{\ell}} \right) \exp\left( - \frac{\mi H_2}{\hbar \frac{t}{\ell}} \right) \cdots \exp\left( - \frac{\mi H_m}{\hbar \frac{t}{\ell}} \right)\right)}^\ell.
 \]
@@ -2194,16 +2705,16 @@ So, fix $\ell > 0$: if you can construct $\exp(-\mi H_r / \hbar \cdot t/\ell)$ f
 
   The idea of the proof is that
   \[
-    Y = SH Z H\adj{S}, \qquad X = HZH,
+    Y = SH Z \adj{(SH)} = SHZH\adj{S}, \qquad X = HZ\adj{H} = HZH,
   \]
   (so $X$, $Y$, and $Z$ are conjugates of each other).  So,
   \begin{align*}
     \exp\left( - \frac{\mi H_r}{\hbar} t \right)
-    &= \exp\left( - \frac{\mi}{\hbar}\alpha_r(\sigma_{r,0} \otimes \sigma_{r,1} \otimes \cdots \otimes \sigma{r, n-1})t \right) \\
+    &= \exp\left( - \frac{\mi}{\hbar}\alpha_r(\sigma_{r,0} \otimes \sigma_{r,1} \otimes \cdots \otimes \sigma_{r, n-1})t \right) \\
     &= \exp\left({- \frac{\mi \alpha_r t}{\hbar} R \sigma \adj{R}}\right) \\
     &= R \exp\left( - \frac{\mi \alpha_r t}{\hbar} \sigma \right) \adj{R},
   \end{align*}
-  where $R$ is an unitary operator made of factors of $H$, $S$, and $\sigma$ is a tensor products of $\idt$'s and $Z$'.
+  where $R$ is an unitary operator made of factors of $H$, $S$, and $\sigma$ is a tensor products of $\idt$'s and $Z$'s.
 
   Then, we have
   \[
