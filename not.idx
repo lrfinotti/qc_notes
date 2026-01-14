@@ -4,32 +4,32 @@
 \indexentry{ket minus@$\ket{-}$|hyperpage}{5}
 \indexentry{ket i@$\ket{\mi}$|hyperpage}{5}
 \indexentry{ket minus i@$\ket{-\mi}$|hyperpage}{5}
-\indexentry{ket psi@$\ket{\psi}$|hyperpage}{5}
+\indexentry{ket psi@$\ket{\psi}$|hyperpage}{6}
 \indexentry{ket theta phi@$\ket{\psi(\theta, \phi)}$|hyperpage}{6}
 \indexentry{equivalent@$\equiv$|hyperpage}{7}
-\indexentry{bar psi@$\bra{\psi}$|hyperpage}{7}
-\indexentry{adjoint@$\adj{A}$|hyperpage}{9}
-\indexentry{U sub n of C@$\un$|hyperpage}{9}
+\indexentry{bar psi@$\bra{\psi}$|hyperpage}{8}
+\indexentry{adjoint@$\adj{A}$|hyperpage}{10}
+\indexentry{U sub n of C@$\un$|hyperpage}{10}
 \indexentry{sigma 1@$\sigma_1$|hyperpage}{10}
 \indexentry{X@$X$|hyperpage}{10}
 \indexentry{sigma 2@$\sigma_2$|hyperpage}{10}
 \indexentry{Y@$Y$|hyperpage}{10}
-\indexentry{sigma 3@$\sigma_3$|hyperpage}{10}
-\indexentry{Z@$Z$|hyperpage}{10}
+\indexentry{sigma 3@$\sigma_3$|hyperpage}{11}
+\indexentry{Z@$Z$|hyperpage}{11}
 \indexentry{R sub X@$R_X$|hyperpage}{11}
 \indexentry{R sub Y@$R_Y$|hyperpage}{11}
 \indexentry{R sub Z@$R_Z$|hyperpage}{11}
-\indexentry{H@$H$|hyperpage}{12}
-\indexentry{S@$S$|hyperpage}{12}
-\indexentry{T@$T$|hyperpage}{12}
-\indexentry{P@$P$|hyperpage}{12}
+\indexentry{H@$H$|hyperpage}{13}
+\indexentry{S@$S$|hyperpage}{13}
+\indexentry{T@$T$|hyperpage}{13}
+\indexentry{P@$P$|hyperpage}{13}
 \indexentry{ket s@$\ket{s}$|hyperpage}{13}
 \indexentry{swap@$\sg$|hyperpage}{17}
-\indexentry{cp theta@$CP(\theta)$|hyperpage}{17}
-\indexentry{phi plus@$\ket{\Phi^+}$|hyperpage}{20}
-\indexentry{phi minus@$\ket{\Phi^-}$|hyperpage}{20}
-\indexentry{psi plus@$\ket{\Psi^+}$|hyperpage}{20}
-\indexentry{psi minus@$\ket{\Psi^-}$|hyperpage}{20}
-\indexentry{ket k of F@$\ket{k}_F$|hyperpage}{38}
-\indexentry{c x zero X@$C_{x_0}^n X$|hyperpage}{48}
-\indexentry{swap@$\swpg$|hyperpage}{49}
+\indexentry{cp theta@$CP(\theta)$|hyperpage}{18}
+\indexentry{phi plus@$\ket{\Phi^+}$|hyperpage}{24}
+\indexentry{phi minus@$\ket{\Phi^-}$|hyperpage}{24}
+\indexentry{psi plus@$\ket{\Psi^+}$|hyperpage}{24}
+\indexentry{psi minus@$\ket{\Psi^-}$|hyperpage}{24}
+\indexentry{ket k of F@$\ket{k}_F$|hyperpage}{50}
+\indexentry{c x zero X@$C_{x_0}^n X$|hyperpage}{60}
+\indexentry{swap@$\swpg$|hyperpage}{61}

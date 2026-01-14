@@ -132,6 +132,17 @@ quantum_circuit.draw(output="mpl", style="textbook")
 quantum_circuit.draw(output="mpl", style="bw")
 ```
 
+## Multi-Controlled Gates
+
+
+We can make multi-controlled gates:
+
+```python
+multi_x = QuantumCircuit(QuantumRegister(size=5, name="x"))
+multi_x.mcx([0,1,3], 4)
+multi_x.draw(output="mpl")
+```
+
 ## States
 
 

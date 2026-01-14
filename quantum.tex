@@ -131,6 +131,7 @@
 \DeclareMathOperator{\SL}{SL}
 \DeclareMathOperator{\ord}{ord}
 \DeclareMathOperator{\chr}{char} % characteristic
+\DeclareMathOperator{\range}{range}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % EXTRA SHORTCUTS
@@ -171,6 +172,7 @@
 
 \tableofcontents
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Qubits}
 
 \begin{notation}
@@ -280,6 +282,7 @@
 \end{notation}
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Tensor Products}\label{sec:tensor_prods}
 
 
@@ -334,7 +337,7 @@ If $\ket{\psi} = \sum_{x \in \F_2^n} \psi_{x} \ket{x}$, then we have:
 
 
 
-
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Inner Product}
 
 We have the \emph{inner product}\index{inner product} in ${\left( {\C^2} \right)}^{\otimes n}$:  if $\ket{\psi}  = \sum_{x \in \F_2^n} \psi_x \ket{x}$ and $\ket{\phi} = \sum_{x \in \F_2^n} \phi_x \ket{x}$, then
@@ -356,7 +359,7 @@ Hence,
 
 
 
-
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Bloch Sphere}\label{sec:bloch_sphere}
 
 \textbf{Reference:} \href{https://www.youtube.com/watch?v=AYGHS9hXgyw}{Bloch Sphere | Visualizing Qubits and Spin | Quantum Information}
@@ -418,6 +421,7 @@ be a direction/point on the sphere (in spherical coordinates).  Then, the spin o
 
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{$1$-Qubit Gates}
 
 
@@ -447,6 +451,7 @@ A physically closed system, quantum systems evolve through unitary operations.
 In a \emph{physical} level, implementing $1$-qubit gates is ``easy'', but $n$-qubit gates are usually hard.  So, we need a small set of simple (physically, so $n$-qubit gates with $n$ small, i.e., mostly $n=1$, and a few with $n=2$, and maybe $n=3$, and also easy to understand and use) and universal (meaning that we can produce any $n$-gate from them) set of gates.
 
 
+% ------------------------------------------------------------------------------
 \subsection{Pauli Gates}
 
 \begin{notation}
@@ -509,6 +514,7 @@ In a \emph{physical} level, implementing $1$-qubit gates is ``easy'', but $n$-qu
 \end{remarks}
 
 
+% ------------------------------------------------------------------------------
 \subsection{Rotations}\label{sec:rotations}
 
 We also have \emph{rotations}\index{rotations} around the $X$, $Y$, and $Z$ angles:
@@ -596,6 +602,7 @@ Note that if $R$ is one of these, then:
 
 
 
+% ------------------------------------------------------------------------------
 \subsection{Hadamard, $S$, $T$, and Phase Gates}
 
 \begin{notation}
@@ -698,9 +705,43 @@ Note that if $R$ is one of these, then:
 \end{remark}
 
 
+% ------------------------------------------------------------------------------
+\subsection{Computations with the Hadamard Gate}
+
+Note that we have
+\[
+  H \ket{a} = \frac{1}{\sqrt{2}} \ket{0} + (-1)^a \ket{1} = \frac{1}{\sqrt{2}} \sum_{b \in \F_2} (-1)^{ab} \ket{b}.
+\]
+
+Then,
+\begin{align*}
+  H^{\otimes n} \ket{x}_n
+  &= H^{\otimes n} \ket{x_{n-1}x_{n-2} \cdots x_0} \\
+  &= (H \ket{x_{n-1}}) \otimes \cdots \otimes (H \ket{x_0}) \\
+  &= \left( \frac{1}{\sqrt{2^n}} \sum_{y_{n-1} \in \F_2} (-1)^{x_{n-1}y_{n-1}} \ket{y_{n-1}} \right) \otimes \cdots \otimes \left( \frac{1}{\sqrt{2^n}} \sum_{y_{0} \in F_2} (-1)^{x_{0}y_{0}} \ket{y_{0}} \right) \\
+  &= \frac{1}{\sqrt{2^n}} \sum_{y \in \F_2^n} (-1)^{x \cdot y} \ket{y}_n,
+\end{align*}
+i.e.,
+\begin{equation}\label{eq:multH}
+  H^{\otimes n} \ket{x}_n = \frac{1}{\sqrt{2^n}} \sum_{y \in \F_2^n} (-1)^{x \cdot y} \ket{y}_n,
+\end{equation}
+where the operation in $x \cdot y$ is the dot product of $\F_2^n$.
 
 
+% ------------------------------------------------------------------------------
+\subsection{Query Gate}
 
+\begin{definition}
+  Given a function $f : \F_2^n \to \F_2^m$, the \emph{query gate}\index{query gate} for $f$ is the defined as
+  \[
+    U_f(\ket{y}_m \ket{x}_n) \idef \ket{y \oplus f(x)}_m \ket{x}_n.
+  \]
+\end{definition}
+
+Note that the $2^{n + m} \times 2^{n+m}$ matrix of $U_f$ is a \emph{permutation matrix}\index{permutation matrix}, i.e., the columns are permutations of the identity, since the $\ket{y}_m \ket{x}_n$ form a basis.  Note that permutation matrices are always unitary.  In this case, in fact, we have $U_f = \adj{U_f}$.
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quantum Circuits}\label{sec:circuits}
 
 Circuits apply gates to particular qubits.  For instance:
@@ -736,36 +777,18 @@ We can also add measurements to the circuit:
 \end{center}
 
 
-\begin{definition}
-  The \emph{depth}\index{depth} of a circuit is the number of \emph{layers} of the circuit, i.e., the number of time steps need to execute all gates.  The circuit's \emph{width}\index{width} is the maximum number of gates to be executed (in parallel) at single time step.  (Narrow usually means that we use few ancillas.)
-\end{definition}
-
-Note that the depth is not the same as the number of gates, since these may run in parallel.  For instance, the depth of
-\begin{center}
-  \begin{quantikz}
-    & \gate{X} &  &  & \\
-    &  & \gate{Y} &  & \\
-    &  &  & \gate{Z} & \\
-  \end{quantikz}
-  \quad $=$ \quad
-  \begin{quantikz}
-    & \gate{X} & \\
-    & \gate{Y} & \\
-    & \gate{Z} & \\
-  \end{quantikz}
-\end{center}
-is one, and its width is three.
-
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Multi-Qubit Gates}\label{sec:mq-gates}
 
+% ------------------------------------------------------------------------------
 \subsection{$\cnot$ Gate}
 
 Here is the \emph{$\cnot$ Gate}\index{cnot gate@$\cnot$ Gate} (for \emph{controlled not gate}) or \emph{controlled NOT gate}\index{controlled NOT gate}: we have a control qubit and target qubit.  If the control qubit is $1$, then flip the value of the target bit.  The graphical representation is
 
 \begin{center}
   \begin{quantikz}
-    & \ctrl{1} & \\
-    & \targ{} &
+   \lstick{$\ket{a}$} & \ctrl{1} & \rstick{$\ket{a}$}\\
+    \lstick{$\ket{b}$} & \targ{} & \rstick{$\ket{a \oplus b}$}
   \end{quantikz}
 \end{center}
 
@@ -831,6 +854,7 @@ Note that using Corollary~\ref{cor:repres}, we can produce any controlled gate w
 
 
 
+% ------------------------------------------------------------------------------
 \subsection{Swap Gate}
 
 The \emph{swap gate}\index{swap gate} $\sg\index[not]{swap@$\sg$}$ is defined by for $a, b \in \F_2$ as
@@ -865,6 +889,7 @@ It can be constructed from $\cnot$ gates:
   \end{quantikz}
 \end{center}
 
+% ------------------------------------------------------------------------------
 \subsection{Controlled-Phase Gate}
 
 The \emph{controlled-phase gate}\index{controlled-phase gate} $CP(\theta)\index[not]{cp theta@$CP(\theta)$}$, given by
@@ -884,6 +909,7 @@ can be constructed as:
   \end{quantikz}
 \end{center}
 
+% ------------------------------------------------------------------------------
 \subsection{Multiple Control Gates}
 
 We can have multiple controls for a gate.  In that case, all control qubits must be $\ket{1}$ in order for the gate to be applied to the target qubit.  For a gate $U$ on $n$ qubits, the notation for it is $C^{n-1}U$.
@@ -891,15 +917,16 @@ We can have multiple controls for a gate.  In that case, all control qubits must
 \textbf{Note:} These may be hard to create using only one-qubit gates and $\cnot$!  See \href{https://quantumcomputing.stackexchange.com/questions/13132/how-can-we-implement-controlled-t-gate-using-cnot-and-h-s-and-t-gates}{this Stack exchange post}.
 
 
+% ------------------------------------------------------------------------------
 \subsection{Toffoli Gate}
 
 The \emph{Toffoli Gate}\index{Toffoli Gate} is $C^2X$, so it has two controls and one target.  We only switch the target, i.e., apply $X$, when \emph{both} controls are $1$.
 
 \begin{center}
   \begin{quantikz}
-    & \ctrl{2} & \\
-    & \control{} &  \\
-    & \targ{} &
+    \lstick{$\ket{a}$} & \ctrl{2} & \rstick{$\ket{a}$} \\
+    \lstick{$\ket{b}$} & \control{} & \rstick{$\ket{b}$} \\
+    \lstick{$\ket{c}$} & \targ{} & \rstick{$\ket{c \oplus ab}$}
   \end{quantikz}
 \end{center}
 
@@ -915,6 +942,9 @@ We can construct the Toffoli gate from $H$, $T$ (and $\adj{T} = T^7 = P(-\pi/4)$
 
 
 
+
+
+% ------------------------------------------------------------------------------
 \subsection{Other Controlled Gates}\label{ssec:control_gates}
 
 One can use the $\cnot$ gate to produce other controlled gates: $CY$, $CZ$, $CS$, $CH$.
@@ -937,6 +967,7 @@ Here is a graphic representation:
 \end{center}
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Measuring Singular Qubits}
 
 If we have:
@@ -957,6 +988,132 @@ due to probabilities.  Hence, $c = 4/\sqrt{11}$ and
 \]
 
 
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Elementary Operations}
+
+
+\begin{definition}
+  The \emph{standard quantum gate set}\index{standard quantum gate set}, which is often used to measure number of ``steps'' in a quantum circuit are:
+  \begin{itemize}
+
+  \item The single-qubit gates $X$, $Y$, $Z$, $H$, $S$, $\adj{S}$, $T$, $\adj{T}$;
+
+  \item the $CNOT$ gates;
+
+  \item single-qubit  standard basis measurements.
+
+  \end{itemize}
+\end{definition}
+
+It can be shown that any unitary gate can be closely approximated by a circuit using these gates.
+
+
+
+\begin{definition}
+
+  \begin{enumerate}
+
+  \item The \emph{size}\index{size} of a circuit is the number of (elementary) gates it uses.  (This is associated with \emph{sequential running time}.)
+
+  \item The \emph{depth}\index{depth} of a circuit is the number of \emph{layers} of the circuit, i.e., the number of time steps need to execute all gates.  (This is associated with \emph{parallel running time}.)
+
+  \item The circuit's \emph{width}\index{width} is the maximum number of gates to be executed (in parallel) at single time step.  (Narrow usually means that we use few ancillas.)
+  \end{enumerate}
+\end{definition}
+
+Note that the depth is not the same as the size/number of gates, since these may run in parallel.  For instance, the depth of
+\begin{center}
+  \begin{quantikz}
+    & \gate{X} &  &  & \\
+    &  & \gate{Y} &  & \\
+    &  &  & \gate{Z} & \\
+  \end{quantikz}
+  \quad $=$ \quad
+  \begin{quantikz}
+    & \gate{X} & \\
+    & \gate{Y} & \\
+    & \gate{Z} & \\
+  \end{quantikz}
+\end{center}
+is one, and its width and size are three.
+
+We can use elementary operations to simulate classical logical gates.  We already have the NOT gate $X$.  Here is the AND gate:
+\begin{center}
+  \begin{quantikz}[wire types={n,n,n}]
+    \lstick{$\ket{a}$} & \setwiretype{q} &\gategroup[3, steps=5, style={dashed, rounded corners, inner sep=6pt}]{AND} &                    &                  \ctrl{2} & \rstick{$\ket{a}$} & \setwiretype{n} &&                             \\
+    \lstick{$\ket{b}$} & \setwiretype{q} & &                    &                  \ctrl{0} & \rstick{$\ket{b}$} & \setwiretype{n} &&                             \\
+    &&                 & \lstick{$\ket{0}$} & \targ{0} \setwiretype{q}  &                    &                 && \rstick{$\ket{a \land b}$}
+  \end{quantikz}
+\end{center}
+
+And here is the OR gate:
+
+\begin{center}
+  \begin{quantikz}[wire types={n,n,n}]
+    \lstick{$\ket{a}$} & \setwiretype{q} & \gategroup[3, steps=8, style={dashed, rounded corners, inner sep=6pt}]{OR} && \gate{X} &                                    \ctrl{2} && \rstick{$\ket{\neg a}$} & \setwiretype{n} &&                             \\
+    \lstick{$\ket{b}$} & \setwiretype{q} &&                    & \gate{X} &                 \ctrl{0} && \rstick{$\ket{\neg b}$} & \setwiretype{n} &&                             \\
+    &&                 & \lstick{$\ket{0}$} & \setwiretype{q}  & \targ{0}& \gate{X}                   &                 &&&& \rstick{$\ket{a \lor b}$}
+  \end{quantikz}
+\end{center}
+
+Finally, we have the \emph{FANOUT} gate, which just replicates the input:
+
+\begin{center}
+  \begin{quantikz}[wire types={n,n}]
+    \lstick{$\ket{a}$} &\setwiretype{q}& \gategroup[2, steps=5, style={dashed, rounded corners, inner sep=6pt}]{FANOUT} &                    &                  \ctrl{1} &&&& \rstick{$\ket{a}$} & \setwiretype{n} &                             \\
+    &&                 & \lstick{$\ket{0}$} & \targ{0} \setwiretype{q}  &                    &                 && \rstick{$\ket{a}$}
+  \end{quantikz}
+\end{center}
+
+
+Hence, if we have logical gate $C$ that computes $f : \F_2^n \to \F_2^m$ using $t$ elementary logical gates, we can use the approximations above to implement it as a quantum circuit $R$, with $\mathcal{O}(t)$ elementary quantum gates:
+\begin{center}
+  \begin{quantikz}
+    \lstick[4]{$x$} & & \gate[4]{C} & &\rstick[4]{$f(x)$}\\
+    & &  & &\\
+    \setwiretype{n} & \vdots &  &\vdots& && \\
+    & &  & &\\
+  \end{quantikz}
+  \quad \sim \quad
+  \begin{quantikz}
+    \lstick[4]{$\ket{0}_k$} & & \gate[8]{R} && \rstick[5]{$\ket{g(x)}$}\\
+    & &  && \\
+    \setwiretype{n}        & \vdots&  &\vdots& \\
+    & &  && \\
+    \lstick[4]{$\ket{x}_n$} & &  && \\
+    & &  && \rstick[3]{$\ket{f(x)}_m$}\\
+    \setwiretype{n}        & \vdots&  &\vdots& \\
+    & &  && \\
+  \end{quantikz}
+\end{center}
+
+Note that we have the \emph{garbage} $\ket{g(x)}$, which can be problematic if we want to use it as a subroutine in a larger algorithm, as it might break interference patterns.   To fix it, we can copy the result $\ket{f(x)}_m$ to a new set of $m$ qubits:
+\begin{center}
+  \begin{quantikz}
+    \lstick[4]{$\ket{y}_m$} &        &             & \targ{0}  &           &        &           &                   &        & \rstick[4]{$\ket{y \oplus f(x)}_m$} \\
+                            &        &             &           & \targ{0}  &        &           &                   &        &                                     \\
+    \setwiretype{n}         & \vdots &             &           &           & \cdots &           &                   & \vdots &                                     \\
+                            &        &             &           &           &        & \targ{0}  &                   &        &                                     \\
+    \lstick[4]{$\ket{0}_k$} &        & \gate[8]{R} &           &           &        &           & \gate[8]{\adj{R}} &        & \rstick[4]{$\ket{0}_k$}             \\
+                            &        &             &           &           &        &           &                   &        &                                     \\
+    \setwiretype{n}         & \vdots &             &           &           & \cdots &           &                   & \vdots &                                     \\
+                            &        &             &           &           &        &           &                   &        &                                     \\
+    \lstick[4]{$\ket{x}_n$} &        &             & \ctrl{-8} &           &        &           &                   &        & \rstick[4]{$\ket{x}_n$}             \\
+                            &        &             &           & \ctrl{-8} &        &           &                   &        &                                     \\
+    \setwiretype{n}         & \vdots &             &           &           & \cdots &           &                   & \vdots &                                     \\
+                            &        &             &           &           &        & \ctrl{-8} &                   &        &                                     \\
+  \end{quantikz}
+\end{center}
+
+\begin{remark}
+  It's important here that $R$ is \emph{deterministic}, as it might now work when the qubits are in superposition states of the basis.
+\end{remark}
+
+Note then that for any function $f$ that can be implemented with classical boolean gates, we can implement a query gate $U_f$.
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Entanglement}
 
 Consider the circuit:
@@ -1035,14 +1192,38 @@ More precisely:
 \end{remark}
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Phase Kickback}
 
-Consider:
+Let $b, c \in \F_2$.  Then, we have that
+\[
+  \ket{b \oplus c} = X^c \ket{b} = X^b \ket{c}.
+\]
+So, if $U_f$ is a query gate for the function $f : \F_2^n \to \F_2$, then $U_f(\ket{b}\ket{a}_n) = \ket{b \oplus f(a)}\ket{a}_n = (X^{f(a)}\ket{b}) \otimes \ket{a}_n$.  More generally,
+\[
+  U_f(\ket{\psi} \ket{a}_n) = (X^{f(a)} \ket{\psi} \ket{a}_n).
+\]
+In particular, since $X \ket{-} = - \ket{-}$ (so, $\ket{-}$ is an eigenstate of $X$), we have
+\begin{align*}
+  U_f(\ket{-} \ket{a}_n)
+  &= \left( X^{f(a)} \ket{-} \right) \oplus \ket{a}_n \\
+  &= (-1)^{f(a)} \ket{-} \ket{a}_n.
+\end{align*}
+The formula
+\begin{equation}\label{eq:pk1}
+  U_f(\ket{-} \ket{a}_n) = (-1)^{f(a)} \ket{-} \ket{a}_n,
+\end{equation}
+is the phase kickback formula.
+
+On the other hand, note that since $X \ket{+} = \ket{+}$, we have $U_f (\ket{+} \ket{a}_n) = \ket{+} \ket{a}_n$, and so it remains unchanged.
+
+
+We can also consider:
 
 \begin{center}
   \begin{quantikz}
-    \lstick{$\ket{+}$} & & \ctrl{1} & \\
-    \lstick{$\ket{v}$} & & \gate{U} &
+    \lstick{$\ket{v}$} & & \gate{U} & \\
+    \lstick{$\ket{+}$} & & \ctrl{-1} &
   \end{quantikz}
 \end{center}
 and suppose the $\ket{v}$ is an \emph{eigenstate}\index{eigenstate} of $U$, meaning, $U \ket{v} = \me^{\mi \theta} \ket{v}$.  (Note that, due to normalization, all eigenvalues are of the form $\me^{\mi \theta}$.)
@@ -1060,6 +1241,7 @@ So, $\ket{v}$ is unchanged (even though it was the target qubit), and a relative
 So, if we apply a controlled gate to a target that is an eigenvector of this gate, the phase of the control qubit is changed.  This is called \emph{phase kickback}\index{phase kickback}.
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Superdense Coding}
 
 Alice can send Bob two classical bits using only one qubit.  Alice and Bob start with a maximally entangled pair of qubits
@@ -1077,8 +1259,260 @@ Alice takes the first qubit and Bob the second.  Then, when Alice applies the fi
 \]
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Deutsch's Algorithm}
+
+\textbf{Problem:} Given a function $f : \F^2 \to \F^2$ and an oracle $U_f (\ket{y}\ket{x}) = \ket{y + f(x)} \ket{x}$, find if $f(0) \oplus f(1)$ is either $0$ or $1$.  Note that if $f(0) \oplus f(1) = 0$, then $f$ is \emph{constant}.
+
+Here is the quantum circuit:
+
+\begin{center}
+  \begin{quantikz}
+    \lstick{$\ket{0}$} & & & \gate[2]{H} & \gate[2]{U_f} & \gate{H} & \meter{} & \\
+    \lstick{$\ket{0}$} & \gate{X} & &  &  &  &  & \\
+  \end{quantikz}
+\end{center}
 
 
+Let's check that it works.  First, observe that
+\[
+  \ket{0 \oplus a} - \ket{1 \oplus a} = (-1)^a \left( \ket{0} - \ket{1} \right).
+\]
+Then, due to phase kickback (Eq.~\eqref{eq:pk1}):
+% \begingroup
+% \addtolength{\jot}{1em}\begin{align*}
+%   \ket{0}\ket{0}
+%   &\mapsto \ket{1}\ket{0} \\
+%   &\mapsto \frac{1}{2} \left(\ket{0} - \ket{1})\right) \otimes \left(\ket{0} + \ket{1})\right) \\
+%   &= \frac{1}{2} \left( \ket{0} - \ket{1}) \right) \ket{0} +\frac{1}{2} \left( \ket{0} - \ket{1}) \right) \ket{1} \\
+%   &\mapsto  \frac{1}{2} \left( \ket{0 \oplus f(0)} - \ket{1 \oplus f(0)}) \right) \ket{0} +\frac{1}{2} \left( \ket{0 \oplus f(1)} - \ket{1 \oplus f(1)}) \right) \ket{1} \\
+%   &= \frac{(-1)^{f(0)}}{2} \left( \ket{0} - \ket{1} \right)\ket{0} + \frac{(-1)^{f(1)}}{2} \left( \ket{0} - \ket{1} \right) \ket{1} \\
+%   &= (-1)^{f(0)}{\sqrt{2}} \ket{-}\ket{0} + \frac{(-1)^{f(1)}}{\sqrt{2}} \ket{-}\ket{1} \\
+%   &= (-1)^{f(0)} \ket{-} \otimes \frac{1}{\sqrt{2}}  \left(\ket{0} + \f(-1)^{f(0) \oplus f(1)} \ket{1}\right) \\
+%   &\mapsto (-1)^{f(0)} \ket{-} \otimes \ket{f(0) \oplus f(1)},
+% \end{align*}
+% \endgroup
+\begingroup
+\addtolength{\jot}{1em}\begin{align*}
+  \ket{0}\ket{0}
+  &\mapsto \ket{1}\ket{0} \\
+  &\mapsto \frac{1}{2} \left(\ket{0} - \ket{1})\right) \otimes \left(\ket{0} + \ket{1})\right) \\
+  &= \frac{1}{\sqrt{2}} \left( \ket{-}\ket{0} + \ket{-}\ket{1} \right) \\
+  &\mapsto \frac{1}{\sqrt{2}} \left((-1)^{f(0)}\ket{-}\ket{0} + (-1)^{f(1)}\ket{-}\ket{1}\right) \\
+  &= (-1)^{f(0)} \ket{-} \otimes \frac{1}{\sqrt{2}}  \left(\ket{0} + (-1)^{f(0) \oplus f(1)} \ket{1}\right) \\
+  &\mapsto (-1)^{f(0)} \ket{-} \otimes \ket{f(0) \oplus f(1)},
+\end{align*}
+\endgroup
+so, we measure $f(0) \oplus f(1)$.
+
+Note that we call $U_f$ only once, but due to ``interference'': we compute both $f(0)$ and $f(1)$, at the same time, due to the Hadamard gate at the top quibit.  We make constructive interference for the correct answer, and destructive interference for the wrong one.
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Deutsch-Jozsa Algorithm}
+
+Now, we will consider $f : \F_2^n \to \F_2$, for $n \geq 1$.
+
+Here is the circuit for the Deutsch-Jozsa algorithm, which just generalizes the previous one:
+
+\begin{center}
+  \begin{quantikz}
+    \lstick{$\ket{0}$} & &  & \gate[5]{H} & \gate[5]{U_f} & \gate[4]{H} & \meter{} & \rstick[4]{$y \in \F_2^n$}\\
+    \lstick{$\ket{0}$} & &  &  &  &  & \meter{} & \\
+    \setwiretype{n} \lstick{$\vdots$} & &  &  &  &  & \vdots & \\
+    \lstick{$\ket{0}$} & &  &  &  & & \meter{} & \\
+    \lstick{$\ket{0}$} & & \gate{X} &  &  &  &  & \\
+  \end{quantikz}
+\end{center}
+
+This circuit can be used to solve a multiple problems.
+
+% ------------------------------------------------------------------------------
+\subsection{The Deutsch-Jozsa Problem}
+
+\textbf{Problem:} Given $f : \F_2^n \to \F^2$, determine if the function is constant or balanced (i.e., the number of inputs that give $0$ and the number of inputs that give $1$ are equal).  (Note that $f$ might be neither, but we just ``don't care'' about such functions, i.e., we \emph{assume} that the $f$ is either constant or balanced.)
+
+Using Eq.~\eqref{eq:multH} and phase kickback, we have
+\begin{align*}
+  \ket{0}_n
+  &\mapsto \ket{1}\ket{0}_{n-1} \\
+  &\mapsto \ket{-} \otimes \frac{1}{\sqrt{2^n}} \sum_{x \in \F_2^n} \ket{x}_n \\
+  &= \frac{1}{\sqrt{2^n}} \sum_{x \in \F_2^n} \ket{-} \ket{x}_n \\
+  &\mapsto \frac{1}{\sqrt{2^n}} \sum_{x \in \F_2^n} (-1)^{f(x)} \ket{-} \ket{x}_n \\
+  &= \ket{-} \otimes \frac{1}{\sqrt{2^n}} \sum_{x \in \F_2^n} (-1)^{f(x)} \ket{x}_n \\
+  &\mapsto \ket{-} \otimes \frac{1}{2^n} \sum_{x \in \F_2^n} \sum_{y \in \F_2^n} (-1)^{f(x) + x \cdot y} \ket{y}_n \\
+  &= \ket{-} \otimes \frac{1}{2^n} \sum_{y \in \F_2^n} \left[\sum_{x \in \F_2^n} (-1)^{f(x) + x \cdot y}\right] \ket{y}_n.
+\end{align*}
+
+Now,
+\[
+  \prob(\ket{0}_n) = \abs{\frac{1}{2^n} \sum_{x \in \F_2^n} (-1)^{f(x)}}^2 =
+  \begin{cases}
+    1,& \text{if $f$ is constant}; \\
+    0,& \text{if $f$ is balanced}.
+  \end{cases}
+\]
+
+Therefore, if we measure $0$, we have that the function is constant and if we don't, then the function is constant. Hence, with a single query we can answer the questions.
+
+Classically, in the worst case scenario we'd need $2^{n-1} + 1$ queries, but in terms of probability, $k$ \emph{random} queries being equal for a balanced function would have a probability of $1/2^{k-1}$, which gets small quickly.  Since quantum computers are not perfect in reality, the advantage might not be that great.
+
+
+
+% ------------------------------------------------------------------------------
+\subsection{The Bernstein-Vazirani Problem}
+
+\textbf{Problem:} Given $f: \F_2^n \to \F_2$ for which we know there is some $s \in \F_2^n$ such that $f(x) = x \cdot z$ for all $x \in \F_2^n$, find $z$.
+
+The same circuit as the one for Deutsch-Jozsa immediately solves the problem, since
+\begin{align*}
+  \frac{1}{2^n} \sum_{y \in \F_2^n} \left[\sum_{x \in \F_2^n} (-1)^{f(x) + x \cdot y}\right] \ket{y}_n
+  &= \frac{1}{2^n} \sum_{y \in \F_2^n} \left[\sum_{x \in \F_2^n} (-1)^{x \cdot z + x \cdot y}\right] \ket{y}_n \\
+  &= \frac{1}{2^n} \sum_{y \in \F_2^n} \left[\sum_{x \in \F_2^n} (-1)^{x \cdot (z \oplus y)}\right] \ket{y}_n.
+\end{align*}
+Then,
+\[
+  \prob(\ket{z}_n) = \abs{\frac{1}{2^n} \sum_{x \in \F_2^n} 1}^2 = 1.
+\]
+
+One can also see that if $y \in \F_2^n \setminus \{(0,0, \ldots , 0)\}$, then
+\[
+  \sum_{x \in \F_2^n} (-1)^{x \cdot y} = 0.
+\]
+Indeed, if $y_i \neq 0$, i.e., $y_i = 1$, then if
+\[
+  (-1)^{x_0y_0 + \cdots + 0\cdot y_i + \cdots + x_{n-1}y_{n-1}} +   (-1)^{x_0y_0 + \cdots + 1 \cdot y_i + \cdots + x_{n-1}y_{n-1}} = 0,
+\]
+and the summands above can be paired this way.
+
+Again, we can solve the problem with a single query, while in classic computing, we'd need $n$.
+
+
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Simon's Algorithm}
+
+\textbf{Problem:} Let $f : \F_2^n \to \F_2^m$ such that there is $z \in \F_2^n$ such that
+\[
+  f(x) = f(y) \quad \text{if and only if} \quad x=y \text{ or } x \oplus z = y
+\]
+for all $x, y \in \F_2^n$.  Find $z$.
+
+We break it in cases:
+\begin{enumerate}
+
+\item \textbf{Case 1:} $z = (0, \ldots , 0)$.  In this case the condition is that $f$ is one-to-one.
+
+\item \textbf{Case 2:} $z \neq (0, \ldots , 0)$.  In this case the condition is that $f$ is two-to-one, as $f(x) = f(x \oplus z)$.
+
+\end{enumerate}
+
+Simon's algorithm consists of running the following circuit several times, followed by some \emph{classical} post processing steps described below.
+
+\begin{center}
+  \begin{quantikz}
+    \lstick{$\ket{0}$}  &  & \gate[4]{H} & \gate[7]{U_f} & \gate[4]{H} & \meter{} & \rstick[4]{$y \in \F_2^n$}\\
+    \lstick{$\ket{0}$}  &  &  &  &  & \meter{} & \\
+    \setwiretype{n} \lstick{$\vdots$}  &  &  &  &  & \vdots & \\
+    \lstick{$\ket{0}$}  &  &  &  & & \meter{} & \\
+    \lstick{$\ket{0}$}  & &  &  &  &  & \\
+    \setwiretype{n} \lstick{$\vdots$}  &  &  &  &  & \vdots & \\
+    \lstick{$\ket{0}$}  & &  &  &  &  &
+  \end{quantikz}
+\end{center}
+
+We then have:
+\begin{align*}
+  \ket{0}_m \ket{0}_n
+  &\mapsto \frac{1}{\sqrt{2^n}} \sum_{x \in \F_2^n} \ket{0}_m \ket{x}_n \\
+  &\mapsto  \frac{1}{\sqrt{2^n}} \sum_{x \in \F_2^n} \ket{f(x)}_m \ket{x}_n \\
+  &\mapsto  \frac{1}{2^n} \sum_{x \in \F_2^n} \ket{f(x)}_m \otimes \sum_{y \in \F_2^n} (-1)^{x \cdot y} \ket{y}_n \\
+  &= \frac{1}{2^n} \sum_{y \in \F_2^n} \left[\sum_{x \in \F_2^n}  (-1)^{x \cdot y} \ket{f(x)}_m\right] \otimes \ket{y}_n.
+\end{align*}
+
+Therefore, in measuring the last $n$-qubits, we have
+\begin{align*}
+  \prob(\ket{y}_n)
+  &= \left\| \frac{1}{2^n} \sum_{x \in \F_2^n} (-1)^{x \cdot y} \ket{f(x)}_m \right\|^2 \\
+  &= \left\| \frac{1}{2^n} \sum_{t \in \range(f)} \left[ \sum_{x \in f^{-1}(t)} (-1)^{x \cdot y} \right] \ket{t}_m \right\|^2 \\
+  &= \frac{1}{2^{2n}} \sum_{t \in \range(f)} \left|  \sum_{x \in f^{-1}(t)} (-1)^{x \cdot y}  \right|^2
+\end{align*}
+
+Hence, in Case 1, when $f$ is one-to-one we have
+\[
+  \left|  \sum_{x \in f^{-1}(t)} (-1)^{x \cdot y}  \right|^2 = 1,
+\]
+since the sum has a single term.  So,
+\[
+  \prob(\ket{y}_n) = \frac{1}{2^{2n}} \cdot 2^n = \frac{1}{2^n}
+\]
+for every $y \in \F_2^n$, meaning the every single $y$ has the exact same probability.
+
+In Case 2, when $z \neq (0, \ldots , 0)$, we have that $f^{-1}(t) = \{w, w \oplus z\}$ (for some $w$ such that $f(w) = t$).  Then,
+\begin{align*}
+  \left|  \sum_{x \in f^{-1}(t)} (-1)^{x \cdot y}  \right|^2
+  &= \left| (-1)^{w \cdot y} + (-1)^{(w \oplus z) \cdot y} \right|^2 \\
+  &= \left| 1 + (-1)^{z \cdot y} \right| \\
+  &=
+    \begin{cases}
+      4, & \text{if $z \cdot y = 0$}; \\
+      0, & \text{if $z \cdot y = 1$}.
+    \end{cases}
+\end{align*}
+
+Hence, in this case, since $\range(f)$ has $2^{n-1}$ elements, we have
+\[
+  \prob(\ket{y}_n) =
+  \begin{cases}
+    \frac{1}{2^{n-1}}, &  \text{if $z \cdot y = 0$}; \\
+      0, & \text{if $z \cdot y = 1$}.
+    \end{cases}
+\]
+
+Now, suppose that we run this circuit $k \idef n + r$ times (for some $r$), and measure $y^{(1)}, y^{(2)}, \ldots y^{(k)}$, and let
+\[
+  y^{(i)} = y^{(i)}_{n-1} y^{(i)}_{n-2} \cdots y^{(i)}_{1} y^{(i)}_{0},
+\]
+and let
+\[
+  M \idef \begin{bmatrix}
+    y^{(1)}_{n-1} & y^{(1)}_{n-2} & \cdots & y^{(1)}_{0} \\
+    y^{(2)}_{n-1} & y^{(2)}_{n-2} & \cdots & y^{(2)}_{0} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    y^{(k)}_{n-1} & y^{(k)}_{n-2} & \cdots & y^{(k)}_{0}
+  \end{bmatrix} \in M_{k,n}(\F_2)
+\]
+Then,
+\[
+  M \cdot
+  \begin{bmatrix}
+    z_{n-1} \\
+    z_{n-2}\\
+    \vdots \\
+    z_{0}
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    y^{(1)} \cdot z \\
+    y^{(2)} \cdot z \\
+    \vdots \\
+    y^{(k)} \cdot z
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    0 \\
+    0 \\
+    \vdots \\
+    0
+  \end{bmatrix}.
+\]
+This is clearly true in Case 1, where $z = \vec{0}$, but also true in Case 2, due to the probabilities.  So, the desired $z$ is in the kernel of $M$, which we can find.  We will have that this kernel will be $\{\vec{0}, z\}$ with probability greater than $1 - 2^{-r}$.
+
+One can show that every classical algorithm to solve Simon's problem requires an \emph{exponential} number of queries, while Simon's algorithm requires a \emph{linear} number.
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Grover's Algorithm}
 
 Grover's algorithm is an \emph{unstructured search}, meaning, no assumption on the data that might help with searching.
@@ -1369,10 +1803,12 @@ We define \emph{Grover's oracle} as $G = - U_S U_f$.
 
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Application of Grover's Algorithm: Solving Pseudo-Boolean Equations}
 
 We illustrate Grover's algorithm with a simple example.  Let $F: {\{0, 1\}}^2 \to \Z$ given by $F(x_0, x_1) = 2x_0 + x_1$.  Our goal is to solve $F(x_0, x_1) = 2$.  Note that the image is $\{0, 1, 2, 3\}$, so we can actually see $F$ as $F: \Z/{4}\Z \to \Z/{4}\Z$, where we use the binary representation of the input to get $(x_0, x_1)$, i.e., $2x_1 + x_0 \mapsto (x_0, x_1)$.
 
+% ------------------------------------------------------------------------------
 \subsection{The Maker Circuit}
 
 The first idea is to create a circuit such that $\ket{x}_2 \ket{0}_2 \mapsto \ket{x}_2 \ket{F(x)}$, or, more generally, $\ket{x}_2 \ket{y}_2 \mapsto \ket{x}_2 \ket{x + y \mod{4}}$.  The following circuit accomplishes that:
@@ -1437,6 +1873,7 @@ So, we implement is as:
 So, $U_F\ket{x_1x_0}\ket{00} = - \ket{x_1x_0}\ket{00}$ if $F(x_0, x_1) = 2$, and $0$ otherwise, as needed for Grover's algorithm.
 
 
+% ------------------------------------------------------------------------------
 \subsection{Diffuser Circuit}
 
 We now simply create the gate $U_S$ as in the description the algorithm:
@@ -1453,6 +1890,7 @@ We now simply create the gate $U_S$ as in the description the algorithm:
 \end{center}
 
 
+% ------------------------------------------------------------------------------
 \subsection{Full Grover Circuit}
 
 The number of iterations of $G = -U_S U$ we need is
@@ -1477,6 +1915,7 @@ After running, $\ket{z_1z_0}$, associated to the input $(z_0, z_1)$, should have
 
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quantum Fourier Transform}
 
 
@@ -1504,6 +1943,7 @@ After running, $\ket{z_1z_0}$, associated to the input $(z_0, z_1)$, should have
 \end{proof}
 
 
+% ------------------------------------------------------------------------------
 \subsection{Discrete Fourier Transform}
 
 \begin{definition}
@@ -1557,6 +1997,7 @@ It decomposes $f$ into periodic functions.
 \end{proof}
 
 
+% ------------------------------------------------------------------------------
 \subsection{Quantum Fourier Transform}
 
 \begin{definition}
@@ -1653,6 +2094,7 @@ This implementation has no ancillas (auxiliary qubits), so it takes ``small spac
 \end{example}
 
 
+% ------------------------------------------------------------------------------
 \subsection{Application: Adder Circuit}
 
 We will need the following (\emph{non-standard}) definition:
@@ -1778,8 +2220,10 @@ So, using~\cref{eq:ak}, and assuming that $\qft$ can be implemented, we can also
 
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quantum Phase Estimation}
 
+% ------------------------------------------------------------------------------
 \subsection{Fejér States}
 
 What happens if we replace $k \in \Z$ in $A(k)$ by some $k \in  \R$?
@@ -1823,6 +2267,7 @@ and in fact
 \]
 
 
+% ------------------------------------------------------------------------------
 \subsection{Quantum Phase Estimator/Digitizer}
 
 Let $\mcal{H}$ be the Hilbert space of $m$-qubit states.  Given
@@ -1904,6 +2349,7 @@ Hence, measuring the first $n$ qubits, we get either $\lfloor 2^n \theta \rfloor
 
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Shor's Algorithm}\label{sec:shor}
 
 Given $a \in \Z/{N}\Z$, with $\gcd(a, N) = 1$, we want to find the order of $a \in {\Z/{N}\Z}^{\times}$.  Classical methods are \href{https://en.wikipedia.org/wiki/Time_complexity#Superpolynomial_time}{superpolynomial} in $\log_2(N)$, with $\mcal{O}\left({(1 + \epsilon)}^{\log_2(N)}\right)$ for any $\epsilon > 0$.
@@ -1920,6 +2366,7 @@ Let $n \idef \lceil \log_2(N) \rceil$.  Shor showed that one can implement
 with $\mcal{O}(n^2)$ gates and ancillas.  Then, one can use $\qpe$ to compute the order.
 
 
+% ------------------------------------------------------------------------------
 \subsection{The Spectrum of $U_a$}
 
 Suppose $\gcd(a, N) = 1$.  Then for $x \geq N$, we have that $\ket{x}_n$ is an eigenstate of $U_a$, with eigenvalue $1$.
@@ -2097,6 +2544,7 @@ with $q_n \mid r$, since $p_n/q_n$ is reduced.  We can then compute $a^{q_n}$: i
 
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quantum Data Access Oracles}
 
 In classical data we often need functions $f : \F_2^n \to \F_2^d$, e.g., for lists, dictionaries, etc.  How do we implement these on a quantum computer?
@@ -2120,6 +2568,7 @@ Alternatively, we could use \emph{diagonal unitaries}\index{diagonal unitaries}:
 In most cases, having one constructions leads to the other.
 
 
+% ------------------------------------------------------------------------------
 \subsection{Implementing $U_f$}
 
 There are two main implementations: select QROM and swap QRAM, and a combination of the two called select-swap.  (There are many others, though.)
@@ -2455,6 +2904,7 @@ The total cost is the cost of the $2^k$ select, plus the swap of $k$.  So, the t
   If we restrict to $H$, $T$, $S$, and $CX$, then the $T$ cost is only $\mathcal{O}\left( \sqrt{d2^n} \right)$.  (A bit higher on the others.)
 \end{remark}
 
+% ------------------------------------------------------------------------------
 \subsection{Diagonal Unitary}
 
 Given some $\theta : \F_2^n \to [0, 1)$, we might want to construct the operator
@@ -2516,6 +2966,7 @@ These can also be done with data access oracles!
 
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quantum State Preparation}
 
 
@@ -2612,6 +3063,7 @@ Here is a construction that is not always the best, but always works and often i
 \end{example}
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quantum (Hamiltonian) Simulations}
 
 Quantum systems modeled by Hilbert spaces $\mathcal{H}$.
@@ -2680,6 +3132,7 @@ We have the formula, but it is hard to compute.
 \end{example}
 
 
+% ------------------------------------------------------------------------------
 \subsection{Trotter's Formula}
 
 \begin{theorem}[Trotter]
@@ -2724,6 +3177,7 @@ So, fix large $\ell > 0$: if you can construct $\exp(-\mi H_r / \hbar \cdot t/\e
 
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quantum Error Correction}
 
 
@@ -2754,6 +3208,7 @@ for some $a$, $b$, and $c$ fixed.  (So, $X$ gives a bit-flip, $Z$ gives a phase-
 
 So, we might start with $\ket{0}$ and end with $U_{\epsilon} \ket{0}$.
 
+% ------------------------------------------------------------------------------
 \subsection{Quantum $3$-Qubit Code}
 
 We have one logical qubit with three physical one:
@@ -2847,6 +3302,7 @@ If we get $s_0 = 0$, then we get the correct $\alpha \ket{000} + \beta \ket{111}
 \end{remark}
 
 
+% ------------------------------------------------------------------------------
 \subsection{Correcting $Z$-Errors}
 
 Note that $Z=HXH$, and so
@@ -2931,6 +3387,7 @@ This second representation can save some gates, since $H^2 = \idt$, in the imple
 
 
 
+% ------------------------------------------------------------------------------
 \subsection{Shor's $9$-Qubit Code}
 
 (See also:\href{https://abdullahkhalid.com/qecft/qec-intro/shor-code/}{A Methods Focused Guide to Quantum Error Correction and Fault-Tolerant Quantum Computation} by Abdullah Khalid.)
@@ -3020,6 +3477,7 @@ Similarly, with $X_{i,j,k,l,m,n}$ we can detect $Z$ errors on the corresponding 
 \end{remark}
 
 
+% ------------------------------------------------------------------------------
 \subsection{$5$ Qubit Code}
 
 Here is an example of a more efficient code, using only $5$ qubits per logical qubit:
@@ -3036,6 +3494,7 @@ Here is an example of a more efficient code, using only $5$ qubits per logical q
 \end{example}
 
 
+% ------------------------------------------------------------------------------
 \subsection{Extracting Syndromes}
 
 A syndrome $s$ associated to some $P$ in a stabilizer group, is either $0$ or $1$, by $P \ket{\psi} = {(-1)}^s \ket{\psi}$.  But how do we measure it.
@@ -3126,9 +3585,14 @@ where $\mathcal{P}_n$ is the \emph{Pauli group}\index{Pauli group} (the group of
 
 
 
+% ------------------------------------------------------------------------------
 \subsection{Steane's Code}
 
-Steane's code is a $[[7, 1, 3]]$ code, defined with $S= \langle X_{0356}, X_{1346}, X_{2456}, Z_{0356}, Z_{1346}, Z_{2456}\rangle$.  Stabilizer codes that have only $X$ and $Z$-type stabilizers are called \emph{CSS codes}\index{CSS codes}.
+Steane's code is a $[[7, 1, 3]]$ code, defined with
+\[
+S= \langle X_{0356}, X_{1346}, X_{2456}, Z_{0356}, Z_{1346}, Z_{2456}\rangle.
+\]
+Stabilizer codes that have only $X$ and $Z$-type stabilizers are called \emph{CSS codes}\index{CSS codes}.
 
 Another example of CSS codes are the Kitaev's toric codes, which are $[[2k^2, 2, k]]$, for $k \in \Z_{>0}$.
 

@@ -1,15 +1,15 @@
 \begin{theindex}
 
-  \item $\adj{A}$, \hyperpage{9}
+  \item $\adj{A}$, \hyperpage{10}
 
   \indexspace
 
-  \item $\bra{\psi}$, \hyperpage{7}
+  \item $\bra{\psi}$, \hyperpage{8}
 
   \indexspace
 
-  \item $C_{x_0}^n X$, \hyperpage{48}
-  \item $CP(\theta)$, \hyperpage{17}
+  \item $C_{x_0}^n X$, \hyperpage{60}
+  \item $CP(\theta)$, \hyperpage{18}
 
   \indexspace
 
@@ -17,28 +17,28 @@
 
   \indexspace
 
-  \item $H$, \hyperpage{12}
+  \item $H$, \hyperpage{13}
 
   \indexspace
 
   \item $\ket{\mi}$, \hyperpage{5}
-  \item $\ket{k}_F$, \hyperpage{38}
+  \item $\ket{k}_F$, \hyperpage{50}
   \item $\ket{-}$, \hyperpage{5}
   \item $\ket{-\mi}$, \hyperpage{5}
   \item $\ket{1}$, \hyperpage{5}
   \item $\ket{+}$, \hyperpage{5}
-  \item $\ket{\psi}$, \hyperpage{5}
+  \item $\ket{\psi}$, \hyperpage{6}
   \item $\ket{s}$, \hyperpage{13}
   \item $\ket{\psi(\theta, \phi)}$, \hyperpage{6}
   \item $\ket{0}$, \hyperpage{5}
 
   \indexspace
 
-  \item $P$, \hyperpage{12}
-  \item $\ket{\Phi^-}$, \hyperpage{20}
-  \item $\ket{\Phi^+}$, \hyperpage{20}
-  \item $\ket{\Psi^-}$, \hyperpage{20}
-  \item $\ket{\Psi^+}$, \hyperpage{20}
+  \item $P$, \hyperpage{13}
+  \item $\ket{\Phi^-}$, \hyperpage{24}
+  \item $\ket{\Phi^+}$, \hyperpage{24}
+  \item $\ket{\Psi^-}$, \hyperpage{24}
+  \item $\ket{\Psi^+}$, \hyperpage{24}
 
   \indexspace
 
@@ -48,20 +48,20 @@
 
   \indexspace
 
-  \item $S$, \hyperpage{12}
+  \item $S$, \hyperpage{13}
   \item $\sigma_1$, \hyperpage{10}
   \item $\sigma_2$, \hyperpage{10}
-  \item $\sigma_3$, \hyperpage{10}
+  \item $\sigma_3$, \hyperpage{11}
   \item $\sg$, \hyperpage{17}
-  \item $\swpg$, \hyperpage{49}
+  \item $\swpg$, \hyperpage{61}
 
   \indexspace
 
-  \item $T$, \hyperpage{12}
+  \item $T$, \hyperpage{13}
 
   \indexspace
 
-  \item $\un$, \hyperpage{9}
+  \item $\un$, \hyperpage{10}
 
   \indexspace
 
@@ -73,6 +73,6 @@
 
   \indexspace
 
-  \item $Z$, \hyperpage{10}
+  \item $Z$, \hyperpage{11}
 
 \end{theindex}
